@@ -434,7 +434,7 @@ async function fetchAmendmentXml(url) {
   // Libellé en clair (auteur principal + cosignataires)
   const sigBlock = ns("signataires")[0];
   const libelleEl = sigBlock ? sigBlock.getElementsByTagNameNS(XML_NS, "libelle")[0] : null;
-  const libelle = libelleEl ? libelleEl.textContent.replace(/\s+/g, " ").trim() : "";
+  const libelle = libelleEl ? cleanXmlText(libelleEl.textContent) : "";
   // Auteur principal = premier nom du libellé
   let author = "";
   if (libelle) {
@@ -459,11 +459,11 @@ async function fetchAmendmentXml(url) {
   const sortLib = firstText("sort") || "";
   const state = sortLib || etatLib || "En traitement";
 
-  // Dispositif et exposé (HTML)
+  // Dispositif et exposé — on récupère directement le texte (entités HTML décodées)
   const dispositifEl = ns("dispositif")[0];
-  const dispositifHtml = dispositifEl ? dispositifEl.innerHTML.trim() : "";
+  const dispositifText = dispositifEl ? cleanXmlText(dispositifEl.textContent) : "";
   const exposeEl = ns("exposeSommaire")[0];
-  const exposeHtml = exposeEl ? exposeEl.innerHTML.trim() : "";
+  const exposeText = exposeEl ? cleanXmlText(exposeEl.textContent) : "";
 
   return {
     author,
@@ -472,9 +472,32 @@ async function fetchAmendmentXml(url) {
     state,
     rapporteur: isRapp,
     libelle,
-    dispositifHtml,
-    exposeHtml,
+    dispositifText,
+    exposeText,
   };
+}
+
+/**
+ * Nettoie un texte issu du XML officiel : décode &#160; → espace,
+ * normalise les espaces, retire les balises HTML résiduelles.
+ */
+function cleanXmlText(s) {
+  if (!s) return "";
+  // Le textContent décode déjà les entités numériques sur la plupart des navigateurs,
+  // mais on force pour les cas où les entités sont doublement échappées.
+  let t = s
+    .replace(/&#160;|&#xa0;|&nbsp;/gi, " ")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'");
+  // Retirer les balises HTML qui ont pu rester
+  t = t.replace(/<[^>]+>/g, " ");
+  // Normaliser les espaces
+  return t.replace(/\s+/g, " ").trim();
 }
 
 function formatArticle(titre, avantApres, additionnel) {
@@ -563,13 +586,15 @@ async function applyFeedItems(items) {
         if (enriched.state) a.state = enriched.state;
         a.rapporteur = enriched.rapporteur;
         // Le résumé reste "à rédiger" mais on lui donne un extrait textuel propre
-        // construit depuis l'exposé sommaire (premiers 500 caractères, sans HTML)
-        if (enriched.exposeHtml) {
-          const txt = stripHtml(enriched.exposeHtml).replace(/\s+/g, " ").trim();
-          a.summary = txt.length > 500 ? txt.slice(0, 500).replace(/\s+\S*$/, "") + "…" : txt;
-        } else if (enriched.dispositifHtml) {
-          const txt = stripHtml(enriched.dispositifHtml).replace(/\s+/g, " ").trim();
-          a.summary = txt.length > 500 ? txt.slice(0, 500).replace(/\s+\S*$/, "") + "…" : txt;
+        // construit depuis l'exposé sommaire officiel (premiers 500 caractères).
+        if (enriched.exposeText) {
+          a.summary = enriched.exposeText.length > 500
+            ? enriched.exposeText.slice(0, 500).replace(/\s+\S*$/, "") + "…"
+            : enriched.exposeText;
+        } else if (enriched.dispositifText) {
+          a.summary = enriched.dispositifText.length > 500
+            ? enriched.dispositifText.slice(0, 500).replace(/\s+\S*$/, "") + "…"
+            : enriched.dispositifText;
         }
         a.libelle = enriched.libelle;
       } catch (err) {

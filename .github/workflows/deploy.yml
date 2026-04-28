@@ -1,4 +1,4 @@
-yamlname: Déploiement GitHub Pages
+name: Déploiement GitHub Pages
 
 on:
   push:

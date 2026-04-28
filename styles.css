@@ -98,6 +98,26 @@ a:hover { color: var(--hemicycle-deep); }
   color: var(--ink-mute);
 }
 
+.masthead-headline {
+  display: flex;
+  gap: 1.6rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.masthead-logo {
+  flex-shrink: 0;
+  width: 130px;
+  height: auto;
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.masthead-title-block {
+  flex: 1;
+  min-width: 0;
+}
+
 .masthead-title {
   font-family: var(--serif);
   font-size: clamp(1.9rem, 4vw, 3rem);
@@ -116,7 +136,7 @@ a:hover { color: var(--hemicycle-deep); }
   line-height: 1.5;
   color: var(--ink-soft);
   max-width: 760px;
-  margin: 0 0 1.6rem;
+  margin: 0;
 }
 
 .masthead-deck em {
@@ -124,11 +144,21 @@ a:hover { color: var(--hemicycle-deep); }
   color: var(--ink);
 }
 
+@media (max-width: 720px) {
+  .masthead-headline {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .masthead-logo { width: 100px; }
+  .masthead-title { margin-bottom: 0.6rem; }
+}
+
 .masthead-footer {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem 1.4rem;
+  margin-top: 1.4rem;
   padding-top: 1rem;
   border-top: 1px solid var(--rule);
   font-size: 0.85rem;

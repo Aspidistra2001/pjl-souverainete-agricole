@@ -533,8 +533,12 @@ async function applyFeedItems(items) {
   state.rssDetected.newAmendments = [];
   state.rssDetected.stateChanges = [];
 
-  // Phase 1 : détection rapide à partir du flux seul (synchrone)
-  // pour pouvoir afficher quelque chose sans attendre les fetchs XML.
+  // Le flux RSS d'Aspidistra ne contient pas l'état dans son XML, juste un lien
+  // vers le XML OpenData officiel. Pour CHAQUE entrée du flux (qu'elle soit
+  // déjà connue ou non), on fetch l'XML pour avoir l'état réel et à jour.
+  // En pratique, le flux ne liste que les amendements récents/modifiés, donc
+  // on enrichit aussi les amendements connus quand ils réapparaissent dans le flux.
+
   const toEnrich = [];
 
   for (const item of items) {
@@ -563,20 +567,14 @@ async function applyFeedItems(items) {
       };
       state.byNum.set(item.num, placeholder);
       state.rssDetected.newAmendments.push(item.num);
-      toEnrich.push(item);
-    } else if (item.sort && item.sort !== existing.state) {
-      state.rssDetected.stateChanges.push({
-        num: item.num,
-        oldState: existing.state,
-        newState: item.sort,
-      });
-      existing.previous_state = existing.state;
-      existing.state = item.sort;
-      existing.is_changed = true;
+      toEnrich.push({ item, isNew: true });
+    } else {
+      // Amendement connu : on l'enrichit aussi pour rafraîchir son état/sort.
+      // On note l'ancien état pour détecter le changement après enrichissement.
+      toEnrich.push({ item, isNew: false, oldState: existing.state });
     }
   }
 
-  // Phase 2 : enrichissement en parallèle (jusqu'à 5 fetchs simultanés)
   if (toEnrich.length === 0) return;
 
   // Render immédiat avec les placeholders
@@ -586,44 +584,57 @@ async function applyFeedItems(items) {
   let idx = 0;
   async function worker() {
     while (idx < toEnrich.length) {
-      const item = toEnrich[idx++];
+      const job = toEnrich[idx++];
+      const { item, isNew, oldState } = job;
       if (!item.xmlUrl) continue;
       try {
         const enriched = await fetchAmendmentXml(item.xmlUrl);
         if (!enriched) continue;
         const a = state.byNum.get(item.num);
         if (!a) continue;
-        if (enriched.author) a.author = enriched.author;
-        if (enriched.group) {
-          a.group = enriched.group;
-          a.group_resolved = true;
+
+        if (isNew) {
+          if (enriched.author) a.author = enriched.author;
+          if (enriched.group) {
+            a.group = enriched.group;
+            a.group_resolved = true;
+          }
+          if (enriched.article) a.article = enriched.article;
+          a.rapporteur = enriched.rapporteur;
+          if (enriched.exposeText) {
+            a.summary = enriched.exposeText.length > 500
+              ? enriched.exposeText.slice(0, 500).replace(/\s+\S*$/, "") + "…"
+              : enriched.exposeText;
+          } else if (enriched.dispositifText) {
+            a.summary = enriched.dispositifText.length > 500
+              ? enriched.dispositifText.slice(0, 500).replace(/\s+\S*$/, "") + "…"
+              : enriched.dispositifText;
+          }
+          a.libelle = enriched.libelle;
         }
-        if (enriched.article) a.article = enriched.article;
-        if (enriched.state) a.state = enriched.state;
-        a.rapporteur = enriched.rapporteur;
-        // Le résumé reste "à rédiger" mais on lui donne un extrait textuel propre
-        // construit depuis l'exposé sommaire officiel (premiers 500 caractères).
-        if (enriched.exposeText) {
-          a.summary = enriched.exposeText.length > 500
-            ? enriched.exposeText.slice(0, 500).replace(/\s+\S*$/, "") + "…"
-            : enriched.exposeText;
-        } else if (enriched.dispositifText) {
-          a.summary = enriched.dispositifText.length > 500
-            ? enriched.dispositifText.slice(0, 500).replace(/\s+\S*$/, "") + "…"
-            : enriched.dispositifText;
+
+        // Mise à jour de l'état dans tous les cas (nouveau ou connu)
+        if (enriched.state && enriched.state !== a.state) {
+          if (!isNew) {
+            state.rssDetected.stateChanges.push({
+              num: item.num,
+              oldState: oldState || a.state,
+              newState: enriched.state,
+            });
+            a.previous_state = a.state;
+            a.is_changed = true;
+          }
+          a.state = enriched.state;
         }
-        a.libelle = enriched.libelle;
       } catch (err) {
         console.warn(`Enrichissement XML échoué pour ${item.num} :`, err);
       }
     }
   }
 
-  // Lancer N workers en parallèle
   const workers = Array.from({ length: Math.min(CONCURRENCY, toEnrich.length) }, () => worker());
   await Promise.all(workers);
 
-  // Re-render après enrichissement
   render();
 }
 
@@ -741,7 +752,7 @@ function renderStats() {
   ).length;
   // « Votés » = sort final atteint
   const votes = all.filter(a =>
-    a.state === "Adopté" || a.state === "Rejeté" || a.state === "Tombé"
+    a.state === "Adopté" || a.state === "Rejeté" || a.state === "Tombé" || a.state === "Non soutenu"
   ).length;
 
   dom.stats.innerHTML = `
@@ -910,6 +921,7 @@ function stateCssClass(s) {
     "Adopté":          "state-adopte",
     "Rejeté":          "state-rejete",
     "Tombé":           "state-tombe",
+    "Non soutenu":     "state-tombe",
     "Retiré":          "state-retire",
     "Irrecevable":     "state-irrecevable",
     "Irrecevable 40":  "state-irrecevable",

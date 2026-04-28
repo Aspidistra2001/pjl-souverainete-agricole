@@ -653,9 +653,14 @@ a:hover { color: var(--hemicycle-deep); }
   text-transform: none;
   font-size: 0.76rem;
 }
-.state-en-traitement { background: #e6f1ea; color: #1a5d2c; }
-.state-retire { background: #ebe8df; color: #6e6859; }
-.state-irrecevable { background: #f7e3e0; color: #8e2418; }
+.state-en-traitement { background: #f4f1e8; color: #6e6859; }
+.state-a-discuter    { background: #e3edf6; color: #2c5e8a; }
+.state-discute       { background: #ece4f4; color: #6f4d8c; }
+.state-adopte        { background: #d5ecda; color: #1a5d2c; font-weight: 500; }
+.state-rejete        { background: #f7d8d4; color: #8e2418; font-weight: 500; }
+.state-tombe         { background: #ece9e0; color: #5a5448; font-weight: 500; font-style: normal; }
+.state-retire        { background: #ebe8df; color: #6e6859; }
+.state-irrecevable   { background: #f7e3e0; color: #8e2418; }
 
 .badge-instance {
   background: #e3edf6;

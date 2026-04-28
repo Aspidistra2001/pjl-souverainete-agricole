@@ -281,9 +281,18 @@ function extractItem(node) {
 
   // Extraire le numéro d'amendement depuis : titre, lien, GUID ou contenu
   // Patrons typiques : CD3, CD123, CE56, AS401, SPE862…
-  const blob = `${title} ${link} ${guid}`;
+  const blob = `${title} ${link} ${guid} ${description}`;
   const m = blob.match(/\b([A-Z]{2,4}\d+)\b/);
   if (!m) return null;
+
+  // Filtre : ne retenir que les amendements rattachés au texte n° 2632
+  // (PJL souveraineté agricoles). Le numéro de texte apparaît dans l'URL
+  // du lien, dans le GUID OpenData, ou dans le titre.
+  const isText2632 =
+    /\b2632\b/.test(blob) ||
+    /\/2632\//.test(link) ||
+    /B2632P/.test(guid);
+  if (!isText2632) return null;
 
   // Chercher l'URL du XML OpenData : présente soit dans <guid>, soit dans <description>
   // Format typique : https://www.assemblee-nationale.fr/dyn/opendata/AMANR5L17PO...XX.xml

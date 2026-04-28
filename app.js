@@ -218,7 +218,7 @@ async function refreshFromFeed(manual = false) {
 
   try {
     const items = parseFeed(xmlText);
-    applyFeedItems(items);
+    await applyFeedItems(items);
     state.feedAvailable = true;
     state.lastFetch = new Date();
     setStatus("ok", `Flux RSS — ${items.length} entrée${items.length > 1 ? "s" : ""}`);
@@ -285,6 +285,27 @@ function extractItem(node) {
   const m = blob.match(/\b([A-Z]{2,4}\d+)\b/);
   if (!m) return null;
 
+  // Chercher l'URL du XML OpenData : présente soit dans <guid>, soit dans <description>
+  // Format typique : https://www.assemblee-nationale.fr/dyn/opendata/AMANR5L17PO...XX.xml
+  let xmlUrl = null;
+  const xmlPatterns = [
+    /https?:\/\/[^"'<>\s]+AMANR[A-Z0-9]+\.xml/i,
+    /(\/dyn\/opendata\/AMANR[A-Z0-9]+\.xml)/i,
+  ];
+  const searchSpace = `${guid} ${description} ${content}`;
+  for (const re of xmlPatterns) {
+    const xm = searchSpace.match(re);
+    if (xm) {
+      xmlUrl = xm[0];
+      if (xmlUrl.startsWith("/")) xmlUrl = "https://www.assemblee-nationale.fr" + xmlUrl;
+      break;
+    }
+  }
+  // Si le guid est exactement une URI sans .xml, ajouter .xml
+  if (!xmlUrl && guid.includes("AMANR") && !guid.endsWith(".xml")) {
+    xmlUrl = guid.endsWith("/") ? guid.slice(0, -1) + ".xml" : guid + ".xml";
+  }
+
   const item = {
     num: m[1],
     title,
@@ -292,6 +313,7 @@ function extractItem(node) {
     content,
     link: link || "",
     pubDate,
+    xmlUrl,                         // URL du XML OpenData officiel, si trouvée
     sort: extractSort(title, content, description),
     author: extractAuthor(title, content),
   };
@@ -342,47 +364,167 @@ function extractAuthor(title, content) {
 // Application des données du flux à l'état
 // ------------------------------------------------------------
 
-function applyFeedItems(items) {
+// Mapping des codes <groupePolitiqueRef> XML → code de groupe utilisé par notre UI
+const XML_GROUP_MAP = {
+  "PO845401": "RN",
+  "PO845407": "EPR",
+  "PO845413": "LFI",
+  "PO845419": "SOC",
+  "PO845425": "DR",
+  "PO845439": "EcoS",
+  "PO845454": "DEM",
+  "PO845470": "HOR",
+  "PO845485": "LIOT",
+  "PO872880": "UDR",
+};
+
+const XML_NS = "http://schemas.assemblee-nationale.fr/referentiel";
+
+/**
+ * Fetch et parse le XML OpenData officiel d'un amendement.
+ * Renvoie { author, group, article, state, dispositifHtml, exposeHtml, libelle, rapporteur }
+ * ou null en cas d'échec.
+ */
+async function fetchAmendmentXml(url) {
+  if (!url) return null;
+  let xmlText = null;
+  try {
+    xmlText = await fetchText(url);
+  } catch (err) {
+    // Tentative via proxys CORS
+    for (const proxy of CORS_FALLBACKS) {
+      try {
+        xmlText = await fetchText(proxy(url));
+        if (xmlText) break;
+      } catch (_) { /* on essaie le suivant */ }
+    }
+  }
+  if (!xmlText) return null;
+
+  let doc;
+  try {
+    doc = new DOMParser().parseFromString(xmlText, "application/xml");
+  } catch (e) {
+    return null;
+  }
+  if (doc.querySelector("parsererror")) return null;
+
+  const ns = (tag) => doc.getElementsByTagNameNS(XML_NS, tag);
+  const firstText = (tag) => {
+    const els = ns(tag);
+    return els.length && els[0].textContent ? els[0].textContent.trim() : "";
+  };
+  const firstTextWithin = (parent, tag) => {
+    if (!parent) return "";
+    const el = parent.getElementsByTagNameNS(XML_NS, tag)[0];
+    return el && el.textContent ? el.textContent.trim() : "";
+  };
+
+  // Auteur principal & groupe
+  const auteur = ns("auteur")[0];
+  const groupRef = firstTextWithin(auteur, "groupePolitiqueRef");
+  const group = XML_GROUP_MAP[groupRef] || null;
+  // Détection du statut rapporteur
+  let isRapp = false;
+  if (auteur) {
+    const rappEl = auteur.getElementsByTagNameNS(XML_NS, "auteurRapporteurOrganeRef")[0];
+    isRapp = !!(rappEl && rappEl.textContent && rappEl.textContent.trim());
+  }
+
+  // Libellé en clair (auteur principal + cosignataires)
+  const sigBlock = ns("signataires")[0];
+  const libelleEl = sigBlock ? sigBlock.getElementsByTagNameNS(XML_NS, "libelle")[0] : null;
+  const libelle = libelleEl ? libelleEl.textContent.replace(/\s+/g, " ").trim() : "";
+  // Auteur principal = premier nom du libellé
+  let author = "";
+  if (libelle) {
+    const first = libelle.split(",")[0].trim();
+    author = first.replace(/^(M\.?|Mme\.?|Mlle\.?)\s+/i, "").trim();
+  }
+
+  // Article ciblé
+  const div = ns("division")[0];
+  const articleTitre = firstTextWithin(div, "titre");
+  const avantApres = firstTextWithin(div, "avant_A_Apres");
+  const additionnel = firstTextWithin(div, "articleAdditionnel") === "true";
+  const article = formatArticle(articleTitre, avantApres, additionnel);
+
+  // État et sort
+  const etatLib = (() => {
+    const etats = ns("etatDesTraitements");
+    if (!etats.length) return "";
+    const lib = etats[0].getElementsByTagNameNS(XML_NS, "libelle")[0];
+    return lib && lib.textContent ? lib.textContent.trim() : "";
+  })();
+  const sortLib = firstText("sort") || "";
+  const state = sortLib || etatLib || "En traitement";
+
+  // Dispositif et exposé (HTML)
+  const dispositifEl = ns("dispositif")[0];
+  const dispositifHtml = dispositifEl ? dispositifEl.innerHTML.trim() : "";
+  const exposeEl = ns("exposeSommaire")[0];
+  const exposeHtml = exposeEl ? exposeEl.innerHTML.trim() : "";
+
+  return {
+    author,
+    group,
+    article,
+    state,
+    rapporteur: isRapp,
+    libelle,
+    dispositifHtml,
+    exposeHtml,
+  };
+}
+
+function formatArticle(titre, avantApres, additionnel) {
+  if (!titre) return "À classer";
+  if (!additionnel) return titre;
+  // Article additionnel : titre = article de référence, avant_A_Apres = "B" (avant) ou "A" (après)
+  const m = titre.match(/Article\s+(\d+|PREMIER)/i);
+  if (!m) return titre;
+  const n = m[1];
+  if (avantApres === "B") {
+    return n === "PREMIER" ? "Avant l'article 1ᵉʳ" : `Avant l'article ${n}`;
+  }
+  return n === "PREMIER" ? "Après l'article PREMIER" : `Après l'article ${n}`;
+}
+
+async function applyFeedItems(items) {
   state.rssDetected.newAmendments = [];
   state.rssDetected.stateChanges = [];
+
+  // Phase 1 : détection rapide à partir du flux seul (synchrone)
+  // pour pouvoir afficher quelque chose sans attendre les fetchs XML.
+  const toEnrich = [];
 
   for (const item of items) {
     const existing = state.byNum.get(item.num);
 
     if (!existing) {
-      // Nouvel amendement détecté via RSS, pas dans la baseline
-      const article = guessArticleFromContent(item) || "À classer";
-      const lookup = lookupAuthor(item.author);
-      const author = lookup ? lookup.full : (item.author || "Auteur non identifié");
-      const group = lookup ? lookup.group : null;
-
-      const rawSummary = item.description ? stripHtml(item.description) :
-                         item.content ? stripHtml(item.content) :
-                         item.title || "";
-      const truncated = rawSummary.length > 600
-        ? rawSummary.slice(0, 600).replace(/\s+\S*$/, "") + "…"
-        : rawSummary;
-
-      const newAmend = {
+      // Nouvel amendement → placeholder, à enrichir via XML officiel
+      const placeholder = {
         num: item.num,
-        article,
-        author,
-        group: group || "EPR",      // fallback explicite si auteur introuvable
-        group_resolved: !!group,    // sert au CSS pour signaler un fallback
+        article: "À classer",
+        author: "Chargement…",
+        group: "EPR",
+        group_resolved: false,
         rapporteur: false,
         state: item.sort || "En traitement",
         url: item.link || "",
         instance: item.num.startsWith("CE") ? "Affaires économiques" :
                   item.num.startsWith("AS") ? "Affaires sociales" :
                   item.num.startsWith("CD") ? "Développement durable" : "",
-        summary: truncated || "Détails non disponibles dans le flux.",
-        summary_pending: true,      // résumé brut, à reformuler
+        summary: "Récupération du contenu officiel en cours…",
+        summary_pending: true,
         is_new: true,
         is_rss_new: true,
         rss_link: item.link,
+        xml_url: item.xmlUrl,
       };
-      state.byNum.set(item.num, newAmend);
+      state.byNum.set(item.num, placeholder);
       state.rssDetected.newAmendments.push(item.num);
+      toEnrich.push(item);
     } else if (item.sort && item.sort !== existing.state) {
       state.rssDetected.stateChanges.push({
         num: item.num,
@@ -394,6 +536,54 @@ function applyFeedItems(items) {
       existing.is_changed = true;
     }
   }
+
+  // Phase 2 : enrichissement en parallèle (jusqu'à 5 fetchs simultanés)
+  if (toEnrich.length === 0) return;
+
+  // Render immédiat avec les placeholders
+  render();
+
+  const CONCURRENCY = 5;
+  let idx = 0;
+  async function worker() {
+    while (idx < toEnrich.length) {
+      const item = toEnrich[idx++];
+      if (!item.xmlUrl) continue;
+      try {
+        const enriched = await fetchAmendmentXml(item.xmlUrl);
+        if (!enriched) continue;
+        const a = state.byNum.get(item.num);
+        if (!a) continue;
+        if (enriched.author) a.author = enriched.author;
+        if (enriched.group) {
+          a.group = enriched.group;
+          a.group_resolved = true;
+        }
+        if (enriched.article) a.article = enriched.article;
+        if (enriched.state) a.state = enriched.state;
+        a.rapporteur = enriched.rapporteur;
+        // Le résumé reste "à rédiger" mais on lui donne un extrait textuel propre
+        // construit depuis l'exposé sommaire (premiers 500 caractères, sans HTML)
+        if (enriched.exposeHtml) {
+          const txt = stripHtml(enriched.exposeHtml).replace(/\s+/g, " ").trim();
+          a.summary = txt.length > 500 ? txt.slice(0, 500).replace(/\s+\S*$/, "") + "…" : txt;
+        } else if (enriched.dispositifHtml) {
+          const txt = stripHtml(enriched.dispositifHtml).replace(/\s+/g, " ").trim();
+          a.summary = txt.length > 500 ? txt.slice(0, 500).replace(/\s+\S*$/, "") + "…" : txt;
+        }
+        a.libelle = enriched.libelle;
+      } catch (err) {
+        console.warn(`Enrichissement XML échoué pour ${item.num} :`, err);
+      }
+    }
+  }
+
+  // Lancer N workers en parallèle
+  const workers = Array.from({ length: Math.min(CONCURRENCY, toEnrich.length) }, () => worker());
+  await Promise.all(workers);
+
+  // Re-render après enrichissement
+  render();
 }
 
 function guessArticleFromContent(item) {
@@ -618,7 +808,7 @@ function renderAmendment(a) {
   const url = a.url || a.rss_link || "#";
   const stateClass = stateCssClass(a.state);
 
-  // Pour les résumés non encore synthétisés (extraits bruts du flux),
+  // Pour les résumés non encore synthétisés (extraits bruts du flux ou de l'exposé sommaire),
   // on affiche un bandeau d'avertissement et on stylise différemment.
   const summaryHtml = a.summary_pending
     ? `<div class="pending-banner" role="note">
@@ -626,7 +816,7 @@ function renderAmendment(a) {
            <path d="M12 9v4"/><path d="M12 17h.01"/>
            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
          </svg>
-         Synthèse à rédiger — extrait brut du flux RSS
+         Synthèse à rédiger — extrait de l'exposé sommaire officiel
        </div>
        <p class="amendment-summary summary-pending">${escapeHtml(a.summary)}</p>`
     : `<p class="amendment-summary">${escapeHtml(a.summary)}</p>`;

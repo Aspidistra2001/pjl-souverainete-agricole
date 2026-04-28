@@ -338,15 +338,21 @@ function textOf(node, tag) {
 
 /**
  * Tente d'extraire un "sort" (état d'avancement) depuis le contenu textuel.
- * Mots-clés cherchés : Adopté, Rejeté, Retiré, Irrecevable, Tombé, "En traitement"…
+ * Mots-clés cherchés : Adopté, Rejeté, Retiré, Tombé, Irrecevable, A discuter,
+ * En traitement, Discuté…
  */
 function extractSort(title, content, description) {
   const blob = `${title}\n${description}\n${content}`.toLowerCase();
-  if (/\bretir[ée]\b/.test(blob)) return "Retiré";
-  if (/\birrecevable\b/.test(blob)) return "Irrecevable";
-  if (/\btomb[ée]\b/.test(blob)) return "Tombé";
+  // Sort final (après vote en commission)
   if (/\badopt[ée]\b/.test(blob)) return "Adopté";
   if (/\brejet[ée]\b/.test(blob)) return "Rejeté";
+  if (/\btomb[ée]\b/.test(blob)) return "Tombé";
+  // États intermédiaires
+  if (/\birrecevable\s*40\b/.test(blob)) return "Irrecevable 40";
+  if (/\birrecevable\b/.test(blob)) return "Irrecevable";
+  if (/\bretir[ée]\b/.test(blob)) return "Retiré";
+  if (/\bdiscut[ée]\b/.test(blob)) return "Discuté";
+  if (/\bà discuter\b|\ba discuter\b/.test(blob)) return "A discuter";
   if (/\ben traitement\b/.test(blob)) return "En traitement";
   return null;
 }
@@ -458,7 +464,8 @@ async function fetchAmendmentXml(url) {
   const additionnel = firstTextWithin(div, "articleAdditionnel") === "true";
   const article = formatArticle(articleTitre, avantApres, additionnel);
 
-  // État et sort
+  // État et sort : si le sort officiel est rempli, c'est lui qui prime ;
+  // sinon on prend l'état du traitement administratif.
   const etatLib = (() => {
     const etats = ns("etatDesTraitements");
     if (!etats.length) return "";
@@ -728,13 +735,20 @@ function renderStats() {
   const all = Array.from(state.byNum.values());
   const newCount = all.filter(a => a.is_new || a.is_rss_new).length;
   const changedCount = state.rssDetected.stateChanges.length;
-  const enTraitement = all.filter(a => a.state === "En traitement").length;
+  // « Actifs » = en cours de procédure (pas encore retiré, irrecevable ou voté)
+  const actifs = all.filter(a =>
+    a.state === "En traitement" || a.state === "A discuter"
+  ).length;
+  // « Votés » = sort final atteint
+  const votes = all.filter(a =>
+    a.state === "Adopté" || a.state === "Rejeté" || a.state === "Tombé"
+  ).length;
 
   dom.stats.innerHTML = `
     <div class="stat"><span class="stat-num">${all.length}</span><span class="stat-label">Amendements</span></div>
     <div class="stat"><span class="stat-num accent">${newCount}</span><span class="stat-label">Nouveaux</span></div>
-    <div class="stat"><span class="stat-num">${enTraitement}</span><span class="stat-label">En traitement</span></div>
-    <div class="stat"><span class="stat-num">${changedCount}</span><span class="stat-label">Sorts modifiés</span></div>
+    <div class="stat"><span class="stat-num">${actifs}</span><span class="stat-label">Actifs</span></div>
+    <div class="stat"><span class="stat-num">${votes}</span><span class="stat-label">Votés</span></div>
   `;
 }
 
@@ -890,12 +904,15 @@ function groupPill(group, count) {
 
 function stateCssClass(s) {
   return ({
-    "En traitement": "state-en-traitement",
-    "Retiré":        "state-retire",
-    "Irrecevable":   "state-irrecevable",
-    "Adopté":        "state-en-traitement",
-    "Rejeté":        "state-irrecevable",
-    "Tombé":         "state-retire",
+    "En traitement":   "state-en-traitement",
+    "A discuter":      "state-a-discuter",
+    "Discuté":         "state-discute",
+    "Adopté":          "state-adopte",
+    "Rejeté":          "state-rejete",
+    "Tombé":           "state-tombe",
+    "Retiré":          "state-retire",
+    "Irrecevable":     "state-irrecevable",
+    "Irrecevable 40":  "state-irrecevable",
   })[s] || "state-en-traitement";
 }
 

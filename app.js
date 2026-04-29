@@ -16,11 +16,20 @@ const FEED_URL = "https://aspidistra2001.github.io/AN/feed";
 const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
 const STORAGE_KEY = "veille_pjl_2632_state";
 
-// Proxy de secours en cas de blocage CORS (allorigins est public et gratuit)
+// Proxys CORS — ordre d'essai. Les services gratuits étant instables,
+// on en a plusieurs en secours. Le premier qui répond gagne.
 const CORS_FALLBACKS = [
-  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
   url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  url => `https://cors-anywhere.herokuapp.com/${url}`,
 ];
+
+// Cache local des XMLs déjà fetchés pour éviter de retaper les proxys en boucle
+// (clé : URL du XML, valeur : { result, timestamp })
+const xmlCache = new Map();
+const XML_CACHE_TTL_MS = 30 * 60 * 1000; // 30 min — au-delà on refait le fetch
+
 
 // État applicatif
 const state = {
@@ -397,24 +406,40 @@ const XML_NS = "http://schemas.assemblee-nationale.fr/referentiel";
 
 /**
  * Fetch et parse le XML OpenData officiel d'un amendement.
- * Renvoie { author, group, article, state, dispositifHtml, exposeHtml, libelle, rapporteur }
+ * Renvoie { author, group, article, state, dispositifText, exposeText, libelle, rapporteur }
  * ou null en cas d'échec.
+ *
+ * Le serveur de l'Assemblée nationale ne renvoie pas les en-têtes CORS,
+ * donc le fetch direct depuis un navigateur tiers échoue toujours.
+ * On commence donc par les proxys CORS, et on met les résultats en cache
+ * pour éviter de retenter les mêmes requêtes à chaque cycle de rafraîchissement.
  */
 async function fetchAmendmentXml(url) {
   if (!url) return null;
+
+  // Cache : si on a déjà fetché cette URL récemment, on retourne le résultat
+  const cached = xmlCache.get(url);
+  if (cached && (Date.now() - cached.timestamp) < XML_CACHE_TTL_MS) {
+    return cached.result;
+  }
+
   let xmlText = null;
-  try {
-    xmlText = await fetchText(url);
-  } catch (err) {
-    // Tentative via proxys CORS
-    for (const proxy of CORS_FALLBACKS) {
-      try {
-        xmlText = await fetchText(proxy(url));
-        if (xmlText) break;
-      } catch (_) { /* on essaie le suivant */ }
+  // Stratégie proxy-first (le fetch direct vers assemblee-nationale.fr est
+  // toujours bloqué par CORS, inutile de le tenter)
+  for (const proxy of CORS_FALLBACKS) {
+    try {
+      xmlText = await fetchText(proxy(url));
+      if (xmlText && xmlText.includes("<amendement")) break;
+      xmlText = null;
+    } catch (_) {
+      // proxy suivant
     }
   }
-  if (!xmlText) return null;
+
+  if (!xmlText) {
+    xmlCache.set(url, { result: null, timestamp: Date.now() });
+    return null;
+  }
 
   let doc;
   try {
@@ -481,7 +506,7 @@ async function fetchAmendmentXml(url) {
   const exposeEl = ns("exposeSommaire")[0];
   const exposeText = exposeEl ? cleanXmlText(exposeEl.textContent) : "";
 
-  return {
+  const result = {
     author,
     group,
     article,
@@ -491,6 +516,8 @@ async function fetchAmendmentXml(url) {
     dispositifText,
     exposeText,
   };
+  xmlCache.set(url, { result, timestamp: Date.now() });
+  return result;
 }
 
 /**
@@ -582,14 +609,17 @@ async function applyFeedItems(items) {
 
   const CONCURRENCY = 5;
   let idx = 0;
+  let successCount = 0;
+  let failureCount = 0;
   async function worker() {
     while (idx < toEnrich.length) {
       const job = toEnrich[idx++];
       const { item, isNew, oldState } = job;
-      if (!item.xmlUrl) continue;
+      if (!item.xmlUrl) { failureCount++; continue; }
       try {
         const enriched = await fetchAmendmentXml(item.xmlUrl);
-        if (!enriched) continue;
+        if (!enriched) { failureCount++; continue; }
+        successCount++;
         const a = state.byNum.get(item.num);
         if (!a) continue;
 
@@ -627,6 +657,7 @@ async function applyFeedItems(items) {
           a.state = enriched.state;
         }
       } catch (err) {
+        failureCount++;
         console.warn(`Enrichissement XML échoué pour ${item.num} :`, err);
       }
     }
@@ -634,6 +665,13 @@ async function applyFeedItems(items) {
 
   const workers = Array.from({ length: Math.min(CONCURRENCY, toEnrich.length) }, () => worker());
   await Promise.all(workers);
+
+  // Statut détaillé pour aider au diagnostic
+  if (failureCount > 0 && successCount === 0) {
+    setStatus("error", `Enrichissement XML — ${failureCount} échec${failureCount > 1 ? "s" : ""} (proxys CORS indisponibles)`);
+  } else if (failureCount > 0) {
+    setStatus("ok", `Enrichi — ${successCount}/${successCount + failureCount} amendements`);
+  }
 
   render();
 }

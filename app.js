@@ -1,89 +1,68 @@
 /* ============================================================
- * Bulletin de veille — moteur
+ * Bulletin de veille — moteur (version "serveur first")
  * ============================================================
  *
- * Parcours :
- *   1. Charge data/amendments.json (baseline locale figée).
- *   2. Tente de récupérer le flux RSS d'aspidistra2001.github.io/AN/feed.
- *   3. Détecte les amendements nouveaux (non présents dans la baseline)
- *      et les changements de "sort" pour les amendements existants.
- *   4. Met à jour l'affichage et recommence toutes les 10 minutes.
+ * Le travail d'enrichissement (lecture RSS + fetch XML OpenData) est
+ * désormais fait côté serveur par .github/workflows/sync.yml qui exécute
+ * scripts/refresh_amendments.py toutes les 30 minutes et committe les
+ * changements directement dans data/amendments.json.
  *
- * Le flux peut être au format RSS 2.0 ou Atom : les deux sont parsés.
+ * Côté navigateur, on se contente donc :
+ *   - de charger data/amendments.json
+ *   - de l'afficher
+ *   - de le rafraîchir toutes les 5 minutes pour récupérer les
+ *     éventuels commits récents (rapport entre les rafraîchissements
+ *     navigateur (5 min) et la fréquence de sync serveur (30 min))
+ *
+ * Plus aucun fetch externe n'est fait depuis le navigateur, ce qui
+ * élimine tous les problèmes CORS et la dépendance à des proxys
+ * gratuits instables.
  * ============================================================ */
 
-const FEED_URL = "https://aspidistra2001.github.io/AN/feed";
-const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
-const STORAGE_KEY = "veille_pjl_2632_state";
+const DATA_URL = "data/amendments.json";
+const AUTHORS_URL = "data/authors.json";
+const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
 
-// Proxys CORS — ordre d'essai. Les services gratuits étant instables,
-// on en a plusieurs en secours. Le premier qui répond gagne.
-const CORS_FALLBACKS = [
-  url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-  url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-  url => `https://cors-anywhere.herokuapp.com/${url}`,
-];
-
-// Cache local des XMLs déjà fetchés pour éviter de retaper les proxys en boucle
-// (clé : URL du XML, valeur : { result, timestamp })
-const xmlCache = new Map();
-const XML_CACHE_TTL_MS = 30 * 60 * 1000; // 30 min — au-delà on refait le fetch
-
-
-// État applicatif
 const state = {
-  meta: null,                  // métadonnées (groupes, ordre des articles)
-  baseline: [],                // 545 amendements baseline
-  byNum: new Map(),            // index num → amendment (comprend mises à jour RSS)
-  authors: null,               // index des députés (group_map + lookup par nom de famille)
+  meta: null,
+  amendments: [],
+  byNum: new Map(),
+  authors: null,
   filters: {
     search: "",
-    states: new Set(),         // états actifs
-    groups: new Set(),         // groupes actifs
-    articles: new Set(),       // articles actifs
+    states: new Set(),
+    groups: new Set(),
+    articles: new Set(),
   },
-  rssDetected: {
-    newAmendments: [],         // numéros détectés via RSS et absents de la baseline
-    stateChanges: [],          // {num, oldState, newState}
+  previouslySeen: new Set(),
+  previousStates: new Map(),
+  detectedChanges: {
+    addedSinceOpen: [],
+    statesChanged: [],
   },
-  lastFetch: null,
-  feedAvailable: false,
+  lastRefresh: null,
 };
 
 const dom = {};
 
-// ------------------------------------------------------------
-// Boot
-// ------------------------------------------------------------
-
 document.addEventListener("DOMContentLoaded", async () => {
   cacheDom();
   bindEvents();
-
-  setStatus("loading", "Chargement des données…");
+  setStatus("loading", "Chargement…");
 
   try {
-    const [data, authors] = await Promise.all([loadBaseline(), loadAuthors()]);
-    state.meta = data.meta;
-    state.baseline = data.amendments;
-    state.byNum = new Map(state.baseline.map(a => [a.num, { ...a }]));
-    state.authors = authors;
-
-    // Pré-remplir filtres avec tous les états/groupes/articles disponibles
+    await loadData();
     initFilters();
-
     render();
-    setStatus("ok", "Baseline locale chargée");
-
-    // Lancement immédiat puis répétition
-    refreshFromFeed();
-    setInterval(refreshFromFeed, REFRESH_INTERVAL_MS);
+    state.lastRefresh = new Date();
+    updateLastRefreshLabel();
+    setStatus("ok", "Données à jour");
+    setInterval(refreshData, REFRESH_INTERVAL_MS);
   } catch (err) {
-    console.error("Erreur de chargement de la baseline :", err);
+    console.error("Erreur de chargement :", err);
     setStatus("error", "Échec du chargement");
     dom.amendments.innerHTML =
-      `<p class="no-results">Erreur de chargement de la baseline. Vérifiez la console.</p>`;
+      `<p class="no-results">Erreur de chargement des données. Vérifiez la console.</p>`;
   }
 });
 
@@ -103,7 +82,7 @@ function cacheDom() {
 }
 
 function bindEvents() {
-  dom.refreshBtn.addEventListener("click", () => refreshFromFeed(true));
+  dom.refreshBtn.addEventListener("click", () => refreshData(true));
   dom.search.addEventListener("input", e => {
     state.filters.search = e.target.value.trim().toLowerCase();
     render();
@@ -111,605 +90,110 @@ function bindEvents() {
 }
 
 // ------------------------------------------------------------
-// Chargement baseline
+// Chargement et rafraîchissement
 // ------------------------------------------------------------
 
-async function loadBaseline() {
-  const res = await fetch("data/amendments.json", { cache: "no-cache" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+async function fetchJson(url) {
+  const sep = url.includes("?") ? "&" : "?";
+  const res = await fetch(`${url}${sep}t=${Date.now()}`, { cache: "no-cache" });
+  if (!res.ok) throw new Error(`HTTP ${res.status} sur ${url}`);
   return res.json();
 }
 
-async function loadAuthors() {
-  const res = await fetch("data/authors.json", { cache: "no-cache" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+async function loadData() {
+  const [data, authors] = await Promise.all([
+    fetchJson(DATA_URL),
+    fetchJson(AUTHORS_URL),
+  ]);
+  state.meta = data.meta;
+  state.amendments = data.amendments;
+  state.byNum = new Map(state.amendments.map(a => [a.num, a]));
+  state.authors = authors;
+
+  state.previouslySeen = new Set(state.byNum.keys());
+  state.previousStates = new Map(state.amendments.map(a => [a.num, a.state]));
+  state.detectedChanges.addedSinceOpen = [];
+  state.detectedChanges.statesChanged = [];
 }
 
-/**
- * Cherche le groupe parlementaire d'un auteur à partir d'un fragment libre
- * extrait du flux RSS (peut être "M. POTIER", "Mme Pantel Sophie", "Potier"...).
- * Retourne { full, group } ou null si introuvable / ambigu.
- */
-function lookupAuthor(rawAuthor) {
-  if (!rawAuthor || !state.authors) return null;
-  const norm = stripAccents(rawAuthor).toLowerCase().trim();
-
-  // 1. Nettoyer les civilités
-  let cleaned = norm
-    .replace(/^(m\.?|mme\.?|mlle\.?|mr\.?|monsieur|madame|mademoiselle)\s+/i, "")
-    .replace(/\s+/g, " ")
-    .trim();
-  if (!cleaned) return null;
-
-  // 2. Match exact normalisé ("pantel sophie" ou "sophie pantel")
-  if (state.authors.by_normalized[cleaned]) {
-    return state.authors.by_normalized[cleaned];
-  }
-
-  // 3. Match par nom de famille
-  // On essaie plusieurs tokens : le premier, le dernier, et après une particule
-  const tokens = cleaned.split(" ");
-  const PARTICLES = new Set(["de", "le", "la", "du", "des", "van", "von", "d'", "saint"]);
-  const candidates = new Set();
-  candidates.add(tokens[0]);
-  candidates.add(tokens[tokens.length - 1]);
-  // Si le premier est une particule, essayer aussi le second
-  if (PARTICLES.has(tokens[0]) && tokens.length >= 2) {
-    candidates.add(tokens[1]);
-  }
-
-  for (const tok of candidates) {
-    if (!tok) continue;
-    const matches = state.authors.by_lastname[tok];
-    if (!matches) continue;
-    if (matches.length === 1) {
-      return matches[0];
-    }
-    // Plusieurs candidats : on essaie de désambiguïser par les autres tokens
-    for (const cand of matches) {
-      const candTokens = stripAccents(cand.full).toLowerCase().split(" ");
-      // Tous les tokens significatifs (>2 lettres) du candidat doivent être dans cleaned
-      const allMatch = candTokens
-        .filter(w => w.length > 2 && !PARTICLES.has(w))
-        .every(w => cleaned.includes(w));
-      if (allMatch) return cand;
-    }
-  }
-
-  return null;
-}
-
-function stripAccents(s) {
-  return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
-
-// ------------------------------------------------------------
-// RSS — fetch et parsing
-// ------------------------------------------------------------
-
-async function refreshFromFeed(manual = false) {
+async function refreshData(manual = false) {
   if (manual) dom.refreshBtn.setAttribute("disabled", "");
-  setStatus("loading", "Lecture du flux RSS…");
+  setStatus("loading", "Lecture des données…");
 
-  let xmlText = null;
-  let lastError = null;
-
-  // Tentative directe
   try {
-    xmlText = await fetchText(FEED_URL);
-  } catch (err) {
-    lastError = err;
-  }
+    const data = await fetchJson(DATA_URL);
+    const newByNum = new Map(data.amendments.map(a => [a.num, a]));
 
-  // Fallbacks CORS
-  if (!xmlText) {
-    for (const proxy of CORS_FALLBACKS) {
-      try {
-        xmlText = await fetchText(proxy(FEED_URL));
-        if (xmlText) break;
-      } catch (err) {
-        lastError = err;
+    const added = [];
+    const stateChanges = [];
+
+    for (const [num, amend] of newByNum) {
+      if (!state.previouslySeen.has(num)) {
+        added.push(num);
+      }
+      const prevState = state.previousStates.get(num);
+      if (prevState !== undefined && prevState !== amend.state) {
+        stateChanges.push({ num, oldState: prevState, newState: amend.state });
       }
     }
-  }
 
-  dom.refreshBtn.removeAttribute("disabled");
+    state.amendments = data.amendments;
+    state.byNum = newByNum;
+    state.meta = data.meta;
 
-  if (!xmlText) {
-    state.feedAvailable = false;
-    setStatus("offline", "Flux RSS injoignable");
-    if (manual) {
-      console.warn("Flux indisponible :", lastError);
+    state.detectedChanges.addedSinceOpen = state.detectedChanges.addedSinceOpen.concat(added);
+    state.detectedChanges.statesChanged = state.detectedChanges.statesChanged.concat(stateChanges);
+
+    for (const num of added) {
+      const a = state.byNum.get(num);
+      if (a) a._addedSinceOpen = true;
     }
-    return;
-  }
+    for (const ch of stateChanges) {
+      const a = state.byNum.get(ch.num);
+      if (a) {
+        a._stateChangedSinceOpen = true;
+        a._previousState = ch.oldState;
+      }
+    }
 
-  try {
-    const items = parseFeed(xmlText);
-    await applyFeedItems(items);
-    state.feedAvailable = true;
-    state.lastFetch = new Date();
-    setStatus("ok", `Flux RSS — ${items.length} entrée${items.length > 1 ? "s" : ""}`);
-    updateLastFetchLabel();
+    for (const [num, amend] of newByNum) {
+      state.previousStates.set(num, amend.state);
+      state.previouslySeen.add(num);
+    }
+
+    state.lastRefresh = new Date();
+    setStatus("ok",
+      added.length || stateChanges.length
+        ? `Mise à jour reçue — ${added.length} nouveau(x), ${stateChanges.length} changement(s)`
+        : "Données à jour"
+    );
+    updateLastRefreshLabel();
     render();
   } catch (err) {
-    console.error("Parsing RSS échoué :", err);
-    setStatus("error", "Flux RSS — format inattendu");
+    console.error("Échec du rafraîchissement :", err);
+    setStatus("error", "Échec du rafraîchissement");
+  } finally {
+    dom.refreshBtn.removeAttribute("disabled");
   }
-}
-
-async function fetchText(url) {
-  const res = await fetch(url, { cache: "no-cache" });
-  if (!res.ok) throw new Error(`HTTP ${res.status} sur ${url}`);
-  return res.text();
-}
-
-/**
- * Parse un flux RSS 2.0 ou Atom et renvoie un tableau uniforme :
- *   [{ num, title, content, link, pubDate, raw }]
- */
-function parseFeed(xmlText) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(xmlText, "application/xml");
-
-  const parserError = doc.querySelector("parsererror");
-  if (parserError) throw new Error("XML invalide");
-
-  const root = doc.documentElement;
-  const tag = root.tagName.toLowerCase();
-
-  let items;
-  if (tag === "rss") {
-    items = Array.from(doc.querySelectorAll("channel > item"));
-  } else if (tag === "feed") {
-    items = Array.from(doc.querySelectorAll("feed > entry"));
-  } else {
-    items = Array.from(doc.querySelectorAll("item, entry"));
-  }
-
-  return items.map(node => extractItem(node)).filter(Boolean);
-}
-
-function extractItem(node) {
-  const title = textOf(node, "title") || "";
-  const description = textOf(node, "description") || textOf(node, "summary") || "";
-  const content =
-    textOf(node, "content\\:encoded") ||
-    textOf(node, "content") ||
-    description;
-  const linkText = textOf(node, "link");
-  let link = linkText;
-  if (!link) {
-    // Atom : <link href="..."/>
-    const linkEl = node.querySelector("link[href]");
-    if (linkEl) link = linkEl.getAttribute("href");
-  }
-  const guid = textOf(node, "guid") || textOf(node, "id") || "";
-  const pubDate = textOf(node, "pubDate") || textOf(node, "updated") || textOf(node, "published") || "";
-
-  // Extraire le numéro d'amendement depuis : titre, lien, GUID ou contenu
-  // Patrons typiques : CD3, CD123, CE56, AS401, SPE862…
-  const blob = `${title} ${link} ${guid} ${description}`;
-  const m = blob.match(/\b([A-Z]{2,4}\d+)\b/);
-  if (!m) return null;
-
-  // Filtre : ne retenir que les amendements rattachés au texte n° 2632
-  // (PJL souveraineté agricoles). Le numéro de texte apparaît dans l'URL
-  // du lien, dans le GUID OpenData, ou dans le titre.
-  const isText2632 =
-    /\b2632\b/.test(blob) ||
-    /\/2632\//.test(link) ||
-    /B2632P/.test(guid);
-  if (!isText2632) return null;
-
-  // Chercher l'URL du XML OpenData : présente soit dans <guid>, soit dans <description>
-  // Format typique : https://www.assemblee-nationale.fr/dyn/opendata/AMANR5L17PO...XX.xml
-  let xmlUrl = null;
-  const xmlPatterns = [
-    /https?:\/\/[^"'<>\s]+AMANR[A-Z0-9]+\.xml/i,
-    /(\/dyn\/opendata\/AMANR[A-Z0-9]+\.xml)/i,
-  ];
-  const searchSpace = `${guid} ${description} ${content}`;
-  for (const re of xmlPatterns) {
-    const xm = searchSpace.match(re);
-    if (xm) {
-      xmlUrl = xm[0];
-      if (xmlUrl.startsWith("/")) xmlUrl = "https://www.assemblee-nationale.fr" + xmlUrl;
-      break;
-    }
-  }
-  // Si le guid est exactement une URI sans .xml, ajouter .xml
-  if (!xmlUrl && guid.includes("AMANR") && !guid.endsWith(".xml")) {
-    xmlUrl = guid.endsWith("/") ? guid.slice(0, -1) + ".xml" : guid + ".xml";
-  }
-
-  const item = {
-    num: m[1],
-    title,
-    description,
-    content,
-    link: link || "",
-    pubDate,
-    xmlUrl,                         // URL du XML OpenData officiel, si trouvée
-    sort: extractSort(title, content, description),
-    author: extractAuthor(title, content),
-  };
-
-  return item;
-}
-
-function textOf(node, tag) {
-  // Gère namespaces simples (content\:encoded, dc\:creator…)
-  const el = node.querySelector(tag);
-  return el ? el.textContent.trim() : "";
-}
-
-/**
- * Tente d'extraire un "sort" (état d'avancement) depuis le contenu textuel.
- * Mots-clés cherchés : Adopté, Rejeté, Retiré, Tombé, Irrecevable, A discuter,
- * En traitement, Discuté…
- */
-function extractSort(title, content, description) {
-  const blob = `${title}\n${description}\n${content}`.toLowerCase();
-  // Sort final (après vote en commission)
-  if (/\badopt[ée]\b/.test(blob)) return "Adopté";
-  if (/\brejet[ée]\b/.test(blob)) return "Rejeté";
-  if (/\btomb[ée]\b/.test(blob)) return "Tombé";
-  // États intermédiaires
-  if (/\birrecevable\s*40\b/.test(blob)) return "Irrecevable 40";
-  if (/\birrecevable\b/.test(blob)) return "Irrecevable";
-  if (/\bretir[ée]\b/.test(blob)) return "Retiré";
-  if (/\bdiscut[ée]\b/.test(blob)) return "Discuté";
-  if (/\bà discuter\b|\ba discuter\b/.test(blob)) return "A discuter";
-  if (/\ben traitement\b/.test(blob)) return "En traitement";
-  return null;
-}
-
-function extractAuthor(title, content) {
-  const blob = (title + " " + content).slice(0, 2000);
-  // Patterns successifs, du plus précis au plus large
-  const patterns = [
-    // "Auteur(s) : M. Potier, Mme Pantel..."
-    /Auteur\(?s?\)?\s*:?\s*(M(?:\.|me|lle)?\.?\s+[\wÀ-ÿ'\- ]+?)(?:[,;]|$)/i,
-    // "M. POTIER" ou "Mme PANTEL Sophie"
-    /\b(M(?:\.|me|lle|r)?\.?\s+[A-ZÀ-Ý][\wÀ-ÿ'\-]+(?:\s+[A-Za-zÀ-ÿ][\wÀ-ÿ'\-]+)?)/,
-    // "présenté par Pantel Sophie"
-    /(?:présenté|déposé)\s+par\s+([A-ZÀ-Ý][\wÀ-ÿ'\- ]+?)(?:[,.;]|$)/i,
-  ];
-  for (const re of patterns) {
-    const m = blob.match(re);
-    if (m) return m[1].trim().replace(/\s+/g, " ");
-  }
-  return "";
 }
 
 // ------------------------------------------------------------
-// Application des données du flux à l'état
-// ------------------------------------------------------------
-
-// Mapping des codes <groupePolitiqueRef> XML → code de groupe utilisé par notre UI
-const XML_GROUP_MAP = {
-  "PO845401": "RN",
-  "PO845407": "EPR",
-  "PO845413": "LFI",
-  "PO845419": "SOC",
-  "PO845425": "DR",
-  "PO845439": "EcoS",
-  "PO845454": "DEM",
-  "PO845470": "HOR",
-  "PO845485": "LIOT",
-  "PO872880": "UDR",
-};
-
-const XML_NS = "http://schemas.assemblee-nationale.fr/referentiel";
-
-/**
- * Fetch et parse le XML OpenData officiel d'un amendement.
- * Renvoie { author, group, article, state, dispositifText, exposeText, libelle, rapporteur }
- * ou null en cas d'échec.
- *
- * Le serveur de l'Assemblée nationale ne renvoie pas les en-têtes CORS,
- * donc le fetch direct depuis un navigateur tiers échoue toujours.
- * On commence donc par les proxys CORS, et on met les résultats en cache
- * pour éviter de retenter les mêmes requêtes à chaque cycle de rafraîchissement.
- */
-async function fetchAmendmentXml(url) {
-  if (!url) return null;
-
-  // Cache : si on a déjà fetché cette URL récemment, on retourne le résultat
-  const cached = xmlCache.get(url);
-  if (cached && (Date.now() - cached.timestamp) < XML_CACHE_TTL_MS) {
-    return cached.result;
-  }
-
-  let xmlText = null;
-  // Stratégie proxy-first (le fetch direct vers assemblee-nationale.fr est
-  // toujours bloqué par CORS, inutile de le tenter)
-  for (const proxy of CORS_FALLBACKS) {
-    try {
-      xmlText = await fetchText(proxy(url));
-      if (xmlText && xmlText.includes("<amendement")) break;
-      xmlText = null;
-    } catch (_) {
-      // proxy suivant
-    }
-  }
-
-  if (!xmlText) {
-    xmlCache.set(url, { result: null, timestamp: Date.now() });
-    return null;
-  }
-
-  let doc;
-  try {
-    doc = new DOMParser().parseFromString(xmlText, "application/xml");
-  } catch (e) {
-    return null;
-  }
-  if (doc.querySelector("parsererror")) return null;
-
-  const ns = (tag) => doc.getElementsByTagNameNS(XML_NS, tag);
-  const firstText = (tag) => {
-    const els = ns(tag);
-    return els.length && els[0].textContent ? els[0].textContent.trim() : "";
-  };
-  const firstTextWithin = (parent, tag) => {
-    if (!parent) return "";
-    const el = parent.getElementsByTagNameNS(XML_NS, tag)[0];
-    return el && el.textContent ? el.textContent.trim() : "";
-  };
-
-  // Auteur principal & groupe
-  const auteur = ns("auteur")[0];
-  const groupRef = firstTextWithin(auteur, "groupePolitiqueRef");
-  const group = XML_GROUP_MAP[groupRef] || null;
-  // Détection du statut rapporteur
-  let isRapp = false;
-  if (auteur) {
-    const rappEl = auteur.getElementsByTagNameNS(XML_NS, "auteurRapporteurOrganeRef")[0];
-    isRapp = !!(rappEl && rappEl.textContent && rappEl.textContent.trim());
-  }
-
-  // Libellé en clair (auteur principal + cosignataires)
-  const sigBlock = ns("signataires")[0];
-  const libelleEl = sigBlock ? sigBlock.getElementsByTagNameNS(XML_NS, "libelle")[0] : null;
-  const libelle = libelleEl ? cleanXmlText(libelleEl.textContent) : "";
-  // Auteur principal = premier nom du libellé
-  let author = "";
-  if (libelle) {
-    const first = libelle.split(",")[0].trim();
-    author = first.replace(/^(M\.?|Mme\.?|Mlle\.?)\s+/i, "").trim();
-  }
-
-  // Article ciblé
-  const div = ns("division")[0];
-  const articleTitre = firstTextWithin(div, "titre");
-  const avantApres = firstTextWithin(div, "avant_A_Apres");
-  const additionnel = firstTextWithin(div, "articleAdditionnel") === "true";
-  const article = formatArticle(articleTitre, avantApres, additionnel);
-
-  // État et sort : si le sort officiel est rempli, c'est lui qui prime ;
-  // sinon on prend l'état du traitement administratif.
-  const etatLib = (() => {
-    const etats = ns("etatDesTraitements");
-    if (!etats.length) return "";
-    const lib = etats[0].getElementsByTagNameNS(XML_NS, "libelle")[0];
-    return lib && lib.textContent ? lib.textContent.trim() : "";
-  })();
-  const sortLib = firstText("sort") || "";
-  const state = sortLib || etatLib || "En traitement";
-
-  // Dispositif et exposé — on récupère directement le texte (entités HTML décodées)
-  const dispositifEl = ns("dispositif")[0];
-  const dispositifText = dispositifEl ? cleanXmlText(dispositifEl.textContent) : "";
-  const exposeEl = ns("exposeSommaire")[0];
-  const exposeText = exposeEl ? cleanXmlText(exposeEl.textContent) : "";
-
-  const result = {
-    author,
-    group,
-    article,
-    state,
-    rapporteur: isRapp,
-    libelle,
-    dispositifText,
-    exposeText,
-  };
-  xmlCache.set(url, { result, timestamp: Date.now() });
-  return result;
-}
-
-/**
- * Nettoie un texte issu du XML officiel : décode &#160; → espace,
- * normalise les espaces, retire les balises HTML résiduelles.
- */
-function cleanXmlText(s) {
-  if (!s) return "";
-  // Le textContent décode déjà les entités numériques sur la plupart des navigateurs,
-  // mais on force pour les cas où les entités sont doublement échappées.
-  let t = s
-    .replace(/&#160;|&#xa0;|&nbsp;/gi, " ")
-    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
-    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&apos;/g, "'");
-  // Retirer les balises HTML qui ont pu rester
-  t = t.replace(/<[^>]+>/g, " ");
-  // Normaliser les espaces
-  return t.replace(/\s+/g, " ").trim();
-}
-
-function formatArticle(titre, avantApres, additionnel) {
-  if (!titre) return "À classer";
-  if (!additionnel) return titre;
-  // Article additionnel : titre = article de référence, avant_A_Apres = "B" (avant) ou "A" (après)
-  const m = titre.match(/Article\s+(\d+|PREMIER)/i);
-  if (!m) return titre;
-  const n = m[1];
-  if (avantApres === "B") {
-    return n === "PREMIER" ? "Avant l'article 1ᵉʳ" : `Avant l'article ${n}`;
-  }
-  return n === "PREMIER" ? "Après l'article PREMIER" : `Après l'article ${n}`;
-}
-
-async function applyFeedItems(items) {
-  state.rssDetected.newAmendments = [];
-  state.rssDetected.stateChanges = [];
-
-  // Le flux RSS d'Aspidistra ne contient pas l'état dans son XML, juste un lien
-  // vers le XML OpenData officiel. Pour CHAQUE entrée du flux (qu'elle soit
-  // déjà connue ou non), on fetch l'XML pour avoir l'état réel et à jour.
-  // En pratique, le flux ne liste que les amendements récents/modifiés, donc
-  // on enrichit aussi les amendements connus quand ils réapparaissent dans le flux.
-
-  const toEnrich = [];
-
-  for (const item of items) {
-    const existing = state.byNum.get(item.num);
-
-    if (!existing) {
-      // Nouvel amendement → placeholder, à enrichir via XML officiel
-      const placeholder = {
-        num: item.num,
-        article: "À classer",
-        author: "Chargement…",
-        group: "EPR",
-        group_resolved: false,
-        rapporteur: false,
-        state: item.sort || "En traitement",
-        url: item.link || "",
-        instance: item.num.startsWith("CE") ? "Affaires économiques" :
-                  item.num.startsWith("AS") ? "Affaires sociales" :
-                  item.num.startsWith("CD") ? "Développement durable" : "",
-        summary: "Récupération du contenu officiel en cours…",
-        summary_pending: true,
-        is_new: true,
-        is_rss_new: true,
-        rss_link: item.link,
-        xml_url: item.xmlUrl,
-      };
-      state.byNum.set(item.num, placeholder);
-      state.rssDetected.newAmendments.push(item.num);
-      toEnrich.push({ item, isNew: true });
-    } else {
-      // Amendement connu : on l'enrichit aussi pour rafraîchir son état/sort.
-      // On note l'ancien état pour détecter le changement après enrichissement.
-      toEnrich.push({ item, isNew: false, oldState: existing.state });
-    }
-  }
-
-  if (toEnrich.length === 0) return;
-
-  // Render immédiat avec les placeholders
-  render();
-
-  const CONCURRENCY = 5;
-  let idx = 0;
-  let successCount = 0;
-  let failureCount = 0;
-  async function worker() {
-    while (idx < toEnrich.length) {
-      const job = toEnrich[idx++];
-      const { item, isNew, oldState } = job;
-      if (!item.xmlUrl) { failureCount++; continue; }
-      try {
-        const enriched = await fetchAmendmentXml(item.xmlUrl);
-        if (!enriched) { failureCount++; continue; }
-        successCount++;
-        const a = state.byNum.get(item.num);
-        if (!a) continue;
-
-        if (isNew) {
-          if (enriched.author) a.author = enriched.author;
-          if (enriched.group) {
-            a.group = enriched.group;
-            a.group_resolved = true;
-          }
-          if (enriched.article) a.article = enriched.article;
-          a.rapporteur = enriched.rapporteur;
-          if (enriched.exposeText) {
-            a.summary = enriched.exposeText.length > 500
-              ? enriched.exposeText.slice(0, 500).replace(/\s+\S*$/, "") + "…"
-              : enriched.exposeText;
-          } else if (enriched.dispositifText) {
-            a.summary = enriched.dispositifText.length > 500
-              ? enriched.dispositifText.slice(0, 500).replace(/\s+\S*$/, "") + "…"
-              : enriched.dispositifText;
-          }
-          a.libelle = enriched.libelle;
-        }
-
-        // Mise à jour de l'état dans tous les cas (nouveau ou connu)
-        if (enriched.state && enriched.state !== a.state) {
-          if (!isNew) {
-            state.rssDetected.stateChanges.push({
-              num: item.num,
-              oldState: oldState || a.state,
-              newState: enriched.state,
-            });
-            a.previous_state = a.state;
-            a.is_changed = true;
-          }
-          a.state = enriched.state;
-        }
-      } catch (err) {
-        failureCount++;
-        console.warn(`Enrichissement XML échoué pour ${item.num} :`, err);
-      }
-    }
-  }
-
-  const workers = Array.from({ length: Math.min(CONCURRENCY, toEnrich.length) }, () => worker());
-  await Promise.all(workers);
-
-  // Statut détaillé pour aider au diagnostic
-  if (failureCount > 0 && successCount === 0) {
-    setStatus("error", `Enrichissement XML — ${failureCount} échec${failureCount > 1 ? "s" : ""} (proxys CORS indisponibles)`);
-  } else if (failureCount > 0) {
-    setStatus("ok", `Enrichi — ${successCount}/${successCount + failureCount} amendements`);
-  }
-
-  render();
-}
-
-function guessArticleFromContent(item) {
-  const blob = `${item.title} ${item.content} ${item.description}`;
-  const m = blob.match(/Article\s+(\d+|PREMIER|premier|1er)/i);
-  if (!m) return null;
-  const v = m[1].toLowerCase();
-  if (v === "premier" || v === "1er") return "Article PREMIER";
-  return `Article ${m[1]}`;
-}
-
-function stripHtml(html) {
-  const tmp = document.createElement("div");
-  tmp.innerHTML = html;
-  return tmp.textContent.replace(/\s+/g, " ").trim();
-}
-
-// ------------------------------------------------------------
-// Filtres & stats
+// Filtres
 // ------------------------------------------------------------
 
 function initFilters() {
-  // États : on prend les états présents
-  const stateCounts = countBy(state.baseline, a => a.state);
-  buildFilterRows(dom.stateFilters, Array.from(stateCounts.keys()), stateCounts, "state");
+  const stateCounts = countBy(state.amendments, a => a.state);
+  buildFilterRows(dom.stateFilters,
+    Array.from(stateCounts.keys()).sort(),
+    stateCounts, "state");
 
-  // Groupes : ordre du meta (RN, EPR, …)
-  const groupCounts = countBy(state.baseline, a => a.group);
-  // Ordre par effectifs décroissants
+  const groupCounts = countBy(state.amendments, a => a.group);
   const groupOrder = Array.from(groupCounts.entries())
     .sort((a, b) => b[1] - a[1])
     .map(([k]) => k);
   buildFilterRows(dom.groupFilters, groupOrder, groupCounts, "group", true);
 
-  // Articles : ordre canonique
-  const articleCounts = countBy(state.baseline, a => a.article);
+  const articleCounts = countBy(state.amendments, a => a.article);
   const articleOrder = state.meta.article_order.filter(x => articleCounts.has(x))
     .concat(Array.from(articleCounts.keys()).filter(x => !state.meta.article_order.includes(x)));
   buildFilterRows(dom.articleFilters, articleOrder, articleCounts, "article");
@@ -726,7 +210,6 @@ function buildFilterRows(container, keys, counts, kind, withSwatch = false) {
     cb.dataset.kind = kind;
     cb.dataset.key = key;
     cb.addEventListener("change", () => onFilterChange(kind, key, cb.checked));
-
     row.appendChild(cb);
 
     if (withSwatch && state.meta.groups[key]) {
@@ -781,16 +264,14 @@ function render() {
 }
 
 function renderStats() {
-  const all = Array.from(state.byNum.values());
+  const all = state.amendments;
   const newCount = all.filter(a => a.is_new || a.is_rss_new).length;
-  const changedCount = state.rssDetected.stateChanges.length;
-  // « Actifs » = en cours de procédure (pas encore retiré, irrecevable ou voté)
   const actifs = all.filter(a =>
     a.state === "En traitement" || a.state === "A discuter"
   ).length;
-  // « Votés » = sort final atteint
   const votes = all.filter(a =>
-    a.state === "Adopté" || a.state === "Rejeté" || a.state === "Tombé" || a.state === "Non soutenu"
+    a.state === "Adopté" || a.state === "Rejeté" ||
+    a.state === "Tombé" || a.state === "Non soutenu"
   ).length;
 
   dom.stats.innerHTML = `
@@ -802,48 +283,57 @@ function renderStats() {
 }
 
 function renderChangelog() {
-  const { newAmendments, stateChanges } = state.rssDetected;
-  const has26AvrilNew = state.baseline.some(a => a.is_new);
-
-  if (!state.feedAvailable && !has26AvrilNew) {
-    dom.changelogBody.innerHTML = `<p class="changelog-empty">En attente d'actualisation du flux RSS…</p>`;
-    return;
-  }
+  const baselineNew = state.amendments.filter(a => a.is_new && !a.is_rss_new);
+  const rssAdded = state.amendments.filter(a => a.is_rss_new);
+  const sessionAdded = state.detectedChanges.addedSinceOpen;
+  const sessionStateChanges = state.detectedChanges.statesChanged;
 
   const parts = [];
 
-  if (has26AvrilNew) {
-    const baselineNew = state.baseline.filter(a => a.is_new).map(a => a.num);
+  if (baselineNew.length > 0) {
+    const nums = baselineNew.map(a => a.num);
     parts.push(
-      `<p><strong>20 amendements</strong> ont été ajoutés au tableau officiel entre le 26 et le 28 avril 2026 : ` +
-      baselineNew.map(n => `<code>${n}</code>`).join(", ") +
-      `. Ces amendements sont signalés en <em>jaune</em> dans la liste ci-dessous.</p>`
+      `<p><strong>${nums.length} amendements</strong> ont été ajoutés au tableau officiel entre le 26 et le 28 avril 2026 : ` +
+      nums.map(n => `<code>${n}</code>`).join(", ") +
+      `. Signalés en <em>jaune</em>.</p>`
     );
   }
 
-  if (newAmendments.length > 0) {
+  if (rssAdded.length > 0) {
+    const nums = rssAdded.map(a => a.num);
     parts.push(
-      `<p><strong>${newAmendments.length} nouvel${newAmendments.length > 1 ? "s amendements détectés" : " amendement détecté"} via le flux RSS</strong> ` +
-      `(non présent${newAmendments.length > 1 ? "s" : ""} dans la baseline du 28 avril) : ` +
-      newAmendments.map(n => `<code>${n}</code>`).join(", ") +
-      `. Signalé${newAmendments.length > 1 ? "s" : ""} en <em>bleu</em>.</p>`
+      `<p><strong>${nums.length} amendement${nums.length > 1 ? "s détectés" : " détecté"} via le flux RSS</strong> ` +
+      `et ajoutés automatiquement par la synchronisation serveur : ` +
+      nums.map(n => `<code>${n}</code>`).join(", ") +
+      `. Signalé${nums.length > 1 ? "s" : ""} en <em>bleu</em>.</p>`
     );
   }
 
-  if (stateChanges.length > 0) {
+  if (sessionAdded.length > 0) {
     parts.push(
-      `<p><strong>${stateChanges.length} amendement${stateChanges.length > 1 ? "s" : ""}</strong> ` +
-      `${stateChanges.length > 1 ? "ont changé d'état" : "a changé d'état"} depuis la baseline (signalé${stateChanges.length > 1 ? "s" : ""} en <em>orange</em>) :</p>` +
+      `<p><strong>${sessionAdded.length} amendement${sessionAdded.length > 1 ? "s" : ""}</strong> ` +
+      `${sessionAdded.length > 1 ? "ajoutés" : "ajouté"} depuis l'ouverture de la page : ` +
+      sessionAdded.slice(0, 10).map(n => `<code>${n}</code>`).join(", ") +
+      (sessionAdded.length > 10 ? `, et ${sessionAdded.length - 10} de plus…` : "") +
+      `</p>`
+    );
+  }
+
+  if (sessionStateChanges.length > 0) {
+    parts.push(
+      `<p><strong>${sessionStateChanges.length} changement${sessionStateChanges.length > 1 ? "s" : ""} d'état</strong> ` +
+      `depuis l'ouverture de la page :</p>` +
       `<ul class="changelog-list">` +
-      stateChanges.map(c =>
+      sessionStateChanges.slice(0, 15).map(c =>
         `<li><code>${c.num}</code> : <em>${c.oldState}</em> → <strong>${c.newState}</strong></li>`
       ).join("") +
-      `</ul>`
+      `</ul>` +
+      (sessionStateChanges.length > 15 ? `<p>…et ${sessionStateChanges.length - 15} autre(s).</p>` : "")
     );
   }
 
   if (parts.length === 0) {
-    dom.changelogBody.innerHTML = `<p class="changelog-empty">Aucune évolution détectée depuis la baseline.</p>`;
+    dom.changelogBody.innerHTML = `<p class="changelog-empty">Aucune évolution détectée.</p>`;
   } else {
     dom.changelogBody.innerHTML = parts.join("");
   }
@@ -857,7 +347,6 @@ function renderAmendments() {
     return;
   }
 
-  // Regrouper par article
   const articleOrder = state.meta.article_order;
   const byArticle = new Map();
   filtered.forEach(a => {
@@ -898,15 +387,13 @@ function renderAmendments() {
 
 function renderAmendment(a) {
   const classes = ["amendment"];
-  if (a.is_new) classes.push("is-new");
+  if (a.is_new && !a.is_rss_new) classes.push("is-new");
   if (a.is_rss_new) classes.push("is-rss-new");
-  if (a.is_changed) classes.push("is-changed");
+  if (a._stateChangedSinceOpen) classes.push("is-changed");
 
-  const url = a.url || a.rss_link || "#";
+  const url = a.url || "#";
   const stateClass = stateCssClass(a.state);
 
-  // Pour les résumés non encore synthétisés (extraits bruts du flux ou de l'exposé sommaire),
-  // on affiche un bandeau d'avertissement et on stylise différemment.
   const summaryHtml = a.summary_pending
     ? `<div class="pending-banner" role="note">
          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -918,18 +405,12 @@ function renderAmendment(a) {
        <p class="amendment-summary summary-pending">${escapeHtml(a.summary)}</p>`
     : `<p class="amendment-summary">${escapeHtml(a.summary)}</p>`;
 
-  // Avertissement si le groupe parlementaire n'a pas pu être résolu depuis le flux
-  const groupWarning = (a.is_rss_new && a.group_resolved === false)
-    ? `<span class="badge badge-warning" title="Groupe non identifié — pastille indicative">groupe ?</span>`
-    : "";
-
   return `
     <article class="${classes.join(" ")}">
       <a class="amendment-num" href="${escapeAttr(url)}" target="_blank" rel="noopener">${escapeHtml(a.num)}</a>
       <div class="amendment-body">
         <div class="amendment-meta">
           ${groupPill(a.group)}
-          ${groupWarning}
           <span class="author">${escapeHtml(a.author)}</span>
           ${a.rapporteur ? `<span class="rapporteur-tag">(rapporteure)</span>` : ""}
           <span class="badge badge-state ${stateClass}">${escapeHtml(a.state)}</span>
@@ -937,7 +418,7 @@ function renderAmendment(a) {
           ${a.instance === "Affaires sociales" ? `<span class="badge badge-instance">Affaires soc.</span>` : ""}
           ${a.is_new && !a.is_rss_new ? `<span class="badge badge-new">NOUVEAU</span>` : ""}
           ${a.is_rss_new ? `<span class="badge badge-rss">FLUX</span>` : ""}
-          ${a.is_changed ? `<span class="badge badge-changed">MODIFIÉ</span>` : ""}
+          ${a._stateChangedSinceOpen ? `<span class="badge badge-changed" title="Avant : ${escapeAttr(a._previousState || "?")}">MODIFIÉ</span>` : ""}
         </div>
         ${summaryHtml}
       </div>
@@ -947,7 +428,7 @@ function renderAmendment(a) {
 
 function groupPill(group, count) {
   const meta = state.meta.groups[group];
-  if (!meta) return `<span class="group-pill" style="background:#ddd;color:#333">${group}</span>`;
+  if (!meta) return `<span class="group-pill" style="background:#ddd;color:#333">${escapeHtml(group || "?")}</span>`;
   return `<span class="group-pill" style="background:${meta.bg};color:${meta.fg}">${meta.label}${count !== undefined ? ` <span class="num">${count}</span>` : ""}</span>`;
 }
 
@@ -971,12 +452,8 @@ function numOf(n) {
   return m ? parseInt(m[1], 10) : 0;
 }
 
-// ------------------------------------------------------------
-// Filtrage
-// ------------------------------------------------------------
-
 function filterAmendments() {
-  const all = Array.from(state.byNum.values());
+  const all = state.amendments;
   const { search, states, groups, articles } = state.filters;
 
   return all.filter(a => {
@@ -991,26 +468,26 @@ function filterAmendments() {
   });
 }
 
-// ------------------------------------------------------------
-// Statut & UI
-// ------------------------------------------------------------
-
-function setStatus(state, label) {
-  dom.statusPill.dataset.state = state;
+function setStatus(s, label) {
+  dom.statusPill.dataset.state = s;
   dom.statusText.textContent = label;
 }
 
-function updateLastFetchLabel() {
-  if (!state.lastFetch) return;
+function updateLastRefreshLabel() {
+  if (!state.lastRefresh) return;
   const fmt = new Intl.DateTimeFormat("fr-FR", {
     hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short"
   });
-  dom.lastUpdate.textContent = `Dernière vérification : ${fmt.format(state.lastFetch)}`;
+  let txt = `Dernière vérification : ${fmt.format(state.lastRefresh)}`;
+  if (state.meta && state.meta.last_sync) {
+    const synced = new Date(state.meta.last_sync);
+    if (!isNaN(synced.getTime())) {
+      const ageMin = Math.round((Date.now() - synced.getTime()) / 60000);
+      txt += ` · synchro serveur il y a ${ageMin} min`;
+    }
+  }
+  dom.lastUpdate.textContent = txt;
 }
-
-// ------------------------------------------------------------
-// Helpers d'échappement HTML
-// ------------------------------------------------------------
 
 function escapeHtml(s) {
   if (s == null) return "";

@@ -100,15 +100,26 @@ async function fetchJson(url) {
   return res.json();
 }
 
+async function fetchJsonSafe(url) {
+  // Comme fetchJson, mais retourne null silencieusement en cas d'échec
+  try {
+    return await fetchJson(url);
+  } catch (e) {
+    return null;
+  }
+}
+
 async function loadData() {
-  const [data, authors] = await Promise.all([
+  const [data, authors, syncStatus] = await Promise.all([
     fetchJson(DATA_URL),
     fetchJson(AUTHORS_URL),
+    fetchJsonSafe("data/sync_status.json"),
   ]);
   state.meta = data.meta;
   state.amendments = data.amendments;
   state.byNum = new Map(state.amendments.map(a => [a.num, a]));
   state.authors = authors;
+  state.syncStatus = syncStatus;
 
   state.previouslySeen = new Set(state.byNum.keys());
   state.previousStates = new Map(state.amendments.map(a => [a.num, a.state]));
@@ -121,7 +132,11 @@ async function refreshData(manual = false) {
   setStatus("loading", "Lecture des données…");
 
   try {
-    const data = await fetchJson(DATA_URL);
+    const [data, syncStatus] = await Promise.all([
+      fetchJson(DATA_URL),
+      fetchJsonSafe("data/sync_status.json"),
+    ]);
+    state.syncStatus = syncStatus;
     const newByNum = new Map(data.amendments.map(a => [a.num, a]));
 
     const added = [];
@@ -526,11 +541,24 @@ function updateLastRefreshLabel() {
     hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short"
   });
   let txt = `Dernière vérification : ${fmt.format(state.lastRefresh)}`;
-  if (state.meta && state.meta.last_sync) {
-    const synced = new Date(state.meta.last_sync);
-    if (!isNaN(synced.getTime())) {
-      const ageMin = Math.round((Date.now() - synced.getTime()) / 60000);
+  // Priorité 1 : sync_status.json (mis à jour à CHAQUE exécution du script)
+  // Priorité 2 : meta.last_sync (mis à jour seulement quand amendments.json change)
+  let serverSyncAt = null;
+  if (state.syncStatus && state.syncStatus.last_sync_utc) {
+    serverSyncAt = new Date(state.syncStatus.last_sync_utc);
+  } else if (state.meta && state.meta.last_sync) {
+    serverSyncAt = new Date(state.meta.last_sync);
+  }
+  if (serverSyncAt && !isNaN(serverSyncAt.getTime())) {
+    const ageMin = Math.round((Date.now() - serverSyncAt.getTime()) / 60000);
+    if (ageMin < 60) {
       txt += ` · synchro serveur il y a ${ageMin} min`;
+    } else if (ageMin < 1440) {
+      const ageH = Math.round(ageMin / 60);
+      txt += ` · synchro serveur il y a ${ageH} h`;
+    } else {
+      const ageJ = Math.round(ageMin / 1440);
+      txt += ` · synchro serveur il y a ${ageJ} j`;
     }
   }
   dom.lastUpdate.textContent = txt;

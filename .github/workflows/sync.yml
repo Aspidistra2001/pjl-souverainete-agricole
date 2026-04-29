@@ -1,0 +1,59 @@
+name: Sync amendements (RSS + OpenData AN)
+
+on:
+  schedule:
+    # Toutes les 30 minutes (UTC). Note : GitHub honore parfois ce timer
+    # avec un délai de quelques minutes, c'est normal.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:  # déclenchement manuel possible
+
+permissions:
+  contents: write   # nécessaire pour committer les MAJ de data/amendments.json
+
+# On ne lance pas plusieurs syncs en parallèle
+concurrency:
+  group: "sync-amendements"
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run sync script
+        run: python scripts/refresh_amendments.py
+
+      - name: Commit & push if changed
+        run: |
+          if [ -f .sync_summary.txt ]; then
+            CHANGES=$(grep '^changes=' .sync_summary.txt | cut -d= -f2)
+            COMMIT_MSG=$(head -n1 .sync_summary.txt)
+          else
+            CHANGES=0
+            COMMIT_MSG="Sync (no summary)"
+          fi
+          rm -f .sync_summary.txt
+
+          if [ "$CHANGES" = "1" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add data/amendments.json
+            if git diff --staged --quiet; then
+              echo "Aucune modification à committer."
+            else
+              git commit -m "$COMMIT_MSG"
+              git push
+              echo "Commit effectué : $COMMIT_MSG"
+            fi
+          else
+            echo "Aucun changement détecté, pas de commit."
+          fi

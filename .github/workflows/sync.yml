@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0   # nécessaire pour git pull --rebase
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -59,6 +59,17 @@ jobs:
             else
               git commit -m "Heartbeat sync — pas de changement"
             fi
-            git push
-            echo "Commit effectué"
+
+            # Push avec gestion des conflits :
+            # si quelqu'un a poussé entre-temps, on rebase et on retente.
+            # 3 tentatives max pour éviter une boucle infinie.
+            for i in 1 2 3; do
+              if git push; then
+                echo "Commit poussé"
+                break
+              else
+                echo "Push refusé (tentative $i/3) — rebase puis retry"
+                git pull --rebase origin main
+              fi
+            done
           fi

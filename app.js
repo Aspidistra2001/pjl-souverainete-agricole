@@ -288,6 +288,29 @@ function renderChangelog() {
   const sessionAdded = state.detectedChanges.addedSinceOpen;
   const sessionStateChanges = state.detectedChanges.statesChanged;
 
+  // Changements opérés côté serveur dans les dernières 24h, lus depuis les
+  // horodatages présents dans le JSON. Permet de voir l'historique récent
+  // même quand la page vient juste d'être ouverte.
+  const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  const recentServerChanges = state.amendments
+    .filter(a => a.state_changed_at && (now - new Date(a.state_changed_at).getTime() < ONE_DAY_MS))
+    .map(a => ({
+      num: a.num,
+      newState: a.state,
+      oldState: a.previous_state || "?",
+      at: new Date(a.state_changed_at),
+    }))
+    .sort((a, b) => b.at - a.at);
+
+  const recentServerAdded = state.amendments
+    .filter(a => a.added_via_rss_at && (now - new Date(a.added_via_rss_at).getTime() < ONE_DAY_MS))
+    .map(a => ({
+      num: a.num,
+      at: new Date(a.added_via_rss_at),
+    }))
+    .sort((a, b) => b.at - a.at);
+
   const parts = [];
 
   if (baselineNew.length > 0) {
@@ -299,44 +322,68 @@ function renderChangelog() {
     );
   }
 
-  if (rssAdded.length > 0) {
-    const nums = rssAdded.map(a => a.num);
+  if (recentServerAdded.length > 0) {
+    const nums = recentServerAdded.map(c => c.num);
     parts.push(
-      `<p><strong>${nums.length} amendement${nums.length > 1 ? "s détectés" : " détecté"} via le flux RSS</strong> ` +
-      `et ajoutés automatiquement par la synchronisation serveur : ` +
-      nums.map(n => `<code>${n}</code>`).join(", ") +
-      `. Signalé${nums.length > 1 ? "s" : ""} en <em>bleu</em>.</p>`
+      `<p><strong>${nums.length} amendement${nums.length > 1 ? "s ajoutés" : " ajouté"} dans les dernières 24 h</strong> ` +
+      `via le flux RSS (synchronisation automatique côté serveur) : ` +
+      nums.slice(0, 15).map(n => `<code>${n}</code>`).join(", ") +
+      (nums.length > 15 ? `, et ${nums.length - 15} de plus…` : "") +
+      `</p>`
     );
   }
 
+  if (recentServerChanges.length > 0) {
+    parts.push(
+      `<p><strong>${recentServerChanges.length} changement${recentServerChanges.length > 1 ? "s" : ""} d'état dans les dernières 24 h</strong> ` +
+      `(synchronisation automatique côté serveur) :</p>` +
+      `<ul class="changelog-list">` +
+      recentServerChanges.slice(0, 20).map(c =>
+        `<li><code>${c.num}</code> : <em>${c.oldState}</em> → <strong>${c.newState}</strong> ` +
+        `<span class="changelog-time">${formatRelativeTime(c.at)}</span></li>`
+      ).join("") +
+      `</ul>` +
+      (recentServerChanges.length > 20 ? `<p class="changelog-foot">…et ${recentServerChanges.length - 20} autre(s) plus ancien(s).</p>` : "")
+    );
+  }
+
+  // Changements détectés depuis l'ouverture de cette page (en plus des historiques serveur)
   if (sessionAdded.length > 0) {
     parts.push(
-      `<p><strong>${sessionAdded.length} amendement${sessionAdded.length > 1 ? "s" : ""}</strong> ` +
-      `${sessionAdded.length > 1 ? "ajoutés" : "ajouté"} depuis l'ouverture de la page : ` +
-      sessionAdded.slice(0, 10).map(n => `<code>${n}</code>`).join(", ") +
-      (sessionAdded.length > 10 ? `, et ${sessionAdded.length - 10} de plus…` : "") +
-      `</p>`
+      `<p><em>Pendant votre session</em> : ${sessionAdded.length} amendement${sessionAdded.length > 1 ? "s" : ""} ` +
+      `${sessionAdded.length > 1 ? "ajoutés" : "ajouté"} : ` +
+      sessionAdded.slice(0, 5).map(n => `<code>${n}</code>`).join(", ") +
+      `.</p>`
     );
   }
 
   if (sessionStateChanges.length > 0) {
     parts.push(
-      `<p><strong>${sessionStateChanges.length} changement${sessionStateChanges.length > 1 ? "s" : ""} d'état</strong> ` +
-      `depuis l'ouverture de la page :</p>` +
+      `<p><em>Pendant votre session</em> : ${sessionStateChanges.length} changement${sessionStateChanges.length > 1 ? "s" : ""} d'état :</p>` +
       `<ul class="changelog-list">` +
-      sessionStateChanges.slice(0, 15).map(c =>
+      sessionStateChanges.slice(0, 10).map(c =>
         `<li><code>${c.num}</code> : <em>${c.oldState}</em> → <strong>${c.newState}</strong></li>`
       ).join("") +
-      `</ul>` +
-      (sessionStateChanges.length > 15 ? `<p>…et ${sessionStateChanges.length - 15} autre(s).</p>` : "")
+      `</ul>`
     );
   }
 
   if (parts.length === 0) {
-    dom.changelogBody.innerHTML = `<p class="changelog-empty">Aucune évolution détectée.</p>`;
+    dom.changelogBody.innerHTML = `<p class="changelog-empty">Aucune évolution récente.</p>`;
   } else {
     dom.changelogBody.innerHTML = parts.join("");
   }
+}
+
+function formatRelativeTime(date) {
+  const diff = Date.now() - date.getTime();
+  const minutes = Math.round(diff / 60000);
+  if (minutes < 1) return "à l'instant";
+  if (minutes < 60) return `il y a ${minutes} min`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return `il y a ${hours} h`;
+  const days = Math.round(hours / 24);
+  return `il y a ${days} j`;
 }
 
 function renderAmendments() {

@@ -34,6 +34,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = ROOT / "data" / "amendments.json"
+SYNC_STATUS_FILE = ROOT / "data" / "sync_status.json"
 
 FEED_URL = "https://aspidistra2001.github.io/AN/feed"
 TEXT_NUMBER = "2632"  # PJL souveraineté agricoles
@@ -395,6 +396,21 @@ def synchronize() -> dict:
     # 9. Écrire le fichier
     with DATA_FILE.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+
+    # 10. TOUJOURS écrire le fichier de statut de synchro (même si rien n'a changé)
+    # Ce fichier est committé indépendamment d'amendments.json pour prouver
+    # que le script tourne, même quand il n'y a aucune modification de fond.
+    sync_status = {
+        "last_sync_utc": datetime.now(timezone.utc).isoformat(),
+        "last_sync_human": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "feed_items": summary["feed_items"],
+        "fetched": summary["fetched"],
+        "added": len(summary["added"]),
+        "state_changes": len(summary["state_changes"]),
+        "errors": summary.get("errors", []),
+    }
+    with SYNC_STATUS_FILE.open("w", encoding="utf-8") as f:
+        json.dump(sync_status, f, ensure_ascii=False, indent=2)
 
     print(f"\nRésumé : +{len(summary['added'])} ajout(s), {len(summary['state_changes'])} changement(s) d'état")
     return summary

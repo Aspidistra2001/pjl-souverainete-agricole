@@ -2,13 +2,15 @@ name: Sync amendements (RSS + OpenData AN)
 
 on:
   schedule:
-    # Toutes les 30 minutes (UTC). Note : GitHub honore parfois ce timer
-    # avec un délai de quelques minutes, c'est normal.
+    # Toutes les heures pile (UTC).
     - cron: "0 * * * *"
   workflow_dispatch:  # déclenchement manuel possible
 
+# Permissions étendues : on a besoin de committer ET de déployer Pages
 permissions:
-  contents: write   # nécessaire pour committer les MAJ de data/amendments.json
+  contents: write
+  pages: write
+  id-token: write
 
 # On ne lance pas plusieurs syncs en parallèle
 concurrency:
@@ -18,6 +20,9 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    # Variable de sortie : indique si un commit a été fait (donc si on doit redéployer)
+    outputs:
+      committed: ${{ steps.push.outputs.committed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,6 +38,7 @@ jobs:
         run: python scripts/refresh_amendments.py
 
       - name: Commit & push
+        id: push
         run: |
           if [ -f .sync_summary.txt ]; then
             COMMIT_MSG=$(head -n1 .sync_summary.txt)
@@ -44,28 +50,23 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # data/sync_status.json est mis à jour à chaque exécution :
-          # on le committe systématiquement pour garder une trace de la sync
           git add data/sync_status.json
-          # data/amendments.json n'est committé que s'il y a un VRAI changement
           git add data/amendments.json
 
           if git diff --staged --quiet; then
             echo "Aucune modification à committer."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
           else
-            # Si seul sync_status.json a changé : message minimal
             if git diff --staged --name-only | grep -q '^data/amendments.json$'; then
               git commit -m "$COMMIT_MSG"
             else
               git commit -m "Heartbeat sync — pas de changement"
             fi
 
-            # Push avec gestion des conflits :
-            # si quelqu'un a poussé entre-temps, on rebase et on retente.
-            # 3 tentatives max pour éviter une boucle infinie.
             for i in 1 2 3; do
               if git push; then
                 echo "Commit poussé"
+                echo "committed=true" >> "$GITHUB_OUTPUT"
                 break
               else
                 echo "Push refusé (tentative $i/3) — rebase puis retry"
@@ -73,3 +74,32 @@ jobs:
               fi
             done
           fi
+
+  # Job de déploiement Pages : ne s'exécute que si la sync a effectivement committé.
+  # Nécessaire car les commits de github-actions[bot] ne déclenchent pas
+  # automatiquement le workflow deploy.yml (protection anti-boucle de GitHub).
+  deploy:
+    needs: sync
+    if: needs.sync.outputs.committed == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout (post-commit)
+        uses: actions/checkout@v4
+        with:
+          ref: main      # récupère le commit qu'on vient de pousser
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

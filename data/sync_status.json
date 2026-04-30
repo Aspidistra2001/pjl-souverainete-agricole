@@ -1,11 +1,9 @@
 {
-  "last_sync_utc": "2026-04-30T13:00:55.759996+00:00",
-  "last_sync_human": "2026-04-30 13:00:55 UTC",
-  "feed_items": 121,
-  "fetched": 0,
-  "added": 0,
+  "last_sync_utc": "2026-04-30T14:01:00.914571+00:00",
+  "last_sync_human": "2026-04-30 14:01:00 UTC",
+  "feed_items": 187,
+  "fetched": 44,
+  "added": 44,
   "state_changes": 0,
-  "errors": [
-    "3 amendements locaux manquants au CSV"
-  ]
+  "errors": []
 }

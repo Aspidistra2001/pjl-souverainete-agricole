@@ -225,6 +225,121 @@ a:hover { color: var(--hemicycle-deep); }
 @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 
 /* ============================================================
+   Sélecteur de commission
+   ============================================================ */
+
+.commission-selector {
+  background: var(--paper-warm);
+  border-bottom: 1px solid var(--rule);
+}
+
+.commission-selector-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0.85rem 2.2rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.6rem;
+}
+
+.commission-selector-label {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  flex-shrink: 0;
+}
+
+.commission-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.5rem;
+}
+
+.commission-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.commission-radio:hover {
+  border-color: var(--hemicycle);
+  color: var(--ink);
+}
+
+.commission-radio input[type="radio"] {
+  margin: 0;
+  accent-color: var(--hemicycle);
+  cursor: pointer;
+}
+
+.commission-radio:has(input:checked) {
+  background: var(--hemicycle);
+  color: var(--paper);
+  border-color: var(--hemicycle);
+}
+
+.commission-radio:has(input:checked) .commission-tag {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--paper);
+}
+
+.commission-radio:has(input:checked) .commission-count {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.commission-tag {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+}
+
+.commission-tag-done {
+  background: rgba(110, 104, 89, 0.16);
+  color: var(--ink-mute);
+  text-decoration: line-through;
+  text-decoration-color: rgba(110, 104, 89, 0.5);
+  text-decoration-thickness: 1px;
+}
+
+.commission-tag-active {
+  background: rgba(29, 77, 44, 0.14);
+  color: var(--hemicycle);
+}
+
+.commission-count {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--ink-mute);
+}
+
+@media (max-width: 720px) {
+  .commission-selector-inner {
+    padding: 0.7rem 1.2rem;
+    gap: 0.5rem 0.8rem;
+  }
+  .commission-radio { font-size: 0.82rem; padding: 0.3rem 0.7rem; }
+}
+
+/* ============================================================
    Layout principal
    ============================================================ */
 

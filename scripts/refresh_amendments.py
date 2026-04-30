@@ -18,6 +18,8 @@ Usage : python scripts/refresh_amendments.py
 """
 
 from __future__ import annotations
+import csv
+import io
 import json
 import re
 import html
@@ -38,6 +40,13 @@ SYNC_STATUS_FILE = ROOT / "data" / "sync_status.json"
 
 FEED_URL = "https://aspidistra2001.github.io/AN/feed"
 TEXT_NUMBER = "2632"  # PJL souveraineté agricoles
+
+# CSV OpenData officiel listant TOUS les amendements du dossier législatif.
+# Beaucoup plus fiable que de découvrir les amendements via le flux RSS,
+# qui ne signale que les changements récents.
+# Le numéro 54085 est l'identifiant du dossier législatif PJL 2632 sur OpenData.
+DOSSIER_LEG_ID = "54085"
+DOSSIER_CSV_URL = f"http://data.assemblee-nationale.fr/static/openData/repository/17/dossiers_legislatifs_opendata/{DOSSIER_LEG_ID}/excel.csv"
 
 USER_AGENT = "Mozilla/5.0 (compatible; veille-pjl-2632/1.0; +https://aspidistra2001.github.io/pjl-souverainete-agricole/)"
 TIMEOUT = 15
@@ -266,15 +275,50 @@ def fetch_and_parse_xml(num: str, xml_url: str | None) -> tuple[str, dict | None
     return num, parsed
 
 
-def synchronize() -> dict:
-    """Met à jour data/amendments.json à partir du flux RSS et de l'API OpenData.
+def fetch_dossier_csv() -> list[dict] | None:
+    """Récupère le CSV OpenData listant tous les amendements du dossier législatif.
 
-    Stratégie :
+    C'est la source de vérité officielle de l'Assemblée nationale.
+    Beaucoup plus fiable que la découverte via flux RSS qui ne signale que
+    les changements récents.
+
+    Retourne une liste de dicts (un par amendement) ou None en cas d'échec.
+    """
+    try:
+        req = urllib.request.Request(DOSSIER_CSV_URL, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=TIMEOUT * 2) as resp:
+            raw = resp.read()
+    except Exception as e:
+        print(f"  CSV OpenData injoignable : {e}", file=sys.stderr)
+        return None
+    # Le fichier est encodé en cp1252 (Windows-1252)
+    try:
+        text = raw.decode("cp1252")
+    except UnicodeDecodeError:
+        text = raw.decode("utf-8", errors="replace")
+    rows = list(csv.DictReader(io.StringIO(text), delimiter=";"))
+    return rows
+
+
+def map_state_from_csv(sort_value: str) -> str:
+    """Convertit la valeur 'Sort de l'amendement' du CSV en état affiché."""
+    if not sort_value or sort_value == "Non renseigné":
+        return "En traitement"
+    return sort_value.strip()
+
+
+def synchronize() -> dict:
+    """Met à jour data/amendments.json à partir du CSV OpenData officiel.
+
+    Stratégie (refonte du 30 avril) :
       1. Charger la baseline existante.
-      2. Lire le flux RSS pour découvrir les NOUVEAUX amendements (non présents dans la baseline).
-      3. Faire un balayage COMPLET de tous les amendements connus (baseline + nouveaux du flux)
-         pour rapatrier leur état/sort réel depuis l'XML OpenData.
-         Cela rattrape les votes qui ont eu lieu et ne sont plus dans le flux RSS.
+      2. Télécharger le CSV OpenData officiel listant TOUS les amendements
+         du dossier législatif (source de vérité).
+      3. Comparer baseline ↔ CSV :
+         - Amendements en plus dans le CSV : à ajouter (et fetcher leur XML
+           pour récupérer le groupe parlementaire et l'exposé sommaire).
+         - Amendements dont le sort a changé : à mettre à jour avec horodatage.
+      4. Le flux RSS reste comme système d'alerte rapide (mais redondant).
 
     Retourne un dict avec un résumé des changements pour le commit message.
     """
@@ -285,6 +329,7 @@ def synchronize() -> dict:
         "errors": [],
         "feed_items": 0,
         "fetched": 0,
+        "csv_total": 0,
     }
 
     # 1. Charger la baseline
@@ -295,56 +340,32 @@ def synchronize() -> dict:
         data = json.load(f)
 
     by_num = {a["num"]: a for a in data["amendments"]}
-    print(f"Baseline : {len(by_num)} amendements")
+    print(f"Baseline locale : {len(by_num)} amendements")
 
-    # 2. Fetch le flux RSS pour découvrir les nouveaux amendements
-    feed_xml = http_get(FEED_URL)
-    if not feed_xml:
-        print("Flux RSS injoignable, on continue avec la baseline existante.", file=sys.stderr)
-        summary["errors"].append("flux RSS injoignable")
-        feed_items = []
+    # 2. Télécharger le CSV OpenData officiel (source de vérité)
+    csv_rows = fetch_dossier_csv()
+    if csv_rows is None:
+        print("Pas de CSV → fallback sur le flux RSS uniquement", file=sys.stderr)
+        summary["errors"].append("CSV OpenData injoignable")
+        csv_rows = []
     else:
-        feed_items = parse_feed(feed_xml)
-        summary["feed_items"] = len(feed_items)
-        print(f"Flux RSS : {len(feed_items)} items pertinents (texte {TEXT_NUMBER})")
+        summary["csv_total"] = len(csv_rows)
+        print(f"CSV OpenData : {len(csv_rows)} amendements officiels")
 
-    # 3. Identifier les nouveaux amendements du flux à fetcher en plus
-    new_from_feed = [it for it in feed_items if it["num"] not in by_num]
-    print(f"Nouveaux à ajouter depuis le flux : {len(new_from_feed)}")
+    # Indexer le CSV par numéro
+    csv_by_num = {}
+    for row in csv_rows:
+        num = (row.get("Numéro de l'amendement") or "").strip()
+        if num:
+            csv_by_num[num] = row
 
-    # 4. Construire la liste complète des amendements à fetcher :
-    #    tous les amendements connus + les nouveaux du flux
-    fetch_list = []
-    for a in data["amendments"]:
-        fetch_list.append({"num": a["num"], "xml_url": None, "link": a.get("url", "")})
-    for it in new_from_feed:
-        fetch_list.append({"num": it["num"], "xml_url": it["xml_url"], "link": it["link"]})
-
-    print(f"Total à fetcher : {len(fetch_list)} amendements (balayage complet)")
-
-    # 5. Fetch en parallèle
-    enriched: dict[str, dict] = {}
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
-        futures = {ex.submit(fetch_and_parse_xml, it["num"], it["xml_url"]): it for it in fetch_list}
-        completed = 0
-        for fut in as_completed(futures):
-            num, parsed = fut.result()
-            completed += 1
-            if parsed:
-                enriched[num] = parsed
-                summary["fetched"] += 1
-            if completed % 100 == 0:
-                print(f"  Fetché {completed}/{len(fetch_list)} (succès : {summary['fetched']})")
-
-    print(f"XML enrichis : {summary['fetched']}/{len(fetch_list)}")
-
-    # 6. Mettre à jour les amendements existants avec leurs états réels
-    for num, existing in by_num.items():
-        parsed = enriched.get(num)
-        if not parsed:
+    # 3. Comparer : changements d'état
+    for num, csv_row in csv_by_num.items():
+        existing = by_num.get(num)
+        if not existing:
             continue
-        new_state = parsed.get("state")
-        if new_state and new_state != existing["state"]:
+        new_state = map_state_from_csv(csv_row.get("Sort de l'amendement", ""))
+        if new_state != existing["state"]:
             old_state = existing["state"]
             existing["previous_state"] = old_state
             existing["state"] = new_state
@@ -353,43 +374,77 @@ def synchronize() -> dict:
                 "num": num, "old": old_state, "new": new_state
             })
             print(f"  [~] {num} : {old_state} → {new_state}")
-        # Au passage on corrige aussi le groupe si on a une donnée plus précise
-        xml_group = parsed.get("group")
-        if xml_group and existing.get("group") != xml_group:
-            existing["group"] = xml_group
 
-    # 7. Ajouter les nouveaux amendements détectés via le flux RSS
-    for item in new_from_feed:
-        num = item["num"]
-        parsed = enriched.get(num)
-        if not parsed:
-            continue
-        instance = "Affaires économiques" if num.startswith("CE") else \
-                   "Affaires sociales" if num.startswith("AS") else \
-                   "Développement durable" if num.startswith("CD") else ""
-        summary_text = parsed.get("expose_text") or parsed.get("dispositif_text") or "Détails non disponibles."
-        new_amend = {
-            "num": num,
-            "article": parsed.get("article", "À classer"),
-            "author": parsed.get("author", "Auteur non identifié"),
-            "group": parsed.get("group") or "EPR",
-            "group_resolved": bool(parsed.get("group")),
-            "rapporteur": parsed.get("rapporteur", False),
-            "state": parsed.get("state", "En traitement"),
-            "url": item["link"],
-            "instance": instance,
-            "summary": truncate(summary_text, 500),
-            "summary_pending": True,
-            "is_new": True,
-            "is_rss_new": True,
-            "added_via_rss_at": datetime.now(timezone.utc).isoformat(),
-        }
-        data["amendments"].append(new_amend)
-        by_num[num] = new_amend
-        summary["added"].append(num)
-        print(f"  [+] {num} ajouté ({parsed.get('group') or '?'} – {parsed.get('author', '?')})")
+    # 4. Identifier les amendements présents dans le CSV mais pas dans la baseline
+    csv_only = sorted(set(csv_by_num) - set(by_num))
+    print(f"Amendements à ajouter (CSV mais pas en local) : {len(csv_only)}")
 
-    # 8. Mettre à jour la métadonnée de fraîcheur
+    # 5. Pour chaque amendement à ajouter, fetcher son XML pour récupérer
+    #    le groupe parlementaire et l'exposé sommaire (le CSV ne donne pas
+    #    ces informations détaillées)
+    if csv_only:
+        print(f"Fetch en parallèle des XML pour les {len(csv_only)} nouveaux amendements...")
+        enriched: dict[str, dict] = {}
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
+            futures = {ex.submit(fetch_and_parse_xml, num, None): num for num in csv_only}
+            for fut in as_completed(futures):
+                num, parsed = fut.result()
+                if parsed:
+                    enriched[num] = parsed
+                    summary["fetched"] += 1
+
+        for num in csv_only:
+            csv_row = csv_by_num[num]
+            parsed = enriched.get(num, {})
+
+            instance = (csv_row.get("Instance") or "").strip()
+            article = (csv_row.get("Désignation de l'article") or "À classer").strip()
+            url = (csv_row.get("URL Amendement") or "").strip()
+            state = map_state_from_csv(csv_row.get("Sort de l'amendement", ""))
+            author = (csv_row.get("Auteur") or "Auteur non identifié").strip()
+            # Retirer les marqueurs "rapporteur" du nom
+            is_rapporteur = bool(re.search(r"rapporteur", author, re.IGNORECASE))
+            author = re.sub(r"\s+rapporteur(e)?\s*$", "", author, flags=re.IGNORECASE).strip()
+
+            # Données fines via XML (groupe, résumé)
+            group = parsed.get("group") or "EPR"
+            summary_text = parsed.get("expose_text") or parsed.get("dispositif_text") or "Détails non disponibles."
+
+            new_amend = {
+                "num": num,
+                "article": article,
+                "author": author,
+                "group": group,
+                "rapporteur": is_rapporteur,
+                "state": state,
+                "url": url,
+                "instance": instance,
+                "summary": truncate(summary_text, 500),
+                "summary_pending": True,
+                "is_new": True,
+                "is_rss_new": True,
+                "added_via_csv_at": datetime.now(timezone.utc).isoformat(),
+            }
+            data["amendments"].append(new_amend)
+            by_num[num] = new_amend
+            summary["added"].append(num)
+            print(f"  [+] {num} ajouté ({group} – {author})")
+
+    # 6. Vérification : amendements dans la baseline mais absents du CSV
+    #    (= amendements supprimés / fusionnés / non publiés sur OpenData)
+    local_only = sorted(set(by_num) - set(csv_by_num))
+    if local_only:
+        print(f"⚠ {len(local_only)} amendements locaux non présents dans le CSV : {local_only[:5]}…", file=sys.stderr)
+        summary["errors"].append(f"{len(local_only)} amendements locaux manquants au CSV")
+
+    # 7. Flux RSS — reste utilisé comme signal complémentaire
+    feed_xml = http_get(FEED_URL)
+    if feed_xml:
+        feed_items = parse_feed(feed_xml)
+        summary["feed_items"] = len(feed_items)
+        print(f"Flux RSS (info) : {len(feed_items)} items")
+
+    # 8. Mettre à jour la métadonnée
     data["meta"]["last_sync"] = datetime.now(timezone.utc).isoformat()
     data["meta"]["total"] = len(data["amendments"])
 

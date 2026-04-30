@@ -93,6 +93,7 @@ function bindEvents() {
     input.addEventListener("change", e => {
       if (e.target.checked) {
         state.filters.commission = e.target.value;
+        rebuildFilters();
         render();
       }
     });
@@ -193,6 +194,7 @@ async function refreshData(manual = false) {
         : "Données à jour"
     );
     updateLastRefreshLabel();
+    rebuildFilters();
     render();
   } catch (err) {
     console.error("Échec du rafraîchissement :", err);
@@ -207,21 +209,57 @@ async function refreshData(manual = false) {
 // ------------------------------------------------------------
 
 function initFilters() {
-  const stateCounts = countBy(state.amendments, a => a.state);
+  rebuildFilters();
+}
+
+function rebuildFilters() {
+  // Préserver les sélections en cours (cases cochées par l'utilisateur)
+  const currentStates = new Set(state.filters.states);
+  const currentGroups = new Set(state.filters.groups);
+  const currentArticles = new Set(state.filters.articles);
+
+  // Source pour les compteurs : amendements filtrés UNIQUEMENT par commission
+  // (sinon on tomberait dans une boucle d'auto-filtrage avec les autres filtres)
+  const commission = state.filters.commission;
+  const scope = commission === "all"
+    ? state.amendments
+    : state.amendments.filter(a => a.instance === commission);
+
+  const stateCounts = countBy(scope, a => a.state);
   buildFilterRows(dom.stateFilters,
     Array.from(stateCounts.keys()).sort(),
     stateCounts, "state");
 
-  const groupCounts = countBy(state.amendments, a => a.group);
+  const groupCounts = countBy(scope, a => a.group);
   const groupOrder = Array.from(groupCounts.entries())
     .sort((a, b) => b[1] - a[1])
     .map(([k]) => k);
   buildFilterRows(dom.groupFilters, groupOrder, groupCounts, "group", true);
 
-  const articleCounts = countBy(state.amendments, a => a.article);
+  const articleCounts = countBy(scope, a => a.article);
   const articleOrder = state.meta.article_order.filter(x => articleCounts.has(x))
     .concat(Array.from(articleCounts.keys()).filter(x => !state.meta.article_order.includes(x)));
   buildFilterRows(dom.articleFilters, articleOrder, articleCounts, "article");
+
+  // Restaurer les cases cochées qui sont toujours présentes dans le scope
+  // (les autres sont silencieusement retirées du filtre actif)
+  state.filters.states = new Set([...currentStates].filter(x => stateCounts.has(x)));
+  state.filters.groups = new Set([...currentGroups].filter(x => groupCounts.has(x)));
+  state.filters.articles = new Set([...currentArticles].filter(x => articleCounts.has(x)));
+
+  // Re-cocher visuellement les filtres conservés
+  state.filters.states.forEach(k => {
+    const cb = dom.stateFilters.querySelector(`input[data-key="${CSS.escape(k)}"]`);
+    if (cb) cb.checked = true;
+  });
+  state.filters.groups.forEach(k => {
+    const cb = dom.groupFilters.querySelector(`input[data-key="${CSS.escape(k)}"]`);
+    if (cb) cb.checked = true;
+  });
+  state.filters.articles.forEach(k => {
+    const cb = dom.articleFilters.querySelector(`input[data-key="${CSS.escape(k)}"]`);
+    if (cb) cb.checked = true;
+  });
 }
 
 function buildFilterRows(container, keys, counts, kind, withSwatch = false) {
@@ -302,7 +340,12 @@ function renderCommissionCounts() {
 }
 
 function renderStats() {
-  const all = state.amendments;
+  // Périmètre : commission active uniquement
+  const commission = state.filters.commission;
+  const all = commission === "all"
+    ? state.amendments
+    : state.amendments.filter(a => a.instance === commission);
+
   const newCount = all.filter(a => a.is_new || a.is_rss_new).length;
   const actifs = all.filter(a =>
     a.state === "En traitement" || a.state === "A discuter"

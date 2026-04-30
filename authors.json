@@ -1,1 +1,942 @@
-{"by_full":{"Serva Olivier":"LIOT","Martineau Éric":"DEM","Guibert Julien":"RN","Roseren Xavier":"HOR","Potier Dominique":"SOC","Biteau Benoît":"EcoS","Bouquin Manon":"RN","Brun Fabrice":"DR","Le Feur Sandrine":"EPR","Coggia Nathalie":"EPR","Descoeur Vincent":"DR","Ozenne Julie":"EcoS","Belluco Lisa":"EcoS","Jourdan Chantal":"SOC","Barusseau Fabrice":"SOC","Bonnivard Émilie":"DR","Brulebois Danielle":"EPR","Bony Jean-Yves":"DR","Minard Christelle":"DR","Houssin Timothée":"RN","Pochon Marie":"EcoS","Vigier Jean-Pierre":"DR","de Pélichy Constance":"LIOT","Magnier David":"RN","Schreck Philippe":"RN","Hignet Mathilde":"LFI","Thiébaut Vincent":"HOR","Taupiac David":"LIOT","Baumel Laurent":"SOC","Cosson Mickaël":"DEM","Ott Hubert":"DEM","Lechanteux Julie":"RN","Ceccoli François-Xavier":"DR","Trouvé Aurélie":"LFI","Violland Anne-Cécile":"HOR","Riotton Véronique":"EPR","Blairy Emmanuel":"RN","Carbonnel Pierre-Henri":"UDR","Cazeneuve Jean-René":"EPR","Delautrette Stéphane":"SOC","Humbert Sébastien":"RN","Raux Jean-Claude":"EcoS","Meunier Manon":"LFI","Liégeon Eric":"DR","Voynet Dominique":"EcoS","Thierry Nicolas":"EcoS","Tivoli Lionel":"RN","Pantel Sophie":"SOC","Rousset Jean-François":"EPR","Grangier Géraldine":"RN","Rossi Valérie":"SOC","Allemand Marie-José":"SOC","Warsmann Jean-Luc":"LIOT","Dutremble Aurélien":"RN","Le Gac Didier":"EPR","Thomin Mélanie":"SOC","Breton Xavier":"DR"},"by_lastname":{"serva":[{"full":"Serva Olivier","group":"LIOT"}],"martineau":[{"full":"Martineau Éric","group":"DEM"}],"guibert":[{"full":"Guibert Julien","group":"RN"}],"roseren":[{"full":"Roseren Xavier","group":"HOR"}],"potier":[{"full":"Potier Dominique","group":"SOC"}],"biteau":[{"full":"Biteau Benoît","group":"EcoS"}],"bouquin":[{"full":"Bouquin Manon","group":"RN"}],"brun":[{"full":"Brun Fabrice","group":"DR"}],"le":[{"full":"Le Feur Sandrine","group":"EPR"},{"full":"Le Gac Didier","group":"EPR"}],"coggia":[{"full":"Coggia Nathalie","group":"EPR"}],"descoeur":[{"full":"Descoeur Vincent","group":"DR"}],"ozenne":[{"full":"Ozenne Julie","group":"EcoS"}],"belluco":[{"full":"Belluco Lisa","group":"EcoS"}],"jourdan":[{"full":"Jourdan Chantal","group":"SOC"}],"barusseau":[{"full":"Barusseau Fabrice","group":"SOC"}],"bonnivard":[{"full":"Bonnivard Émilie","group":"DR"}],"brulebois":[{"full":"Brulebois Danielle","group":"EPR"}],"bony":[{"full":"Bony Jean-Yves","group":"DR"}],"minard":[{"full":"Minard Christelle","group":"DR"}],"houssin":[{"full":"Houssin Timothée","group":"RN"}],"pochon":[{"full":"Pochon Marie","group":"EcoS"}],"vigier":[{"full":"Vigier Jean-Pierre","group":"DR"}],"de":[{"full":"de Pélichy Constance","group":"LIOT"}],"magnier":[{"full":"Magnier David","group":"RN"}],"schreck":[{"full":"Schreck Philippe","group":"RN"}],"hignet":[{"full":"Hignet Mathilde","group":"LFI"}],"thiebaut":[{"full":"Thiébaut Vincent","group":"HOR"}],"taupiac":[{"full":"Taupiac David","group":"LIOT"}],"baumel":[{"full":"Baumel Laurent","group":"SOC"}],"cosson":[{"full":"Cosson Mickaël","group":"DEM"}],"ott":[{"full":"Ott Hubert","group":"DEM"}],"lechanteux":[{"full":"Lechanteux Julie","group":"RN"}],"ceccoli":[{"full":"Ceccoli François-Xavier","group":"DR"}],"trouve":[{"full":"Trouvé Aurélie","group":"LFI"}],"violland":[{"full":"Violland Anne-Cécile","group":"HOR"}],"riotton":[{"full":"Riotton Véronique","group":"EPR"}],"blairy":[{"full":"Blairy Emmanuel","group":"RN"}],"carbonnel":[{"full":"Carbonnel Pierre-Henri","group":"UDR"}],"cazeneuve":[{"full":"Cazeneuve Jean-René","group":"EPR"}],"delautrette":[{"full":"Delautrette Stéphane","group":"SOC"}],"humbert":[{"full":"Humbert Sébastien","group":"RN"}],"raux":[{"full":"Raux Jean-Claude","group":"EcoS"}],"meunier":[{"full":"Meunier Manon","group":"LFI"}],"liegeon":[{"full":"Liégeon Eric","group":"DR"}],"voynet":[{"full":"Voynet Dominique","group":"EcoS"}],"thierry":[{"full":"Thierry Nicolas","group":"EcoS"}],"tivoli":[{"full":"Tivoli Lionel","group":"RN"}],"pantel":[{"full":"Pantel Sophie","group":"SOC"}],"rousset":[{"full":"Rousset Jean-François","group":"EPR"}],"grangier":[{"full":"Grangier Géraldine","group":"RN"}],"rossi":[{"full":"Rossi Valérie","group":"SOC"}],"allemand":[{"full":"Allemand Marie-José","group":"SOC"}],"warsmann":[{"full":"Warsmann Jean-Luc","group":"LIOT"}],"dutremble":[{"full":"Dutremble Aurélien","group":"RN"}],"thomin":[{"full":"Thomin Mélanie","group":"SOC"}],"breton":[{"full":"Breton Xavier","group":"DR"}],"feur":[{"full":"Le Feur Sandrine","group":"EPR"}],"pelichy":[{"full":"de Pélichy Constance","group":"LIOT"}],"gac":[{"full":"Le Gac Didier","group":"EPR"}]},"by_normalized":{"serva olivier":{"full":"Serva Olivier","group":"LIOT"},"olivier serva":{"full":"Serva Olivier","group":"LIOT"},"martineau eric":{"full":"Martineau Éric","group":"DEM"},"eric martineau":{"full":"Martineau Éric","group":"DEM"},"guibert julien":{"full":"Guibert Julien","group":"RN"},"julien guibert":{"full":"Guibert Julien","group":"RN"},"roseren xavier":{"full":"Roseren Xavier","group":"HOR"},"xavier roseren":{"full":"Roseren Xavier","group":"HOR"},"potier dominique":{"full":"Potier Dominique","group":"SOC"},"dominique potier":{"full":"Potier Dominique","group":"SOC"},"biteau benoit":{"full":"Biteau Benoît","group":"EcoS"},"benoit biteau":{"full":"Biteau Benoît","group":"EcoS"},"bouquin manon":{"full":"Bouquin Manon","group":"RN"},"manon bouquin":{"full":"Bouquin Manon","group":"RN"},"brun fabrice":{"full":"Brun Fabrice","group":"DR"},"fabrice brun":{"full":"Brun Fabrice","group":"DR"},"le feur sandrine":{"full":"Le Feur Sandrine","group":"EPR"},"feur sandrine le":{"full":"Le Feur Sandrine","group":"EPR"},"coggia nathalie":{"full":"Coggia Nathalie","group":"EPR"},"nathalie coggia":{"full":"Coggia Nathalie","group":"EPR"},"descoeur vincent":{"full":"Descoeur Vincent","group":"DR"},"vincent descoeur":{"full":"Descoeur Vincent","group":"DR"},"ozenne julie":{"full":"Ozenne Julie","group":"EcoS"},"julie ozenne":{"full":"Ozenne Julie","group":"EcoS"},"belluco lisa":{"full":"Belluco Lisa","group":"EcoS"},"lisa belluco":{"full":"Belluco Lisa","group":"EcoS"},"jourdan chantal":{"full":"Jourdan Chantal","group":"SOC"},"chantal jourdan":{"full":"Jourdan Chantal","group":"SOC"},"barusseau fabrice":{"full":"Barusseau Fabrice","group":"SOC"},"fabrice barusseau":{"full":"Barusseau Fabrice","group":"SOC"},"bonnivard emilie":{"full":"Bonnivard Émilie","group":"DR"},"emilie bonnivard":{"full":"Bonnivard Émilie","group":"DR"},"brulebois danielle":{"full":"Brulebois Danielle","group":"EPR"},"danielle brulebois":{"full":"Brulebois Danielle","group":"EPR"},"bony jean-yves":{"full":"Bony Jean-Yves","group":"DR"},"jean-yves bony":{"full":"Bony Jean-Yves","group":"DR"},"minard christelle":{"full":"Minard Christelle","group":"DR"},"christelle minard":{"full":"Minard Christelle","group":"DR"},"houssin timothee":{"full":"Houssin Timothée","group":"RN"},"timothee houssin":{"full":"Houssin Timothée","group":"RN"},"pochon marie":{"full":"Pochon Marie","group":"EcoS"},"marie pochon":{"full":"Pochon Marie","group":"EcoS"},"vigier jean-pierre":{"full":"Vigier Jean-Pierre","group":"DR"},"jean-pierre vigier":{"full":"Vigier Jean-Pierre","group":"DR"},"de pelichy constance":{"full":"de Pélichy Constance","group":"LIOT"},"pelichy constance de":{"full":"de Pélichy Constance","group":"LIOT"},"magnier david":{"full":"Magnier David","group":"RN"},"david magnier":{"full":"Magnier David","group":"RN"},"schreck philippe":{"full":"Schreck Philippe","group":"RN"},"philippe schreck":{"full":"Schreck Philippe","group":"RN"},"hignet mathilde":{"full":"Hignet Mathilde","group":"LFI"},"mathilde hignet":{"full":"Hignet Mathilde","group":"LFI"},"thiebaut vincent":{"full":"Thiébaut Vincent","group":"HOR"},"vincent thiebaut":{"full":"Thiébaut Vincent","group":"HOR"},"taupiac david":{"full":"Taupiac David","group":"LIOT"},"david taupiac":{"full":"Taupiac David","group":"LIOT"},"baumel laurent":{"full":"Baumel Laurent","group":"SOC"},"laurent baumel":{"full":"Baumel Laurent","group":"SOC"},"cosson mickael":{"full":"Cosson Mickaël","group":"DEM"},"mickael cosson":{"full":"Cosson Mickaël","group":"DEM"},"ott hubert":{"full":"Ott Hubert","group":"DEM"},"hubert ott":{"full":"Ott Hubert","group":"DEM"},"lechanteux julie":{"full":"Lechanteux Julie","group":"RN"},"julie lechanteux":{"full":"Lechanteux Julie","group":"RN"},"ceccoli francois-xavier":{"full":"Ceccoli François-Xavier","group":"DR"},"francois-xavier ceccoli":{"full":"Ceccoli François-Xavier","group":"DR"},"trouve aurelie":{"full":"Trouvé Aurélie","group":"LFI"},"aurelie trouve":{"full":"Trouvé Aurélie","group":"LFI"},"violland anne-cecile":{"full":"Violland Anne-Cécile","group":"HOR"},"anne-cecile violland":{"full":"Violland Anne-Cécile","group":"HOR"},"riotton veronique":{"full":"Riotton Véronique","group":"EPR"},"veronique riotton":{"full":"Riotton Véronique","group":"EPR"},"blairy emmanuel":{"full":"Blairy Emmanuel","group":"RN"},"emmanuel blairy":{"full":"Blairy Emmanuel","group":"RN"},"carbonnel pierre-henri":{"full":"Carbonnel Pierre-Henri","group":"UDR"},"pierre-henri carbonnel":{"full":"Carbonnel Pierre-Henri","group":"UDR"},"cazeneuve jean-rene":{"full":"Cazeneuve Jean-René","group":"EPR"},"jean-rene cazeneuve":{"full":"Cazeneuve Jean-René","group":"EPR"},"delautrette stephane":{"full":"Delautrette Stéphane","group":"SOC"},"stephane delautrette":{"full":"Delautrette Stéphane","group":"SOC"},"humbert sebastien":{"full":"Humbert Sébastien","group":"RN"},"sebastien humbert":{"full":"Humbert Sébastien","group":"RN"},"raux jean-claude":{"full":"Raux Jean-Claude","group":"EcoS"},"jean-claude raux":{"full":"Raux Jean-Claude","group":"EcoS"},"meunier manon":{"full":"Meunier Manon","group":"LFI"},"manon meunier":{"full":"Meunier Manon","group":"LFI"},"liegeon eric":{"full":"Liégeon Eric","group":"DR"},"eric liegeon":{"full":"Liégeon Eric","group":"DR"},"voynet dominique":{"full":"Voynet Dominique","group":"EcoS"},"dominique voynet":{"full":"Voynet Dominique","group":"EcoS"},"thierry nicolas":{"full":"Thierry Nicolas","group":"EcoS"},"nicolas thierry":{"full":"Thierry Nicolas","group":"EcoS"},"tivoli lionel":{"full":"Tivoli Lionel","group":"RN"},"lionel tivoli":{"full":"Tivoli Lionel","group":"RN"},"pantel sophie":{"full":"Pantel Sophie","group":"SOC"},"sophie pantel":{"full":"Pantel Sophie","group":"SOC"},"rousset jean-francois":{"full":"Rousset Jean-François","group":"EPR"},"jean-francois rousset":{"full":"Rousset Jean-François","group":"EPR"},"grangier geraldine":{"full":"Grangier Géraldine","group":"RN"},"geraldine grangier":{"full":"Grangier Géraldine","group":"RN"},"rossi valerie":{"full":"Rossi Valérie","group":"SOC"},"valerie rossi":{"full":"Rossi Valérie","group":"SOC"},"allemand marie-jose":{"full":"Allemand Marie-José","group":"SOC"},"marie-jose allemand":{"full":"Allemand Marie-José","group":"SOC"},"warsmann jean-luc":{"full":"Warsmann Jean-Luc","group":"LIOT"},"jean-luc warsmann":{"full":"Warsmann Jean-Luc","group":"LIOT"},"dutremble aurelien":{"full":"Dutremble Aurélien","group":"RN"},"aurelien dutremble":{"full":"Dutremble Aurélien","group":"RN"},"le gac didier":{"full":"Le Gac Didier","group":"EPR"},"gac didier le":{"full":"Le Gac Didier","group":"EPR"},"thomin melanie":{"full":"Thomin Mélanie","group":"SOC"},"melanie thomin":{"full":"Thomin Mélanie","group":"SOC"},"breton xavier":{"full":"Breton Xavier","group":"DR"},"xavier breton":{"full":"Breton Xavier","group":"DR"}}}
+{
+  "by_full": {
+    "Serva Olivier": "LIOT",
+    "Martineau Éric": "DEM",
+    "Guibert Julien": "RN",
+    "Roseren Xavier": "HOR",
+    "Potier Dominique": "SOC",
+    "Biteau Benoît": "EcoS",
+    "Bouquin Manon": "RN",
+    "Brun Fabrice": "DR",
+    "Le Feur Sandrine": "EPR",
+    "Coggia Nathalie": "EPR",
+    "Descoeur Vincent": "DR",
+    "Ozenne Julie": "EcoS",
+    "Belluco Lisa": "EcoS",
+    "Jourdan Chantal": "SOC",
+    "Barusseau Fabrice": "SOC",
+    "Bonnivard Émilie": "DR",
+    "Brulebois Danielle": "EPR",
+    "Bony Jean-Yves": "DR",
+    "Minard Christelle": "DR",
+    "Houssin Timothée": "RN",
+    "Pochon Marie": "EcoS",
+    "Vigier Jean-Pierre": "DR",
+    "de Pélichy Constance": "LIOT",
+    "Magnier David": "RN",
+    "Schreck Philippe": "RN",
+    "Hignet Mathilde": "LFI",
+    "Thiébaut Vincent": "HOR",
+    "Taupiac David": "LIOT",
+    "Baumel Laurent": "SOC",
+    "Cosson Mickaël": "DEM",
+    "Ott Hubert": "DEM",
+    "Lechanteux Julie": "RN",
+    "Ceccoli François-Xavier": "DR",
+    "Trouvé Aurélie": "LFI",
+    "Violland Anne-Cécile": "HOR",
+    "Riotton Véronique": "EPR",
+    "Blairy Emmanuel": "RN",
+    "Carbonnel Pierre-Henri": "UDR",
+    "Cazeneuve Jean-René": "EPR",
+    "Delautrette Stéphane": "SOC",
+    "Humbert Sébastien": "RN",
+    "Raux Jean-Claude": "EcoS",
+    "Meunier Manon": "LFI",
+    "Liégeon Eric": "DR",
+    "Voynet Dominique": "EcoS",
+    "Thierry Nicolas": "EcoS",
+    "Tivoli Lionel": "RN",
+    "Pantel Sophie": "SOC",
+    "Rousset Jean-François": "EPR",
+    "Grangier Géraldine": "RN",
+    "Rossi Valérie": "SOC",
+    "Allemand Marie-José": "SOC",
+    "Warsmann Jean-Luc": "LIOT",
+    "Dutremble Aurélien": "RN",
+    "Le Gac Didier": "EPR",
+    "Thomin Mélanie": "SOC",
+    "Breton Xavier": "DR",
+    "Gernigon François": "HOR",
+    "Pannier-Runacher Agnès": "EPR",
+    "Buffet Françoise": "EPR",
+    "Benoit Thierry": "HOR",
+    "Bouyx Bertrand": "HOR",
+    "de Lépinau Hervé": "RN",
+    "Laporte Hélène": "RN",
+    "Martin Patrice": "RN",
+    "Stambach-Terrenoir Anne": "LFI",
+    "Goulet Florence": "RN",
+    "Poussier-Winsback Marie-Agnès": "HOR",
+    "Piron Béatrice": "HOR",
+    "Marsaud Sandra": "EPR",
+    "Blin Anne-Laure": "DR",
+    "de Courson Charles": "LIOT",
+    "Dive Julien": "DR",
+    "Cestrières Pauline": "EPR",
+    "Rey-Rinchet Emeline": "DR",
+    "Fugit Jean-Luc": "EPR",
+    "Amblard Maxime": "RN",
+    "Naillet Philippe": "SOC",
+    "Mathiasin Max": "LIOT",
+    "Gumbs Frantz": "DEM",
+    "Vermorel-Marques Antoine": "DR",
+    "Turquois Nicolas": "DEM",
+    "Ronceret Anne-Sophie": "EPR",
+    "Ray Nicolas": "DR",
+    "Roussel Fabrice": "SOC",
+    "Peytavie Sébastien": "EcoS",
+    "Pollet Lisette": "RN",
+    "Garin Marie-Charlotte": "EcoS",
+    "Allegret-Pilot Alexandre": "UDR",
+    "Garot Guillaume": "SOC",
+    "Bonnet Nicolas": "EcoS",
+    "Corneloup Josiane": "DR",
+    "Battistel Marie-Noëlle": "SOC",
+    "Rolland Vincent": "DR",
+    "Tavernier Boris": "EcoS",
+    "Travert Stéphane": "EPR",
+    "Leseul Gérard": "SOC",
+    "Terlier Jean": "EPR",
+    "Weber Frédéric": "RN",
+    "Grégoire Olivia": "EPR",
+    "Lecamp Pascal": "DEM",
+    "Buchou Stéphane": "EPR",
+    "Gabarron Julien": "RN",
+    "Got Pascale": "SOC",
+    "Sorre Bertrand": "EPR",
+    "Falcon Frédéric": "RN",
+    "Rouaux Claudia": "SOC",
+    "Miller Laure": "EPR",
+    "Dufau Peio": "SOC",
+    "Echaniz Inaki": "SOC",
+    "Soudais Ersilia": "LFI",
+    "Vignon Corinne": "EPR",
+    "Tryzna Nicolas": "DR",
+    "Bannier Géraldine": "DEM",
+    "Girard Damien": "EcoS",
+    "Cordier Pierre": "DR",
+    "Le Bourgeois Robert": "RN",
+    "Létard Valérie": "LIOT",
+    "Mette Sophie": "DEM",
+    "Davi Hendrik": "EcoS"
+  },
+  "by_lastname": {
+    "serva": [
+      {
+        "full": "Serva Olivier",
+        "group": "LIOT"
+      }
+    ],
+    "martineau": [
+      {
+        "full": "Martineau Éric",
+        "group": "DEM"
+      }
+    ],
+    "guibert": [
+      {
+        "full": "Guibert Julien",
+        "group": "RN"
+      }
+    ],
+    "roseren": [
+      {
+        "full": "Roseren Xavier",
+        "group": "HOR"
+      }
+    ],
+    "potier": [
+      {
+        "full": "Potier Dominique",
+        "group": "SOC"
+      }
+    ],
+    "biteau": [
+      {
+        "full": "Biteau Benoît",
+        "group": "EcoS"
+      }
+    ],
+    "bouquin": [
+      {
+        "full": "Bouquin Manon",
+        "group": "RN"
+      }
+    ],
+    "brun": [
+      {
+        "full": "Brun Fabrice",
+        "group": "DR"
+      }
+    ],
+    "le": [
+      {
+        "full": "Le Feur Sandrine",
+        "group": "EPR"
+      },
+      {
+        "full": "Le Gac Didier",
+        "group": "EPR"
+      }
+    ],
+    "coggia": [
+      {
+        "full": "Coggia Nathalie",
+        "group": "EPR"
+      }
+    ],
+    "descoeur": [
+      {
+        "full": "Descoeur Vincent",
+        "group": "DR"
+      }
+    ],
+    "ozenne": [
+      {
+        "full": "Ozenne Julie",
+        "group": "EcoS"
+      }
+    ],
+    "belluco": [
+      {
+        "full": "Belluco Lisa",
+        "group": "EcoS"
+      }
+    ],
+    "jourdan": [
+      {
+        "full": "Jourdan Chantal",
+        "group": "SOC"
+      }
+    ],
+    "barusseau": [
+      {
+        "full": "Barusseau Fabrice",
+        "group": "SOC"
+      }
+    ],
+    "bonnivard": [
+      {
+        "full": "Bonnivard Émilie",
+        "group": "DR"
+      }
+    ],
+    "brulebois": [
+      {
+        "full": "Brulebois Danielle",
+        "group": "EPR"
+      }
+    ],
+    "bony": [
+      {
+        "full": "Bony Jean-Yves",
+        "group": "DR"
+      }
+    ],
+    "minard": [
+      {
+        "full": "Minard Christelle",
+        "group": "DR"
+      }
+    ],
+    "houssin": [
+      {
+        "full": "Houssin Timothée",
+        "group": "RN"
+      }
+    ],
+    "pochon": [
+      {
+        "full": "Pochon Marie",
+        "group": "EcoS"
+      }
+    ],
+    "vigier": [
+      {
+        "full": "Vigier Jean-Pierre",
+        "group": "DR"
+      }
+    ],
+    "de": [
+      {
+        "full": "de Pélichy Constance",
+        "group": "LIOT"
+      }
+    ],
+    "magnier": [
+      {
+        "full": "Magnier David",
+        "group": "RN"
+      }
+    ],
+    "schreck": [
+      {
+        "full": "Schreck Philippe",
+        "group": "RN"
+      }
+    ],
+    "hignet": [
+      {
+        "full": "Hignet Mathilde",
+        "group": "LFI"
+      }
+    ],
+    "thiebaut": [
+      {
+        "full": "Thiébaut Vincent",
+        "group": "HOR"
+      }
+    ],
+    "taupiac": [
+      {
+        "full": "Taupiac David",
+        "group": "LIOT"
+      }
+    ],
+    "baumel": [
+      {
+        "full": "Baumel Laurent",
+        "group": "SOC"
+      }
+    ],
+    "cosson": [
+      {
+        "full": "Cosson Mickaël",
+        "group": "DEM"
+      }
+    ],
+    "ott": [
+      {
+        "full": "Ott Hubert",
+        "group": "DEM"
+      }
+    ],
+    "lechanteux": [
+      {
+        "full": "Lechanteux Julie",
+        "group": "RN"
+      }
+    ],
+    "ceccoli": [
+      {
+        "full": "Ceccoli François-Xavier",
+        "group": "DR"
+      }
+    ],
+    "trouve": [
+      {
+        "full": "Trouvé Aurélie",
+        "group": "LFI"
+      }
+    ],
+    "violland": [
+      {
+        "full": "Violland Anne-Cécile",
+        "group": "HOR"
+      }
+    ],
+    "riotton": [
+      {
+        "full": "Riotton Véronique",
+        "group": "EPR"
+      }
+    ],
+    "blairy": [
+      {
+        "full": "Blairy Emmanuel",
+        "group": "RN"
+      }
+    ],
+    "carbonnel": [
+      {
+        "full": "Carbonnel Pierre-Henri",
+        "group": "UDR"
+      }
+    ],
+    "cazeneuve": [
+      {
+        "full": "Cazeneuve Jean-René",
+        "group": "EPR"
+      }
+    ],
+    "delautrette": [
+      {
+        "full": "Delautrette Stéphane",
+        "group": "SOC"
+      }
+    ],
+    "humbert": [
+      {
+        "full": "Humbert Sébastien",
+        "group": "RN"
+      }
+    ],
+    "raux": [
+      {
+        "full": "Raux Jean-Claude",
+        "group": "EcoS"
+      }
+    ],
+    "meunier": [
+      {
+        "full": "Meunier Manon",
+        "group": "LFI"
+      }
+    ],
+    "liegeon": [
+      {
+        "full": "Liégeon Eric",
+        "group": "DR"
+      }
+    ],
+    "voynet": [
+      {
+        "full": "Voynet Dominique",
+        "group": "EcoS"
+      }
+    ],
+    "thierry": [
+      {
+        "full": "Thierry Nicolas",
+        "group": "EcoS"
+      }
+    ],
+    "tivoli": [
+      {
+        "full": "Tivoli Lionel",
+        "group": "RN"
+      }
+    ],
+    "pantel": [
+      {
+        "full": "Pantel Sophie",
+        "group": "SOC"
+      }
+    ],
+    "rousset": [
+      {
+        "full": "Rousset Jean-François",
+        "group": "EPR"
+      }
+    ],
+    "grangier": [
+      {
+        "full": "Grangier Géraldine",
+        "group": "RN"
+      }
+    ],
+    "rossi": [
+      {
+        "full": "Rossi Valérie",
+        "group": "SOC"
+      }
+    ],
+    "allemand": [
+      {
+        "full": "Allemand Marie-José",
+        "group": "SOC"
+      }
+    ],
+    "warsmann": [
+      {
+        "full": "Warsmann Jean-Luc",
+        "group": "LIOT"
+      }
+    ],
+    "dutremble": [
+      {
+        "full": "Dutremble Aurélien",
+        "group": "RN"
+      }
+    ],
+    "thomin": [
+      {
+        "full": "Thomin Mélanie",
+        "group": "SOC"
+      }
+    ],
+    "breton": [
+      {
+        "full": "Breton Xavier",
+        "group": "DR"
+      }
+    ],
+    "feur": [
+      {
+        "full": "Le Feur Sandrine",
+        "group": "EPR"
+      }
+    ],
+    "pelichy": [
+      {
+        "full": "de Pélichy Constance",
+        "group": "LIOT"
+      }
+    ],
+    "gac": [
+      {
+        "full": "Le Gac Didier",
+        "group": "EPR"
+      }
+    ]
+  },
+  "by_normalized": {
+    "serva olivier": {
+      "full": "Serva Olivier",
+      "group": "LIOT"
+    },
+    "olivier serva": {
+      "full": "Serva Olivier",
+      "group": "LIOT"
+    },
+    "martineau eric": {
+      "full": "Martineau Éric",
+      "group": "DEM"
+    },
+    "eric martineau": {
+      "full": "Martineau Éric",
+      "group": "DEM"
+    },
+    "guibert julien": {
+      "full": "Guibert Julien",
+      "group": "RN"
+    },
+    "julien guibert": {
+      "full": "Guibert Julien",
+      "group": "RN"
+    },
+    "roseren xavier": {
+      "full": "Roseren Xavier",
+      "group": "HOR"
+    },
+    "xavier roseren": {
+      "full": "Roseren Xavier",
+      "group": "HOR"
+    },
+    "potier dominique": {
+      "full": "Potier Dominique",
+      "group": "SOC"
+    },
+    "dominique potier": {
+      "full": "Potier Dominique",
+      "group": "SOC"
+    },
+    "biteau benoit": {
+      "full": "Biteau Benoît",
+      "group": "EcoS"
+    },
+    "benoit biteau": {
+      "full": "Biteau Benoît",
+      "group": "EcoS"
+    },
+    "bouquin manon": {
+      "full": "Bouquin Manon",
+      "group": "RN"
+    },
+    "manon bouquin": {
+      "full": "Bouquin Manon",
+      "group": "RN"
+    },
+    "brun fabrice": {
+      "full": "Brun Fabrice",
+      "group": "DR"
+    },
+    "fabrice brun": {
+      "full": "Brun Fabrice",
+      "group": "DR"
+    },
+    "le feur sandrine": {
+      "full": "Le Feur Sandrine",
+      "group": "EPR"
+    },
+    "feur sandrine le": {
+      "full": "Le Feur Sandrine",
+      "group": "EPR"
+    },
+    "coggia nathalie": {
+      "full": "Coggia Nathalie",
+      "group": "EPR"
+    },
+    "nathalie coggia": {
+      "full": "Coggia Nathalie",
+      "group": "EPR"
+    },
+    "descoeur vincent": {
+      "full": "Descoeur Vincent",
+      "group": "DR"
+    },
+    "vincent descoeur": {
+      "full": "Descoeur Vincent",
+      "group": "DR"
+    },
+    "ozenne julie": {
+      "full": "Ozenne Julie",
+      "group": "EcoS"
+    },
+    "julie ozenne": {
+      "full": "Ozenne Julie",
+      "group": "EcoS"
+    },
+    "belluco lisa": {
+      "full": "Belluco Lisa",
+      "group": "EcoS"
+    },
+    "lisa belluco": {
+      "full": "Belluco Lisa",
+      "group": "EcoS"
+    },
+    "jourdan chantal": {
+      "full": "Jourdan Chantal",
+      "group": "SOC"
+    },
+    "chantal jourdan": {
+      "full": "Jourdan Chantal",
+      "group": "SOC"
+    },
+    "barusseau fabrice": {
+      "full": "Barusseau Fabrice",
+      "group": "SOC"
+    },
+    "fabrice barusseau": {
+      "full": "Barusseau Fabrice",
+      "group": "SOC"
+    },
+    "bonnivard emilie": {
+      "full": "Bonnivard Émilie",
+      "group": "DR"
+    },
+    "emilie bonnivard": {
+      "full": "Bonnivard Émilie",
+      "group": "DR"
+    },
+    "brulebois danielle": {
+      "full": "Brulebois Danielle",
+      "group": "EPR"
+    },
+    "danielle brulebois": {
+      "full": "Brulebois Danielle",
+      "group": "EPR"
+    },
+    "bony jean-yves": {
+      "full": "Bony Jean-Yves",
+      "group": "DR"
+    },
+    "jean-yves bony": {
+      "full": "Bony Jean-Yves",
+      "group": "DR"
+    },
+    "minard christelle": {
+      "full": "Minard Christelle",
+      "group": "DR"
+    },
+    "christelle minard": {
+      "full": "Minard Christelle",
+      "group": "DR"
+    },
+    "houssin timothee": {
+      "full": "Houssin Timothée",
+      "group": "RN"
+    },
+    "timothee houssin": {
+      "full": "Houssin Timothée",
+      "group": "RN"
+    },
+    "pochon marie": {
+      "full": "Pochon Marie",
+      "group": "EcoS"
+    },
+    "marie pochon": {
+      "full": "Pochon Marie",
+      "group": "EcoS"
+    },
+    "vigier jean-pierre": {
+      "full": "Vigier Jean-Pierre",
+      "group": "DR"
+    },
+    "jean-pierre vigier": {
+      "full": "Vigier Jean-Pierre",
+      "group": "DR"
+    },
+    "de pelichy constance": {
+      "full": "de Pélichy Constance",
+      "group": "LIOT"
+    },
+    "pelichy constance de": {
+      "full": "de Pélichy Constance",
+      "group": "LIOT"
+    },
+    "magnier david": {
+      "full": "Magnier David",
+      "group": "RN"
+    },
+    "david magnier": {
+      "full": "Magnier David",
+      "group": "RN"
+    },
+    "schreck philippe": {
+      "full": "Schreck Philippe",
+      "group": "RN"
+    },
+    "philippe schreck": {
+      "full": "Schreck Philippe",
+      "group": "RN"
+    },
+    "hignet mathilde": {
+      "full": "Hignet Mathilde",
+      "group": "LFI"
+    },
+    "mathilde hignet": {
+      "full": "Hignet Mathilde",
+      "group": "LFI"
+    },
+    "thiebaut vincent": {
+      "full": "Thiébaut Vincent",
+      "group": "HOR"
+    },
+    "vincent thiebaut": {
+      "full": "Thiébaut Vincent",
+      "group": "HOR"
+    },
+    "taupiac david": {
+      "full": "Taupiac David",
+      "group": "LIOT"
+    },
+    "david taupiac": {
+      "full": "Taupiac David",
+      "group": "LIOT"
+    },
+    "baumel laurent": {
+      "full": "Baumel Laurent",
+      "group": "SOC"
+    },
+    "laurent baumel": {
+      "full": "Baumel Laurent",
+      "group": "SOC"
+    },
+    "cosson mickael": {
+      "full": "Cosson Mickaël",
+      "group": "DEM"
+    },
+    "mickael cosson": {
+      "full": "Cosson Mickaël",
+      "group": "DEM"
+    },
+    "ott hubert": {
+      "full": "Ott Hubert",
+      "group": "DEM"
+    },
+    "hubert ott": {
+      "full": "Ott Hubert",
+      "group": "DEM"
+    },
+    "lechanteux julie": {
+      "full": "Lechanteux Julie",
+      "group": "RN"
+    },
+    "julie lechanteux": {
+      "full": "Lechanteux Julie",
+      "group": "RN"
+    },
+    "ceccoli francois-xavier": {
+      "full": "Ceccoli François-Xavier",
+      "group": "DR"
+    },
+    "francois-xavier ceccoli": {
+      "full": "Ceccoli François-Xavier",
+      "group": "DR"
+    },
+    "trouve aurelie": {
+      "full": "Trouvé Aurélie",
+      "group": "LFI"
+    },
+    "aurelie trouve": {
+      "full": "Trouvé Aurélie",
+      "group": "LFI"
+    },
+    "violland anne-cecile": {
+      "full": "Violland Anne-Cécile",
+      "group": "HOR"
+    },
+    "anne-cecile violland": {
+      "full": "Violland Anne-Cécile",
+      "group": "HOR"
+    },
+    "riotton veronique": {
+      "full": "Riotton Véronique",
+      "group": "EPR"
+    },
+    "veronique riotton": {
+      "full": "Riotton Véronique",
+      "group": "EPR"
+    },
+    "blairy emmanuel": {
+      "full": "Blairy Emmanuel",
+      "group": "RN"
+    },
+    "emmanuel blairy": {
+      "full": "Blairy Emmanuel",
+      "group": "RN"
+    },
+    "carbonnel pierre-henri": {
+      "full": "Carbonnel Pierre-Henri",
+      "group": "UDR"
+    },
+    "pierre-henri carbonnel": {
+      "full": "Carbonnel Pierre-Henri",
+      "group": "UDR"
+    },
+    "cazeneuve jean-rene": {
+      "full": "Cazeneuve Jean-René",
+      "group": "EPR"
+    },
+    "jean-rene cazeneuve": {
+      "full": "Cazeneuve Jean-René",
+      "group": "EPR"
+    },
+    "delautrette stephane": {
+      "full": "Delautrette Stéphane",
+      "group": "SOC"
+    },
+    "stephane delautrette": {
+      "full": "Delautrette Stéphane",
+      "group": "SOC"
+    },
+    "humbert sebastien": {
+      "full": "Humbert Sébastien",
+      "group": "RN"
+    },
+    "sebastien humbert": {
+      "full": "Humbert Sébastien",
+      "group": "RN"
+    },
+    "raux jean-claude": {
+      "full": "Raux Jean-Claude",
+      "group": "EcoS"
+    },
+    "jean-claude raux": {
+      "full": "Raux Jean-Claude",
+      "group": "EcoS"
+    },
+    "meunier manon": {
+      "full": "Meunier Manon",
+      "group": "LFI"
+    },
+    "manon meunier": {
+      "full": "Meunier Manon",
+      "group": "LFI"
+    },
+    "liegeon eric": {
+      "full": "Liégeon Eric",
+      "group": "DR"
+    },
+    "eric liegeon": {
+      "full": "Liégeon Eric",
+      "group": "DR"
+    },
+    "voynet dominique": {
+      "full": "Voynet Dominique",
+      "group": "EcoS"
+    },
+    "dominique voynet": {
+      "full": "Voynet Dominique",
+      "group": "EcoS"
+    },
+    "thierry nicolas": {
+      "full": "Thierry Nicolas",
+      "group": "EcoS"
+    },
+    "nicolas thierry": {
+      "full": "Thierry Nicolas",
+      "group": "EcoS"
+    },
+    "tivoli lionel": {
+      "full": "Tivoli Lionel",
+      "group": "RN"
+    },
+    "lionel tivoli": {
+      "full": "Tivoli Lionel",
+      "group": "RN"
+    },
+    "pantel sophie": {
+      "full": "Pantel Sophie",
+      "group": "SOC"
+    },
+    "sophie pantel": {
+      "full": "Pantel Sophie",
+      "group": "SOC"
+    },
+    "rousset jean-francois": {
+      "full": "Rousset Jean-François",
+      "group": "EPR"
+    },
+    "jean-francois rousset": {
+      "full": "Rousset Jean-François",
+      "group": "EPR"
+    },
+    "grangier geraldine": {
+      "full": "Grangier Géraldine",
+      "group": "RN"
+    },
+    "geraldine grangier": {
+      "full": "Grangier Géraldine",
+      "group": "RN"
+    },
+    "rossi valerie": {
+      "full": "Rossi Valérie",
+      "group": "SOC"
+    },
+    "valerie rossi": {
+      "full": "Rossi Valérie",
+      "group": "SOC"
+    },
+    "allemand marie-jose": {
+      "full": "Allemand Marie-José",
+      "group": "SOC"
+    },
+    "marie-jose allemand": {
+      "full": "Allemand Marie-José",
+      "group": "SOC"
+    },
+    "warsmann jean-luc": {
+      "full": "Warsmann Jean-Luc",
+      "group": "LIOT"
+    },
+    "jean-luc warsmann": {
+      "full": "Warsmann Jean-Luc",
+      "group": "LIOT"
+    },
+    "dutremble aurelien": {
+      "full": "Dutremble Aurélien",
+      "group": "RN"
+    },
+    "aurelien dutremble": {
+      "full": "Dutremble Aurélien",
+      "group": "RN"
+    },
+    "le gac didier": {
+      "full": "Le Gac Didier",
+      "group": "EPR"
+    },
+    "gac didier le": {
+      "full": "Le Gac Didier",
+      "group": "EPR"
+    },
+    "thomin melanie": {
+      "full": "Thomin Mélanie",
+      "group": "SOC"
+    },
+    "melanie thomin": {
+      "full": "Thomin Mélanie",
+      "group": "SOC"
+    },
+    "breton xavier": {
+      "full": "Breton Xavier",
+      "group": "DR"
+    },
+    "xavier breton": {
+      "full": "Breton Xavier",
+      "group": "DR"
+    }
+  }
+}

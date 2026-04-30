@@ -33,6 +33,7 @@ const state = {
     states: new Set(),
     groups: new Set(),
     articles: new Set(),
+    commission: "all",   // 'all' | 'Développement durable' | 'Affaires économiques'
   },
   previouslySeen: new Set(),
   previousStates: new Map(),
@@ -86,6 +87,15 @@ function bindEvents() {
   dom.search.addEventListener("input", e => {
     state.filters.search = e.target.value.trim().toLowerCase();
     render();
+  });
+  // Sélecteur de commission (boutons radio en haut)
+  document.querySelectorAll('input[name="commission"]').forEach(input => {
+    input.addEventListener("change", e => {
+      if (e.target.checked) {
+        state.filters.commission = e.target.value;
+        render();
+      }
+    });
   });
 }
 
@@ -273,9 +283,22 @@ function prettyArticle(name) {
 // ------------------------------------------------------------
 
 function render() {
+  renderCommissionCounts();
   renderStats();
   renderChangelog();
   renderAmendments();
+}
+
+function renderCommissionCounts() {
+  // Met à jour les compteurs affichés à côté des boutons radio
+  // d'après l'instance de chaque amendement
+  const counts = countBy(state.amendments, a => a.instance || "");
+  const total = state.amendments.length;
+  document.querySelectorAll('[data-commission-count]').forEach(el => {
+    const key = el.dataset.commissionCount;
+    const n = key === "all" ? total : (counts.get(key) || 0);
+    el.textContent = `(${n})`;
+  });
 }
 
 function renderStats() {
@@ -516,9 +539,10 @@ function numOf(n) {
 
 function filterAmendments() {
   const all = state.amendments;
-  const { search, states, groups, articles } = state.filters;
+  const { search, states, groups, articles, commission } = state.filters;
 
   return all.filter(a => {
+    if (commission !== "all" && a.instance !== commission) return false;
     if (states.size && !states.has(a.state)) return false;
     if (groups.size && !groups.has(a.group)) return false;
     if (articles.size && !articles.has(a.article)) return false;

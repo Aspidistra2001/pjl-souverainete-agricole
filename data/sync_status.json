@@ -1,9 +1,9 @@
 {
-  "last_sync_utc": "2026-05-01T10:59:40.972405+00:00",
-  "last_sync_human": "2026-05-01 10:59:40 UTC",
+  "last_sync_utc": "2026-05-01T11:00:48.363481+00:00",
+  "last_sync_human": "2026-05-01 11:00:48 UTC",
   "feed_items": 86,
-  "fetched": 0,
-  "added": 0,
+  "fetched": 5,
+  "added": 5,
   "state_changes": 0,
   "errors": []
 }

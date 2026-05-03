@@ -483,6 +483,19 @@ def synchronize() -> dict:
     with DATA_FILE.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
 
+    # 10 bis. Régénérer l'export Excel téléchargeable depuis le site.
+    # Ce fichier est mis à jour à chaque sync pour rester en cohérence
+    # avec amendments.json. Si openpyxl n'est pas installé, on saute
+    # silencieusement (le site continue de marcher sans l'export).
+    try:
+        from generate_excel import main as generate_xlsx
+        generate_xlsx()
+    except ImportError:
+        print("  (openpyxl non disponible, export Excel sauté)", file=sys.stderr)
+    except Exception as e:
+        print(f"  ⚠ Génération Excel échouée : {e}", file=sys.stderr)
+        summary.setdefault("errors", []).append(f"Excel : {e}")
+
     # 11. TOUJOURS écrire le fichier de statut de synchro (même si rien n'a changé)
     # Ce fichier est committé indépendamment d'amendments.json pour prouver
     # que le script tourne, même quand il n'y a aucune modification de fond.

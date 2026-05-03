@@ -33,6 +33,7 @@ const state = {
     states: new Set(),
     groups: new Set(),
     articles: new Set(),
+    tags: new Set(),
     commission: "all",   // 'all' | 'Développement durable' | 'Affaires économiques'
   },
   previouslySeen: new Set(),
@@ -72,11 +73,13 @@ function cacheDom() {
   dom.statusText = document.getElementById("status-text");
   dom.lastUpdate = document.getElementById("last-update");
   dom.refreshBtn = document.getElementById("refresh-btn");
+  dom.exportBtn = document.getElementById("export-btn");
   dom.search = document.getElementById("search");
   dom.stats = document.getElementById("stats");
   dom.stateFilters = document.getElementById("state-filters");
   dom.groupFilters = document.getElementById("group-filters");
   dom.articleFilters = document.getElementById("article-filters");
+  dom.tagFilters = document.getElementById("tag-filters");
   dom.changelog = document.getElementById("changelog");
   dom.changelogBody = document.getElementById("changelog-body");
   dom.amendments = document.getElementById("amendments");
@@ -217,6 +220,7 @@ function rebuildFilters() {
   const currentStates = new Set(state.filters.states);
   const currentGroups = new Set(state.filters.groups);
   const currentArticles = new Set(state.filters.articles);
+  const currentTags = new Set(state.filters.tags);
 
   // Source pour les compteurs : amendements filtrés UNIQUEMENT par commission
   // (sinon on tomberait dans une boucle d'auto-filtrage avec les autres filtres)
@@ -241,11 +245,27 @@ function rebuildFilters() {
     .concat(Array.from(articleCounts.keys()).filter(x => !state.meta.article_order.includes(x)));
   buildFilterRows(dom.articleFilters, articleOrder, articleCounts, "article");
 
+  // Filtre thématique : un amendement compte une fois par tag distinct qu'il porte
+  // (pas une seule fois s'il a 3 tags). Ordre fixe dans la sidebar pour stabilité visuelle.
+  const TAG_ORDER = ["coop", "ab", "animale", "végétale"];
+  const tagCounts = new Map();
+  TAG_ORDER.forEach(t => tagCounts.set(t, 0));
+  scope.forEach(a => {
+    (a.tags || []).forEach(t => {
+      if (tagCounts.has(t)) tagCounts.set(t, tagCounts.get(t) + 1);
+    });
+  });
+  // Ne garder que les tags effectivement présents au moins une fois dans le scope
+  const tagsToShow = TAG_ORDER.filter(t => tagCounts.get(t) > 0);
+  if (dom.tagFilters) {
+    buildFilterRows(dom.tagFilters, tagsToShow, tagCounts, "tag");
+  }
+
   // Restaurer les cases cochées qui sont toujours présentes dans le scope
-  // (les autres sont silencieusement retirées du filtre actif)
   state.filters.states = new Set([...currentStates].filter(x => stateCounts.has(x)));
   state.filters.groups = new Set([...currentGroups].filter(x => groupCounts.has(x)));
   state.filters.articles = new Set([...currentArticles].filter(x => articleCounts.has(x)));
+  state.filters.tags = new Set([...currentTags].filter(x => tagsToShow.includes(x)));
 
   // Re-cocher visuellement les filtres conservés
   state.filters.states.forEach(k => {
@@ -260,6 +280,12 @@ function rebuildFilters() {
     const cb = dom.articleFilters.querySelector(`input[data-key="${CSS.escape(k)}"]`);
     if (cb) cb.checked = true;
   });
+  if (dom.tagFilters) {
+    state.filters.tags.forEach(k => {
+      const cb = dom.tagFilters.querySelector(`input[data-key="${CSS.escape(k)}"]`);
+      if (cb) cb.checked = true;
+    });
+  }
 }
 
 function buildFilterRows(container, keys, counts, kind, withSwatch = false) {
@@ -284,7 +310,13 @@ function buildFilterRows(container, keys, counts, kind, withSwatch = false) {
 
     const label = document.createElement("span");
     label.className = "label";
-    label.textContent = withSwatch ? state.meta.groups[key]?.label || key : prettyArticle(key);
+    if (kind === "tag") {
+      label.textContent = tagLabel(key);
+    } else if (withSwatch) {
+      label.textContent = state.meta.groups[key]?.label || key;
+    } else {
+      label.textContent = prettyArticle(key);
+    }
     row.appendChild(label);
 
     const count = document.createElement("span");
@@ -337,6 +369,27 @@ function renderCommissionCounts() {
     const n = key === "all" ? total : (counts.get(key) || 0);
     el.textContent = `(${n})`;
   });
+
+  // Mise à jour du lien d'export Excel selon la commission active.
+  // Trois fichiers sont régénérés à chaque sync côté serveur :
+  // export_amendements_tous.xlsx, _cd.xlsx, _ce.xlsx
+  if (dom.exportBtn) {
+    const commission = state.filters.commission;
+    let file = "export_amendements_tous.xlsx";
+    let label = "Export Excel";
+    if (commission === "Développement durable") {
+      file = "export_amendements_cd.xlsx";
+      label = "Export Excel — Dvp durable";
+    } else if (commission === "Affaires économiques") {
+      file = "export_amendements_ce.xlsx";
+      label = "Export Excel — Affaires éco";
+    }
+    dom.exportBtn.href = `data/${file}`;
+    // Ne change que la dernière partie du contenu (laisse l'icône SVG)
+    const textNode = Array.from(dom.exportBtn.childNodes)
+      .find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+    if (textNode) textNode.textContent = ` ${label}`;
+  }
 }
 
 function renderStats() {
@@ -544,6 +597,7 @@ function renderAmendment(a) {
           <span class="badge badge-state ${stateClass}">${escapeHtml(a.state)}</span>
           ${a.instance === "Affaires économiques" ? `<span class="badge badge-instance">Affaires éco.</span>` : ""}
           ${a.instance === "Affaires sociales" ? `<span class="badge badge-instance">Affaires soc.</span>` : ""}
+          ${(a.tags || []).map(t => `<span class="badge badge-tag badge-tag-${t}">${tagLabel(t)}</span>`).join("")}
           ${a.is_new && !a.is_rss_new ? `<span class="badge badge-new">NOUVEAU</span>` : ""}
           ${a.is_rss_new ? `<span class="badge badge-rss">FLUX</span>` : ""}
           ${a._stateChangedSinceOpen ? `<span class="badge badge-changed" title="Avant : ${escapeAttr(a._previousState || "?")}">MODIFIÉ</span>` : ""}
@@ -552,6 +606,15 @@ function renderAmendment(a) {
       </div>
     </article>
   `;
+}
+
+function tagLabel(t) {
+  return ({
+    "coop":     "Coopératives",
+    "ab":       "AB",
+    "animale":  "Production animale",
+    "végétale": "Production végétale",
+  })[t] || t;
 }
 
 function groupPill(group, count) {
@@ -582,13 +645,23 @@ function numOf(n) {
 
 function filterAmendments() {
   const all = state.amendments;
-  const { search, states, groups, articles, commission } = state.filters;
+  const { search, states, groups, articles, tags, commission } = state.filters;
 
   return all.filter(a => {
     if (commission !== "all" && a.instance !== commission) return false;
     if (states.size && !states.has(a.state)) return false;
     if (groups.size && !groups.has(a.group)) return false;
     if (articles.size && !articles.has(a.article)) return false;
+    // Filtre tags : on garde l'amendement s'il porte AU MOINS UN des tags cochés
+    // (logique OU entre tags, pas ET — sinon trop restrictif vu le faible nombre de tags)
+    if (tags.size) {
+      const aTags = a.tags || [];
+      let matchesAtLeastOne = false;
+      for (const t of tags) {
+        if (aTags.includes(t)) { matchesAtLeastOne = true; break; }
+      }
+      if (!matchesAtLeastOne) return false;
+    }
     if (search) {
       const blob = `${a.num} ${a.author} ${a.summary} ${a.article}`.toLowerCase();
       if (!blob.includes(search)) return false;

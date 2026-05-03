@@ -200,12 +200,21 @@ def write_sheet(ws, rows: list[dict], full_title: str):
     thin = Side(border_style="thin", color="DDDDDD")
     border = Border(left=thin, right=thin, top=thin, bottom=thin)
 
-    # Tri par préfixe + numéro
+    # Tri primaire par triAmendement (= clé alphabétique fournie par l'AN
+    # pour ordonner les amendements dans l'ordre de discussion en commission).
+    # Exemple : "aaaaaaaaaa" vient avant "aaaaaaaab" qui vient avant "ab".
+    # Les amendements sans tri assigné (très récents) finissent en queue,
+    # classés par préfixe + numéro.
     def sort_key(r):
+        tri = (r.get("tri") or "").strip().lower()
         num = r.get("num", "")
         prefix = "".join(c for c in num if c.isalpha())
         digits = "".join(c for c in num if c.isdigit())
-        return (prefix, int(digits) if digits.isdigit() else 0)
+        if tri:
+            # Groupe 0 : amendements avec tri assigné, classés alphabétiquement
+            return (0, tri, prefix, int(digits) if digits.isdigit() else 0)
+        # Groupe 1 : amendements sans tri, classés par préfixe + numéro
+        return (1, "", prefix, int(digits) if digits.isdigit() else 0)
 
     sorted_rows = sorted(rows, key=sort_key)
 

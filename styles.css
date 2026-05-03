@@ -903,6 +903,85 @@ a:hover { color: var(--hemicycle-deep); }
   border: 1px solid rgba(74, 110, 38, 0.2);
 }
 
+/* Avis (rapporteure, gouvernement, sort en commission)
+   Affichés sous le résumé pour les amendements de la commission Développement durable. */
+.amendment-avis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(74, 68, 58, 0.15);
+  font-size: 0.78rem;
+}
+.avis-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 3px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.avis-role {
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}
+/* Couleurs des avis */
+.avis-f   { background: #d8eed1; color: #2d5e1e; border: 1px solid rgba(45, 94, 30, 0.25); }   /* Favorable */
+.avis-d   { background: #f7e3e0; color: #8e2418; border: 1px solid rgba(142, 36, 24, 0.25); } /* Défavorable */
+.avis-s   { background: #e3edf6; color: #2c5e8a; border: 1px solid rgba(44, 94, 138, 0.25); } /* Sagesse */
+.avis-r   { background: #f5e8d4; color: #8a5a1a; border: 1px solid rgba(138, 90, 26, 0.25); } /* Retrait */
+.avis-sat { background: #e7eee0; color: #5a7a3a; border: 1px solid rgba(90, 122, 58, 0.25); } /* Satisfait */
+/* Sort en commission */
+.avis-sort {
+  background: #efe2cf;
+  color: #6e5a3a;
+  border: 1px solid rgba(110, 90, 58, 0.2);
+  font-style: italic;
+}
+.avis-sort.sort-adopté,
+.avis-sort.sort-adoptéàlunanimité,
+.avis-sort.sort-adoptéàlunanimit,
+.avis-sort[class*="adopt"] {
+  background: #c8e3bd;
+  color: #1f5012;
+  border-color: rgba(31, 80, 18, 0.3);
+  font-style: normal;
+  font-weight: 600;
+}
+.avis-sort.sort-rejeté,
+.avis-sort[class*="rejet"] {
+  background: #f0c9c4;
+  color: #6e1810;
+  border-color: rgba(110, 24, 16, 0.3);
+  font-style: normal;
+  font-weight: 600;
+}
+.avis-sort.sort-tombé,
+.avis-sort[class*="tomb"],
+.avis-sort.sort-nondéfendu,
+.avis-sort[class*="défendu"] {
+  background: #ebe8df;
+  color: #6e6859;
+}
+.avis-note {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #6e6859;
+  color: #f4f1e8;
+  font-size: 0.75rem;
+  cursor: help;
+}
+
 .badge-new {
   background: var(--highlight);
   color: var(--crayon);

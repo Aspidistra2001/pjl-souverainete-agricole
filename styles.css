@@ -246,10 +246,22 @@ a:hover { color: var(--hemicycle-deep); }
   text-decoration: none;
 }
 .export-btn:active { transform: scale(0.98); }
-/* Quand l'export est aligné avec refresh, c'est lui qui prend le margin-left */
-.export-btn + .refresh-btn { margin-left: 0; }
 .export-btn { margin-left: auto; }
-/* Mais alors refresh doit revenir à 0 */
+
+/* Variante secondaire : export OpenData enrichi (moins prioritaire visuellement) */
+.export-btn-secondary {
+  margin-left: 0;
+  color: var(--ink-mute);
+  border-color: var(--rule);
+}
+.export-btn-secondary:hover {
+  background: var(--ink-soft);
+  color: var(--paper);
+  border-color: var(--ink-soft);
+}
+
+/* Le refresh n'a plus le margin-left auto puisque c'est export-btn qui le porte */
+.export-btn ~ .refresh-btn { margin-left: 0; }
 
 @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 

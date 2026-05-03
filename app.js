@@ -603,6 +603,7 @@ function renderAmendment(a) {
           ${a._stateChangedSinceOpen ? `<span class="badge badge-changed" title="Avant : ${escapeAttr(a._previousState || "?")}">MODIFIÉ</span>` : ""}
         </div>
         ${summaryHtml}
+        ${renderAvis(a)}
       </div>
     </article>
   `;
@@ -615,6 +616,31 @@ function tagLabel(t) {
     "animale":  "Production animale",
     "végétale": "Production végétale",
   })[t] || t;
+}
+
+function renderAvis(a) {
+  // Affichage des avis (rapporteure, gouvernement) et du sort en commission
+  // Ces données ne sont disponibles que pour les amendements de la commission
+  // Développement durable (extraites du compte-rendu officiel).
+  if (!a.avis_rapporteur && !a.avis_gouvernement && !a.sort_commission) return "";
+  const labels = {F: "Favorable", D: "Défavorable", S: "Sagesse", R: "Retrait demandé", Sat: "Satisfait"};
+  const parts = [];
+  if (a.avis_rapporteur) {
+    const code = a.avis_rapporteur;
+    parts.push(`<span class="avis-tag avis-${code.toLowerCase()}" title="Avis de la rapporteure"><span class="avis-role">Rapp.</span> ${labels[code] || code}</span>`);
+  }
+  if (a.avis_gouvernement) {
+    const code = a.avis_gouvernement;
+    parts.push(`<span class="avis-tag avis-${code.toLowerCase()}" title="Avis du gouvernement"><span class="avis-role">Gouv.</span> ${labels[code] || code}</span>`);
+  }
+  if (a.sort_commission) {
+    const sortClass = "sort-" + a.sort_commission.toLowerCase().replace(/[^a-zà-ÿ]/gi, "");
+    parts.push(`<span class="avis-tag avis-sort ${sortClass}" title="Sort en commission">${escapeHtml(a.sort_commission)}</span>`);
+  }
+  const noteHtml = a.sort_note
+    ? `<span class="avis-note" title="${escapeAttr(a.sort_note)}">ⓘ</span>`
+    : "";
+  return `<div class="amendment-avis">${parts.join("")}${noteHtml}</div>`;
 }
 
 function groupPill(group, count) {

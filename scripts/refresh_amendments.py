@@ -475,23 +475,62 @@ def synchronize() -> dict:
         else:
             print(f"  {len(pending)} amendements en attente de résumé (ANTHROPIC_API_KEY non définie)")
 
-    # 8 bis. Tagging thématique (coop, ab, animale, végétale) à partir des
-    #    bulletins de veille manuels (data/tags_manual.json). Source : les 4 PDF/DOCX
-    #    de bulletins thématiques publiés. Aucun appel API, instantané, 100 % conforme
-    #    à l'éditorialisation. Si un nouvel amendement n'est pas dans les bulletins,
-    #    il sera taggé avec une liste vide []. Pour le ré-inclure : ajouter un nouveau
-    #    bulletin et relancer `python scripts/tag_from_bulletins.py --force`.
+    # 8 bis. Tagging thématique (coop, ab, animale, végétale) — système hybride.
+    #
+    #    Étape 1 : tags depuis les bulletins manuels (data/tags_manual.json).
+    #              Tous les amendements CE listés y reçoivent leurs tags + tags_source="manual".
+    #              Instantané, gratuit, prioritaire.
+    #
+    #    Étape 2 : fallback Claude pour les amendements CE qui n'ont AUCUN tags_source.
+    #              Cela couvre les nouveaux amendements déposés depuis la publication des
+    #              derniers bulletins. ~0,001 USD par amendement, max 50 par sync.
     try:
         from tag_from_bulletins import apply_manual_tags
-        # On ne force pas : les tags déjà présents sur les amendements sont conservés.
-        # Pour rafraîchir intégralement après mise à jour des bulletins, lancer manuellement
-        # le script avec l'option --force.
-        tag_stats = apply_manual_tags(data["amendments"], force=False)
-        summary["tags_applied"] = tag_stats.get("tagged", 0)
-        summary["tags_with_at_least_one"] = tag_stats.get("amendments_with_tags", 0)
+        # force=True pour rattraper si bulletins ont changé. Les amendements taggés Claude
+        # antérieurement sont préservés par la logique interne (cf. tag_from_bulletins.py).
+        manual_stats = apply_manual_tags(data["amendments"], force=True)
+        summary["tags_manual_applied"] = manual_stats.get("tagged", 0)
     except Exception as e:
         print(f"⚠ Tagging manuel échoué : {e}", file=sys.stderr)
         summary.setdefault("errors", []).append(f"Tagging manuel : {e}")
+        manual_stats = {}
+
+    # Étape 2 : Claude en fallback sur les CE non couverts par les bulletins
+    #          ET pas encore tagués par Claude (pas de tags_source du tout)
+    #          ET ayant un résumé non-pending (sinon le tagging serait peu fiable)
+    needs_claude = [
+        a for a in data["amendments"]
+        if a.get("num", "").startswith("CE")
+        and "tags_source" not in a
+        and not a.get("summary_pending")
+    ]
+    if needs_claude:
+        api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+        if api_key:
+            try:
+                from tag_amendments import tag_amendments
+                # max_per_run=50 : généralement très peu de nouveaux amendements à taguer
+                # (ceux non couverts par les bulletins). Coût plafonné à ~0,05 USD par sync.
+                api_stats = tag_amendments(needs_claude, api_key, max_per_run=50)
+                summary["tags_claude_applied"] = api_stats.get("tagged", 0)
+                summary["tags_cost_usd"] = api_stats.get("estimated_cost_usd", 0)
+            except Exception as e:
+                print(f"⚠ Fallback Claude échoué : {e}", file=sys.stderr)
+                summary.setdefault("errors", []).append(f"Tagging Claude : {e}")
+        else:
+            print(f"  {len(needs_claude)} amendements CE non couverts par bulletins en attente de tagging Claude (ANTHROPIC_API_KEY non définie)")
+
+    # 8 ter. Application des avis CD (rapporteure, gouvernement, sort en commission)
+    #    à partir de data/avis_cd.json, extrait du compte-rendu officiel de la
+    #    commission Développement durable. Instantané, gratuit, mise à jour
+    #    chaque fois que avis_cd.json est mis à jour.
+    try:
+        from apply_avis_cd import apply_avis_cd
+        avis_stats = apply_avis_cd(data["amendments"])
+        summary["avis_cd_applied"] = avis_stats.get("applied", 0)
+    except Exception as e:
+        print(f"⚠ Application avis CD échouée : {e}", file=sys.stderr)
+        summary.setdefault("errors", []).append(f"Avis CD : {e}")
 
     # 9. Mettre à jour la métadonnée
     data["meta"]["last_sync"] = datetime.now(timezone.utc).isoformat()

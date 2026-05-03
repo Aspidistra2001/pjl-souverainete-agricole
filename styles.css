@@ -869,6 +869,40 @@ a:hover { color: var(--hemicycle-deep); }
   letter-spacing: 0;
 }
 
+/* Badges thématiques : portée de l'amendement */
+.badge-tag {
+  font-size: 0.7rem;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  padding: 0.12rem 0.5rem;
+  border-radius: 2px;
+}
+.badge-tag-coop {
+  /* Coopératives : terre cuite, brun chaleureux */
+  background: #efe2cf;
+  color: #7a4a1f;
+  border: 1px solid rgba(122, 74, 31, 0.2);
+}
+.badge-tag-ab {
+  /* Agriculture biologique : vert frais */
+  background: #d8eed1;
+  color: #2d5e1e;
+  border: 1px solid rgba(45, 94, 30, 0.25);
+}
+.badge-tag-animale {
+  /* Production animale : ocre / sépia animal */
+  background: #f0e0c9;
+  color: #8a5a1a;
+  border: 1px solid rgba(138, 90, 26, 0.2);
+}
+.badge-tag-végétale {
+  /* Production végétale : vert tendre, plus clair que AB */
+  background: #e3eed4;
+  color: #4a6e26;
+  border: 1px solid rgba(74, 110, 38, 0.2);
+}
+
 .badge-new {
   background: var(--highlight);
   color: var(--crayon);

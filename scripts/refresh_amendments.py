@@ -21,6 +21,7 @@ from __future__ import annotations
 import csv
 import io
 import json
+import os
 import re
 import html
 import sys
@@ -31,6 +32,9 @@ import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
+
+# Permettre l'import du module summarize_amendments situé dans le même dossier
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # ----- Configuration -----
 
@@ -402,8 +406,14 @@ def synchronize() -> dict:
             url = (csv_row.get("URL Amendement") or "").strip()
             state = map_state_from_csv(csv_row.get("Sort de l'amendement", ""))
             author = (csv_row.get("Auteur") or "Auteur non identifié").strip()
-            # Retirer les marqueurs "rapporteur" du nom
+            # Retirer les marqueurs "rapporteur" du nom (toutes formes)
             is_rapporteur = bool(re.search(r"rapporteur", author, re.IGNORECASE))
+            # Formes longues à retirer en premier (mention complète)
+            author = re.sub(
+                r"\s+rapporteur(e)?\s+(pour\s+avis\s+)?(au\s+nom\s+de\s+la\s+commission.*)?$",
+                "", author, flags=re.IGNORECASE
+            ).strip()
+            # Forme courte résiduelle
             author = re.sub(r"\s+rapporteur(e)?\s*$", "", author, flags=re.IGNORECASE).strip()
 
             # Données fines via XML (groupe, résumé)
@@ -444,15 +454,36 @@ def synchronize() -> dict:
         summary["feed_items"] = len(feed_items)
         print(f"Flux RSS (info) : {len(feed_items)} items")
 
-    # 8. Mettre à jour la métadonnée
+    # 8. Génération des résumés via l'API Claude (Haiku 4.5).
+    #    On ne traite que les amendements avec summary_pending=True
+    #    (les autres ont déjà un résumé rédigé manuellement ou par un appel API précédent).
+    pending = [a for a in data["amendments"] if a.get("summary_pending")]
+    if pending:
+        api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+        if api_key:
+            try:
+                # Import local pour éviter une erreur si le module n'est pas là
+                from summarize_amendments import summarize_amendments
+                # max_per_run=50 pour limiter les coûts par sync
+                # (~50 × 0,003 USD = 0,15 USD max par sync, environ 1500 amendements/mois max)
+                api_stats = summarize_amendments(pending, api_key, max_per_run=50)
+                summary["summaries_generated"] = api_stats.get("generated", 0)
+                summary["summaries_cost_usd"] = api_stats.get("estimated_cost_usd", 0)
+            except Exception as e:
+                print(f"⚠ Génération de résumés échouée : {e}", file=sys.stderr)
+                summary.setdefault("errors", []).append(f"Résumés API : {e}")
+        else:
+            print(f"  {len(pending)} amendements en attente de résumé (ANTHROPIC_API_KEY non définie)")
+
+    # 9. Mettre à jour la métadonnée
     data["meta"]["last_sync"] = datetime.now(timezone.utc).isoformat()
     data["meta"]["total"] = len(data["amendments"])
 
-    # 9. Écrire le fichier
+    # 10. Écrire le fichier
     with DATA_FILE.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
 
-    # 10. TOUJOURS écrire le fichier de statut de synchro (même si rien n'a changé)
+    # 11. TOUJOURS écrire le fichier de statut de synchro (même si rien n'a changé)
     # Ce fichier est committé indépendamment d'amendments.json pour prouver
     # que le script tourne, même quand il n'y a aucune modification de fond.
     sync_status = {
@@ -462,12 +493,14 @@ def synchronize() -> dict:
         "fetched": summary["fetched"],
         "added": len(summary["added"]),
         "state_changes": len(summary["state_changes"]),
+        "summaries_generated": summary.get("summaries_generated", 0),
+        "summaries_cost_usd": summary.get("summaries_cost_usd", 0),
         "errors": summary.get("errors", []),
     }
     with SYNC_STATUS_FILE.open("w", encoding="utf-8") as f:
         json.dump(sync_status, f, ensure_ascii=False, indent=2)
 
-    print(f"\nRésumé : +{len(summary['added'])} ajout(s), {len(summary['state_changes'])} changement(s) d'état")
+    print(f"\nRésumé : +{len(summary['added'])} ajout(s), {len(summary['state_changes'])} changement(s) d'état, {summary.get('summaries_generated', 0)} résumés générés")
     return summary
 
 

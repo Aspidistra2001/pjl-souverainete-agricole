@@ -982,6 +982,66 @@ a:hover { color: var(--hemicycle-deep); }
   cursor: help;
 }
 
+/* Jumeaux CD↔CE — affichés sur les fiches CE pour montrer le sort déjà connu
+   des amendements identiques côté commission Développement durable. */
+.amendment-jumeaux {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  background: #eaf2f7;
+  border-left: 3px solid #5a8ab2;
+  font-size: 0.78rem;
+  border-radius: 0 3px 3px 0;
+}
+.jumeaux-label {
+  font-weight: 600;
+  color: #2c5e8a;
+}
+.jumeau-link, .jumeau-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 2px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.7);
+  color: #1a1816;
+  font-weight: 500;
+}
+.jumeau-link:hover {
+  text-decoration: underline;
+  background: #fff;
+}
+.jumeau-link .sort {
+  font-size: 0.72rem;
+  font-weight: normal;
+  opacity: 0.85;
+  font-style: italic;
+}
+/* Couleurs par sort des jumeaux */
+.jumeau-link.sort-adopté,
+.jumeau-summary.sort-adopté {
+  color: #1f5012;
+  background: #d8eed1;
+}
+.jumeau-link.sort-rejeté,
+.jumeau-summary.sort-rejeté {
+  color: #6e1810;
+  background: #f7e3e0;
+}
+.jumeau-link.sort-nonsoutenu,
+.jumeau-summary.sort-nonsoutenu,
+.jumeau-link.sort-tombé,
+.jumeau-summary.sort-tombé,
+.jumeau-link.sort-retiré,
+.jumeau-summary.sort-retiré {
+  color: #6e6859;
+  background: #ebe8df;
+}
+
 .badge-new {
   background: var(--highlight);
   color: var(--crayon);

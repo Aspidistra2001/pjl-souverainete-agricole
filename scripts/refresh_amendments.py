@@ -475,6 +475,24 @@ def synchronize() -> dict:
         else:
             print(f"  {len(pending)} amendements en attente de résumé (ANTHROPIC_API_KEY non définie)")
 
+    # 8 bis. Tagging thématique (coop, ab, animale, végétale) à partir des
+    #    bulletins de veille manuels (data/tags_manual.json). Source : les 4 PDF/DOCX
+    #    de bulletins thématiques publiés. Aucun appel API, instantané, 100 % conforme
+    #    à l'éditorialisation. Si un nouvel amendement n'est pas dans les bulletins,
+    #    il sera taggé avec une liste vide []. Pour le ré-inclure : ajouter un nouveau
+    #    bulletin et relancer `python scripts/tag_from_bulletins.py --force`.
+    try:
+        from tag_from_bulletins import apply_manual_tags
+        # On ne force pas : les tags déjà présents sur les amendements sont conservés.
+        # Pour rafraîchir intégralement après mise à jour des bulletins, lancer manuellement
+        # le script avec l'option --force.
+        tag_stats = apply_manual_tags(data["amendments"], force=False)
+        summary["tags_applied"] = tag_stats.get("tagged", 0)
+        summary["tags_with_at_least_one"] = tag_stats.get("amendments_with_tags", 0)
+    except Exception as e:
+        print(f"⚠ Tagging manuel échoué : {e}", file=sys.stderr)
+        summary.setdefault("errors", []).append(f"Tagging manuel : {e}")
+
     # 9. Mettre à jour la métadonnée
     data["meta"]["last_sync"] = datetime.now(timezone.utc).isoformat()
     data["meta"]["total"] = len(data["amendments"])

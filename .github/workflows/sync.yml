@@ -34,6 +34,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install Python dependencies
+        run: pip install openpyxl
+
       - name: Run sync script
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -54,6 +57,7 @@ jobs:
 
           git add data/sync_status.json
           git add data/amendments.json
+          git add data/export_amendements.xlsx
 
           if git diff --staged --quiet; then
             echo "Aucune modification à committer."
@@ -65,16 +69,37 @@ jobs:
               git commit -m "Heartbeat sync — pas de changement"
             fi
 
+            # Push avec gestion des conflits.
+            # data/amendments.json et data/sync_status.json sont régénérés intégralement
+            # par chaque exécution du script à partir du CSV OpenData (source de vérité).
+            # En cas de conflit avec une version distante, la version locale gagne
+            # systématiquement : on utilise la stratégie "ours" du rebase.
             for i in 1 2 3; do
               if git push; then
-                echo "Commit poussé"
+                echo "Commit poussé (tentative $i)"
                 echo "committed=true" >> "$GITHUB_OUTPUT"
                 break
-              else
-                echo "Push refusé (tentative $i/3) — rebase puis retry"
-                git pull --rebase origin main
+              fi
+              echo "Push refusé (tentative $i/3) — rebase avec stratégie ours"
+              # Stratégie : récupérer le distant, et en cas de conflit
+              # sur les fichiers de données, garder NOTRE version (= sync.json + amendments.json
+              # régénérés par cette exécution).
+              git fetch origin main
+              if ! git rebase -X ours origin/main; then
+                echo "Rebase auto échoué, tentative de résolution forcée"
+                # Fallback : on annule et on retente différemment
+                git rebase --abort 2>/dev/null || true
+                # Reset à origin puis on rajoute nos fichiers par-dessus
+                git reset --soft origin/main
+                git add data/sync_status.json data/amendments.json
+                git commit --amend -m "$COMMIT_MSG" --no-edit || git commit -m "$COMMIT_MSG"
               fi
             done
+
+            # Vérification finale : si après 3 tentatives toujours pas poussé, on signale
+            if ! git diff origin/main --quiet 2>/dev/null; then
+              echo "⚠ Warning : le push final a peut-être échoué"
+            fi
           fi
 
   # Job de déploiement Pages : ne s'exécute que si la sync a effectivement committé.

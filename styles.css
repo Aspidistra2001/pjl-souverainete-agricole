@@ -222,6 +222,35 @@ a:hover { color: var(--hemicycle-deep); }
 .refresh-btn[disabled] { opacity: 0.5; cursor: wait; }
 .refresh-btn[disabled] svg { animation: spin 1s linear infinite; }
 
+/* Bouton d'export Excel — même esthétique que refresh, juste avant */
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--hemicycle);
+  background: transparent;
+  border: 1px solid var(--hemicycle);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+.export-btn:hover {
+  background: var(--hemicycle);
+  color: var(--paper);
+  text-decoration: none;
+}
+.export-btn:active { transform: scale(0.98); }
+/* Quand l'export est aligné avec refresh, c'est lui qui prend le margin-left */
+.export-btn + .refresh-btn { margin-left: 0; }
+.export-btn { margin-left: auto; }
+/* Mais alors refresh doit revenir à 0 */
+
 @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 
 /* ============================================================

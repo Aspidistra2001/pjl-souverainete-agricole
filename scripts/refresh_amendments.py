@@ -532,6 +532,17 @@ def synchronize() -> dict:
         print(f"⚠ Application avis CD échouée : {e}", file=sys.stderr)
         summary.setdefault("errors", []).append(f"Avis CD : {e}")
 
+    # 8 quater. Application des jumeaux CD↔CE (sort des amendements similaires
+    #    déjà examinés en commission Développement durable). Ces données permettent
+    #    d'anticiper le sort probable des amendements CE qui ont un jumeau CD.
+    try:
+        from apply_jumeaux import apply_jumeaux
+        jumeaux_stats = apply_jumeaux(data["amendments"])
+        summary["jumeaux_applied"] = jumeaux_stats.get("applied", 0)
+    except Exception as e:
+        print(f"⚠ Application jumeaux échouée : {e}", file=sys.stderr)
+        summary.setdefault("errors", []).append(f"Jumeaux CD↔CE : {e}")
+
     # 9. Mettre à jour la métadonnée
     data["meta"]["last_sync"] = datetime.now(timezone.utc).isoformat()
     data["meta"]["total"] = len(data["amendments"])

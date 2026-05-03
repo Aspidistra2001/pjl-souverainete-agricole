@@ -604,6 +604,7 @@ function renderAmendment(a) {
         </div>
         ${summaryHtml}
         ${renderAvis(a)}
+        ${renderJumeaux(a)}
       </div>
     </article>
   `;
@@ -616,6 +617,48 @@ function tagLabel(t) {
     "animale":  "Production animale",
     "végétale": "Production végétale",
   })[t] || t;
+}
+
+function renderJumeaux(a) {
+  // Affiche les amendements jumeaux côté commission Développement durable.
+  // Permet d'anticiper le sort probable d'un CE à partir du sort déjà connu côté CD.
+  if (!a.jumeaux_cd || a.jumeaux_cd.length === 0) return "";
+  const jumeaux = a.jumeaux_cd;
+  const type = a.jumeau_type || "substantiel";
+
+  // Compteur par sort (pour résumer si beaucoup de jumeaux)
+  const sortCounts = {};
+  jumeaux.forEach(j => { sortCounts[j.sort] = (sortCounts[j.sort] || 0) + 1; });
+
+  const sortClass = sort => "sort-" + sort.toLowerCase().replace(/[^a-zà-ÿ]/gi, "");
+
+  const label = type === "suppression"
+    ? `🔗 Amendement de suppression — ${jumeaux.length} jumeau${jumeaux.length > 1 ? "x" : ""} CD :`
+    : `🔗 Jumeau${jumeaux.length > 1 ? "x" : ""} CD :`;
+
+  // Si peu de jumeaux (≤ 4), liste détaillée. Sinon, résumé par sort.
+  let body;
+  if (jumeaux.length <= 4) {
+    body = jumeaux.map(j => {
+      const cd = state.byNum.get(j.num);
+      const url = cd ? cd.url : null;
+      const inner = `${escapeHtml(j.num)} <span class="sort">${escapeHtml(j.sort)}</span>`;
+      const title = j.auteur ? `Auteur : ${escapeAttr(j.auteur)}` : escapeAttr(j.num);
+      if (url) {
+        return `<a class="jumeau-link ${sortClass(j.sort)}" href="${escapeAttr(url)}" target="_blank" rel="noopener" title="${title}">${inner}</a>`;
+      }
+      return `<span class="jumeau-link ${sortClass(j.sort)}" title="${title}">${inner}</span>`;
+    }).join("");
+  } else {
+    body = Object.entries(sortCounts).map(([sort, count]) =>
+      `<span class="jumeau-summary ${sortClass(sort)}">${count} ${escapeHtml(sort)}</span>`
+    ).join("");
+  }
+
+  return `<div class="amendment-jumeaux">
+    <span class="jumeaux-label">${label}</span>
+    ${body}
+  </div>`;
 }
 
 function renderAvis(a) {

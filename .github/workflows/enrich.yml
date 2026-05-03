@@ -61,27 +61,6 @@ jobs:
             done
           fi
 
-  # Job de déploiement Pages : ne s'exécute que si le job enrich a committé
-  deploy:
-    needs: enrich
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout (post-commit)
-        uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+# Note : pas de job de déploiement Pages ici. Le commit ci-dessus déclenche
+# automatiquement le workflow "Déploiement GitHub Pages" qui se charge de
+# publier la nouvelle version du site.

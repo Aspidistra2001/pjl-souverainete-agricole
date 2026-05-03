@@ -1,0 +1,2005 @@
+{
+  "_comment": "Amendements CE qui ont un jumeau substantiel ou de suppression côté CD. Permet de prédire le sort probable côté Affaires éco à partir du sort déjà connu côté Développement durable. Source : analyse comparative des dispositifs identiques.",
+  "_source": "comparaison_amendements_DEV_CE.xlsx",
+  "amendments": {
+    "CE1018": {
+      "jumeaux_cd": [
+        {
+          "num": "CD17",
+          "sort": "Adopté",
+          "auteur": "Descoeur Vincent",
+          "kind": "substantiel"
+        },
+        {
+          "num": "CD175",
+          "sort": "Adopté",
+          "auteur": "Brun Fabrice",
+          "kind": "substantiel"
+        },
+        {
+          "num": "CD74",
+          "sort": "Non soutenu",
+          "auteur": "Bonnivard Émilie",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Après l'article 6"
+    },
+    "CE1020": {
+      "jumeaux_cd": [
+        {
+          "num": "CD336",
+          "sort": "Adopté",
+          "auteur": "Violland Anne-Cécile",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Après l'article 6"
+    },
+    "CE1025": {
+      "jumeaux_cd": [
+        {
+          "num": "CD331",
+          "sort": "Adopté",
+          "auteur": "Violland Anne-Cécile",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Après l'article 8"
+    },
+    "CE1024": {
+      "jumeaux_cd": [
+        {
+          "num": "CD332",
+          "sort": "Adopté",
+          "auteur": "Violland Anne-Cécile",
+          "kind": "substantiel"
+        },
+        {
+          "num": "CD90",
+          "sort": "Adopté",
+          "auteur": "Delautrette Stéphane",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Après l'article 8"
+    },
+    "CE1033": {
+      "jumeaux_cd": [
+        {
+          "num": "CD249",
+          "sort": "Adopté",
+          "auteur": "Martineau Éric",
+          "kind": "substantiel"
+        },
+        {
+          "num": "CD129",
+          "sort": "Non soutenu",
+          "auteur": "Minard Christelle",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Après l'article 9"
+    },
+    "CE1043": {
+      "jumeaux_cd": [
+        {
+          "num": "CD10",
+          "sort": "Adopté",
+          "auteur": "Pantel Sophie",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1039": {
+      "jumeaux_cd": [
+        {
+          "num": "CD178",
+          "sort": "Adopté",
+          "auteur": "Bonnivard Émilie",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1036": {
+      "jumeaux_cd": [
+        {
+          "num": "CD195",
+          "sort": "Adopté",
+          "auteur": "Pantel Sophie",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1035": {
+      "jumeaux_cd": [
+        {
+          "num": "CD272",
+          "sort": "Adopté",
+          "auteur": "Pochon Marie",
+          "kind": "substantiel"
+        },
+        {
+          "num": "CD555",
+          "sort": "Adopté",
+          "auteur": "Roseren Xavier rapporteur",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1047": {
+      "jumeaux_cd": [
+        {
+          "num": "CD3",
+          "sort": "Adopté",
+          "auteur": "Pantel Sophie",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1044": {
+      "jumeaux_cd": [
+        {
+          "num": "CD50",
+          "sort": "Adopté",
+          "auteur": "Rousset Jean-François",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1045": {
+      "jumeaux_cd": [
+        {
+          "num": "CD52",
+          "sort": "Adopté",
+          "auteur": "Rousset Jean-François",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1046": {
+      "jumeaux_cd": [
+        {
+          "num": "CD54",
+          "sort": "Adopté",
+          "auteur": "Rousset Jean-François",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1037": {
+      "jumeaux_cd": [
+        {
+          "num": "CD556",
+          "sort": "Adopté",
+          "auteur": "Roseren Xavier rapporteur",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1040": {
+      "jumeaux_cd": [
+        {
+          "num": "CD559",
+          "sort": "Adopté",
+          "auteur": "Roseren Xavier rapporteur",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1038": {
+      "jumeaux_cd": [
+        {
+          "num": "CD571",
+          "sort": "Adopté",
+          "auteur": "Roseren Xavier rapporteur",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 14"
+    },
+    "CE1009": {
+      "jumeaux_cd": [
+        {
+          "num": "CD416",
+          "sort": "Adopté",
+          "auteur": "Coggia Nathalie rapporteure",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 5"
+    },
+    "CE1008": {
+      "jumeaux_cd": [
+        {
+          "num": "CD421",
+          "sort": "Adopté",
+          "auteur": "Coggia Nathalie rapporteure",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 5"
+    },
+    "CE1012": {
+      "jumeaux_cd": [
+        {
+          "num": "CD422",
+          "sort": "Adopté",
+          "auteur": "Coggia Nathalie rapporteure",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 5"
+    },
+    "CE1011": {
+      "jumeaux_cd": [
+        {
+          "num": "CD424",
+          "sort": "Adopté",
+          "auteur": "Coggia Nathalie rapporteure",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 5"
+    },
+    "CE1013": {
+      "jumeaux_cd": [
+        {
+          "num": "CD425",
+          "sort": "Adopté",
+          "auteur": "Coggia Nathalie rapporteure",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 5"
+    },
+    "CE1017": {
+      "jumeaux_cd": [
+        {
+          "num": "CD428",
+          "sort": "Adopté",
+          "auteur": "Coggia Nathalie rapporteure",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 6"
+    },
+    "CE1032": {
+      "jumeaux_cd": [
+        {
+          "num": "CD527",
+          "sort": "Adopté",
+          "auteur": "Potier Dominique",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 9"
+    },
+    "CE1029": {
+      "jumeaux_cd": [
+        {
+          "num": "CD552",
+          "sort": "Adopté",
+          "auteur": "Roseren Xavier rapporteur",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 9"
+    },
+    "CE1031": {
+      "jumeaux_cd": [
+        {
+          "num": "CD554",
+          "sort": "Adopté",
+          "auteur": "Roseren Xavier rapporteur",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Article 9"
+    },
+    "CE1007": {
+      "jumeaux_cd": [
+        {
+          "num": "CD345",
+          "sort": "Adopté",
+          "auteur": "Le Feur Sandrine",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Avant l'article 5"
+    },
+    "CE1005": {
+      "jumeaux_cd": [
+        {
+          "num": "CD407",
+          "sort": "Adopté",
+          "auteur": "Coggia Nathalie rapporteure",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Avant l'article 5"
+    },
+    "CE1022": {
+      "jumeaux_cd": [
+        {
+          "num": "CD432",
+          "sort": "Adopté",
+          "auteur": "Coggia Nathalie rapporteure",
+          "kind": "substantiel"
+        }
+      ],
+      "type": "substantiel",
+      "article": "Avant l'article 8"
+    },
+    "CE1021": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE1023": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE218": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE229": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE285": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE291": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE294": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE295": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE326": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE417": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE450": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE518": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE564": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE575": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE744": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE830": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE954": {
+      "jumeaux_cd": [
+        {
+          "num": "CD155",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD498",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 10"
+        },
+        {
+          "num": "CD255",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD501",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        },
+        {
+          "num": "CD106",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD395",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        },
+        {
+          "num": "CD22",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD450",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD59",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 6"
+        },
+        {
+          "num": "CD149",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD349",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD477",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        },
+        {
+          "num": "CD62",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 7"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 10",
+      "dispositif": "Supprimer cet article."
+    },
+    "CE531": {
+      "jumeaux_cd": [
+        {
+          "num": "CD279",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 14",
+      "dispositif": "Supprimer l'alinéa 6."
+    },
+    "CE619": {
+      "jumeaux_cd": [
+        {
+          "num": "CD279",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 14"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 14",
+      "dispositif": "Supprimer l'alinéa 6."
+    },
+    "CE332": {
+      "jumeaux_cd": [
+        {
+          "num": "CD36",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 2."
+    },
+    "CE516": {
+      "jumeaux_cd": [
+        {
+          "num": "CD36",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 2."
+    },
+    "CE1056": {
+      "jumeaux_cd": [
+        {
+          "num": "CD37",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 3."
+    },
+    "CE1057": {
+      "jumeaux_cd": [
+        {
+          "num": "CD37",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 3."
+    },
+    "CE1058": {
+      "jumeaux_cd": [
+        {
+          "num": "CD37",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 3."
+    },
+    "CE333": {
+      "jumeaux_cd": [
+        {
+          "num": "CD37",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 3."
+    },
+    "CE523": {
+      "jumeaux_cd": [
+        {
+          "num": "CD37",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 3."
+    },
+    "CE589": {
+      "jumeaux_cd": [
+        {
+          "num": "CD37",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 3."
+    },
+    "CE674": {
+      "jumeaux_cd": [
+        {
+          "num": "CD37",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 3."
+    },
+    "CE842": {
+      "jumeaux_cd": [
+        {
+          "num": "CD37",
+          "sort": "Rejeté",
+          "kind": "suppression",
+          "article": "Article 5"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 5",
+      "dispositif": "Supprimer l’alinéa 3."
+    },
+    "CE1028": {
+      "jumeaux_cd": [
+        {
+          "num": "CD127",
+          "sort": "Non soutenu",
+          "kind": "suppression",
+          "article": "Article 9"
+        },
+        {
+          "num": "CD242",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Article 9"
+        }
+      ],
+      "type": "suppression",
+      "article": "Article 9",
+      "dispositif": "À l’alinéa 11, substituer au montant : « 30 000 € » le montant : « 75 000 € »."
+    },
+    "CE1034": {
+      "jumeaux_cd": [
+        {
+          "num": "CD358",
+          "sort": "Adopté",
+          "kind": "suppression",
+          "article": "Avant l'article 14"
+        }
+      ],
+      "type": "suppression",
+      "article": "Avant l'article 14",
+      "dispositif": "Compléter l’intitulé du chapitre IV par les mots : « par le loup »."
+    }
+  }
+}

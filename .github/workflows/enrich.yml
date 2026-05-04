@@ -1,10 +1,22 @@
 name: Génération de l'export OpenData enrichi
 
-# Ce workflow ne se déclenche QUE manuellement (pas de cron) parce qu'il fetch
-# 1500+ XML d'amendements, soit ~3 minutes de runtime et autant de requêtes
-# vers les serveurs de l'Assemblée nationale. À ne lancer que ponctuellement.
+# Ce workflow se déclenche :
+# - automatiquement une fois par jour à 04h00 UTC (06h00 Paris en été)
+#   pour maintenir l'export enrichi à jour sans alourdir les sync horaires
+# - manuellement via le bouton "Run workflow" si besoin d'un rafraîchissement
+#   ponctuel (par exemple juste avant un examen en commission)
+#
+# Il fetch 1500+ XML d'amendements, soit ~3 minutes de runtime et autant de
+# requêtes vers les serveurs de l'Assemblée nationale. La fréquence quotidienne
+# reste très raisonnable et le fichier produit (~plusieurs Mo) ne pollue pas
+# l'historique git autant qu'avec une génération horaire.
 
 on:
+  schedule:
+    # 04h00 UTC = 05h00 (hiver) / 06h00 (été) Paris.
+    # Choix d'une heure creuse pour limiter les conflits avec la sync horaire
+    # (la sync tourne à HH:00, donc on évite ce créneau précis).
+    - cron: "30 4 * * *"
   workflow_dispatch:
 
 permissions:

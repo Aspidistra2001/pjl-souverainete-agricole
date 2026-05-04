@@ -57,7 +57,9 @@ jobs:
 
           git add data/sync_status.json
           git add data/amendments.json
-          git add data/export_amendements.xlsx
+          git add data/export_amendements_tous.xlsx
+          git add data/export_amendements_cd.xlsx
+          git add data/export_amendements_ce.xlsx
 
           if git diff --staged --quiet; then
             echo "Aucune modification à committer."
@@ -92,6 +94,9 @@ jobs:
                 # Reset à origin puis on rajoute nos fichiers par-dessus
                 git reset --soft origin/main
                 git add data/sync_status.json data/amendments.json
+                git add data/export_amendements_tous.xlsx
+                git add data/export_amendements_cd.xlsx
+                git add data/export_amendements_ce.xlsx
                 git commit --amend -m "$COMMIT_MSG" --no-edit || git commit -m "$COMMIT_MSG"
               fi
             done

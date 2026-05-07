@@ -13,10 +13,15 @@ name: Génération de l'export OpenData enrichi
 
 on:
   schedule:
-    # 04h00 UTC = 05h00 (hiver) / 06h00 (été) Paris.
-    # Choix d'une heure creuse pour limiter les conflits avec la sync horaire
-    # (la sync tourne à HH:00, donc on évite ce créneau précis).
-    - cron: "30 4 * * *"
+    # GitHub Actions documente que les workflows scheduled peuvent être retardés
+    # ou sautés en période de forte charge (notamment autour des heures rondes).
+    # On programme deux créneaux décalés (en milieu de demi-heure pour éviter les
+    # heures rondes), de manière à garantir qu'au moins un run automatique tourne
+    # chaque jour, même si l'autre est sauté.
+    # 03h17 UTC = 05h17 (été) / 04h17 (hiver) Paris
+    # 14h47 UTC = 16h47 (été) / 15h47 (hiver) Paris
+    - cron: "17 3 * * *"
+    - cron: "47 14 * * *"
   workflow_dispatch:
 
 permissions:

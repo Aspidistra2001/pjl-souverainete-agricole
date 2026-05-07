@@ -33,7 +33,10 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = ROOT / "data" / "amendments.json"
-OUTPUT_FILE = ROOT / "data" / "export_amendements.xlsx"
+# Trois fichiers générés selon le périmètre choisi par l'utilisateur :
+# - export_amendements_tous.xlsx : tous les amendements (toutes commissions)
+# - export_amendements_cd.xlsx   : commission Développement durable
+# - export_amendements_ce.xlsx   : commission Affaires économiques
 
 
 # Couleurs des groupes parlementaires (en hex sans le #)
@@ -91,16 +94,16 @@ def write_sheet(ws, amendments: list, title: str):
     ws["A1"] = f"Bulletin de veille — PJL n° 2632 — Souveraineté agricole — {title}"
     ws["A1"].font = Font(name="Calibri", size=14, bold=True, color="1A1816")
     ws["A1"].alignment = Alignment(horizontal="left", vertical="center")
-    ws.merge_cells("A1:G1")
+    ws.merge_cells("A1:H1")
     ws.row_dimensions[1].height = 24
 
     ws["A2"] = f"Export généré le {datetime.now(timezone.utc).strftime('%d/%m/%Y à %H:%M UTC')} — {len(amendments)} amendements"
     ws["A2"].font = Font(name="Calibri", size=10, italic=True, color="6E6859")
-    ws.merge_cells("A2:G2")
+    ws.merge_cells("A2:H2")
     ws.row_dimensions[2].height = 18
 
     # En-têtes (ligne 4)
-    headers = ["N°", "Article", "Auteur", "Groupe", "État", "Résumé", "Lien officiel"]
+    headers = ["N°", "Article", "Auteur", "Groupe", "État", "Thématiques", "Résumé", "Lien officiel"]
     for col_idx, h in enumerate(headers, start=1):
         cell = ws.cell(row=4, column=col_idx, value=h)
         cell.font = Font(name="Calibri", size=11, bold=True, color=HEADER_FG)
@@ -175,15 +178,27 @@ def write_sheet(ws, amendments: list, title: str):
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = border
 
+        # Thématiques (tags Claude)
+        TAG_LABELS_LOCAL = {
+            "coop": "Coopératives", "ab": "AB",
+            "animale": "Production animale", "végétale": "Production végétale",
+        }
+        tags = a.get("tags", []) or []
+        tag_text = ", ".join(TAG_LABELS_LOCAL.get(t, t) for t in tags)
+        cell = ws.cell(row=row_idx, column=6, value=safe_text(tag_text))
+        cell.font = Font(name="Calibri", size=9, italic=True, color="4a443a")
+        cell.alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
+        cell.border = border
+
         # Résumé
         summary = a.get("summary", "")
-        cell = ws.cell(row=row_idx, column=6, value=safe_text(summary))
+        cell = ws.cell(row=row_idx, column=7, value=safe_text(summary))
         cell.font = Font(name="Calibri", size=10)
         cell.alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
         cell.border = border
 
         # Lien officiel
-        cell = ws.cell(row=row_idx, column=7, value="Voir sur l'AN" if url else "")
+        cell = ws.cell(row=row_idx, column=8, value="Voir sur l'AN" if url else "")
         if url:
             cell.font = Font(name="Calibri", size=10, color="1565C0", underline="single")
             cell.hyperlink = url
@@ -192,8 +207,8 @@ def write_sheet(ws, amendments: list, title: str):
         cell.alignment = Alignment(horizontal="left", vertical="top")
         cell.border = border
 
-    # Largeurs de colonnes (en caractères)
-    widths = [10, 24, 28, 8, 18, 90, 18]
+    # Largeurs de colonnes (en caractères) — pour 8 colonnes maintenant
+    widths = [10, 24, 28, 8, 18, 22, 75, 18]
     for col_idx, w in enumerate(widths, start=1):
         ws.column_dimensions[get_column_letter(col_idx)].width = w
 
@@ -222,31 +237,40 @@ def main():
     amendments = data.get("amendments", [])
     print(f"Génération Excel pour {len(amendments)} amendements...")
 
-    wb = Workbook()
-    # Première feuille : tous les amendements
-    ws_all = wb.active
-    write_sheet(ws_all, amendments, "Tous les amendements")
-
-    # Feuilles séparées par commission
+    # Trois fichiers : un par périmètre. Le site choisit lequel télécharger
+    # selon le bouton radio sélectionné par l'utilisateur.
     cd_amends = [a for a in amendments if a.get("instance") == "Développement durable"]
-    if cd_amends:
-        ws_cd = wb.create_sheet("Dvp durable")
-        write_sheet(ws_cd, cd_amends, "Commission Développement durable")
-
     ce_amends = [a for a in amendments if a.get("instance") == "Affaires économiques"]
-    if ce_amends:
-        ws_ce = wb.create_sheet("Affaires éco")
-        write_sheet(ws_ce, ce_amends, "Commission Affaires économiques")
 
-    # Sauvegarder
-    wb.save(OUTPUT_FILE)
+    files_to_generate = [
+        ("export_amendements_tous.xlsx",
+         "Tous les amendements",
+         "Tous les amendements",
+         amendments),
+        ("export_amendements_cd.xlsx",
+         "Dvp durable",
+         "Commission Développement durable",
+         cd_amends),
+        ("export_amendements_ce.xlsx",
+         "Affaires éco",
+         "Commission Affaires économiques",
+         ce_amends),
+    ]
 
     import os
-    size_kb = os.path.getsize(OUTPUT_FILE) / 1024
-    print(f"✓ Fichier généré : {OUTPUT_FILE.relative_to(ROOT)} ({size_kb:.0f} ko)")
-    print(f"  - Feuille 1 : tous ({len(amendments)} amendements)")
-    print(f"  - Feuille 2 : Développement durable ({len(cd_amends)})")
-    print(f"  - Feuille 3 : Affaires économiques ({len(ce_amends)})")
+    for filename, sheet_name, full_title, amends in files_to_generate:
+        if not amends:
+            continue
+        output_file = ROOT / "data" / filename
+        wb = Workbook()
+        ws = wb.active
+        # Pour ces fichiers à feuille unique, on adapte le nom d'onglet
+        write_sheet(ws, amends, full_title)
+        # Renommer l'onglet pour qu'il soit court (le titre interne reste long)
+        ws.title = sheet_name
+        wb.save(output_file)
+        size_kb = os.path.getsize(output_file) / 1024
+        print(f"  ✓ {filename} : {len(amends)} amendements ({size_kb:.0f} ko)")
 
 
 if __name__ == "__main__":

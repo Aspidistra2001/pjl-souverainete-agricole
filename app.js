@@ -371,8 +371,8 @@ function renderCommissionCounts() {
   });
 
   // Mise à jour du lien d'export Excel selon la commission active.
-  // Trois fichiers sont régénérés à chaque sync côté serveur :
-  // export_amendements_tous.xlsx, _cd.xlsx, _ce.xlsx
+  // Quatre fichiers sont régénérés à chaque sync côté serveur :
+  // export_amendements_tous.xlsx, _cd.xlsx, _ce.xlsx, _an.xlsx (séance)
   if (dom.exportBtn) {
     const commission = state.filters.commission;
     let file = "export_amendements_tous.xlsx";
@@ -383,6 +383,9 @@ function renderCommissionCounts() {
     } else if (commission === "Affaires économiques") {
       file = "export_amendements_ce.xlsx";
       label = "Export Excel — Affaires éco";
+    } else if (commission === "Séance publique") {
+      file = "export_amendements_an.xlsx";
+      label = "Export Excel — Séance publique";
     }
     dom.exportBtn.href = `data/${file}`;
     // Ne change que la dernière partie du contenu (laisse l'icône SVG)
@@ -596,6 +599,8 @@ function renderAmendment(a) {
           ${a.rapporteur ? `<span class="rapporteur-tag">(rapporteure)</span>` : ""}
           <span class="badge badge-state ${stateClass}">${escapeHtml(a.state)}</span>
           ${a.instance === "Affaires économiques" ? `<span class="badge badge-instance">Affaires éco.</span>` : ""}
+          ${a.instance === "Développement durable" ? `<span class="badge badge-instance">Dvp durable</span>` : ""}
+          ${a.instance === "Séance publique" ? `<span class="badge badge-instance badge-seance">Séance</span>` : ""}
           ${a.instance === "Affaires sociales" ? `<span class="badge badge-instance">Affaires soc.</span>` : ""}
           ${(a.tags || []).map(t => `<span class="badge badge-tag badge-tag-${t}">${tagLabel(t)}</span>`).join("")}
           ${a.is_new && !a.is_rss_new ? `<span class="badge badge-new">NOUVEAU</span>` : ""}

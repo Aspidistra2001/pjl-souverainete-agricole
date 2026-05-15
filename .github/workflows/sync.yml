@@ -60,6 +60,7 @@ jobs:
           git add data/export_amendements_tous.xlsx
           git add data/export_amendements_cd.xlsx
           git add data/export_amendements_ce.xlsx
+          git add data/export_amendements_an.xlsx
 
           if git diff --staged --quiet; then
             echo "Aucune modification à committer."
@@ -97,6 +98,7 @@ jobs:
                 git add data/export_amendements_tous.xlsx
                 git add data/export_amendements_cd.xlsx
                 git add data/export_amendements_ce.xlsx
+                git add data/export_amendements_an.xlsx
                 git commit --amend -m "$COMMIT_MSG" --no-edit || git commit -m "$COMMIT_MSG"
               fi
             done

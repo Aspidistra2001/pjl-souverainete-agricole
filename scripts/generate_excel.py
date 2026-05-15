@@ -237,10 +237,11 @@ def main():
     amendments = data.get("amendments", [])
     print(f"Génération Excel pour {len(amendments)} amendements...")
 
-    # Trois fichiers : un par périmètre. Le site choisit lequel télécharger
+    # Quatre fichiers : un par périmètre. Le site choisit lequel télécharger
     # selon le bouton radio sélectionné par l'utilisateur.
     cd_amends = [a for a in amendments if a.get("instance") == "Développement durable"]
     ce_amends = [a for a in amendments if a.get("instance") == "Affaires économiques"]
+    an_amends = [a for a in amendments if a.get("instance") == "Séance publique"]
 
     files_to_generate = [
         ("export_amendements_tous.xlsx",
@@ -255,6 +256,10 @@ def main():
          "Affaires éco",
          "Commission Affaires économiques",
          ce_amends),
+        ("export_amendements_an.xlsx",
+         "Séance publique",
+         "Séance publique (texte adopté en commission n° 2765)",
+         an_amends),
     ]
 
     import os

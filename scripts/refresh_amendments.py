@@ -364,6 +364,29 @@ def synchronize() -> dict:
     with DATA_FILE.open(encoding="utf-8") as f:
         data = json.load(f)
 
+    # Migration automatique : nettoyer les éventuelles entrées nues (sans préfixe)
+    # créées par une version antérieure du pipeline avant le support de la
+    # séance publique. Ces entrées ont un num purement numérique comme "644"
+    # alors qu'elles devraient être "AN644". Si l'entrée préfixée existe déjà,
+    # on supprime la nue (doublon). Sinon on renomme la nue.
+    pre_count = len(data["amendments"])
+    an_prefixed_digits = {a["num"][2:] for a in data["amendments"]
+                          if a["num"].startswith("AN") and a["num"][2:].isdigit()}
+    cleaned = []
+    nb_removed_dup = nb_renamed = 0
+    for a in data["amendments"]:
+        num = a.get("num", "")
+        if num.isdigit():
+            if num in an_prefixed_digits:
+                nb_removed_dup += 1
+                continue  # doublon avec l'entrée AN équivalente
+            a["num"] = f"AN{num}"
+            nb_renamed += 1
+        cleaned.append(a)
+    if nb_removed_dup or nb_renamed:
+        data["amendments"] = cleaned
+        print(f"Migration : -{nb_removed_dup} doublons supprimés, {nb_renamed} entrées renommées (X → ANX)")
+
     by_num = {a["num"]: a for a in data["amendments"]}
     print(f"Baseline locale : {len(by_num)} amendements")
 

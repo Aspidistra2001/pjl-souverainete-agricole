@@ -43,7 +43,13 @@ DATA_FILE = ROOT / "data" / "amendments.json"
 SYNC_STATUS_FILE = ROOT / "data" / "sync_status.json"
 
 FEED_URL = "https://aspidistra2001.github.io/AN/feed"
-TEXT_NUMBER = "2632"  # PJL souveraineté agricoles
+TEXT_NUMBER = "2632"  # PJL souveraineté agricoles — numéro du texte initial déposé
+# Numéro du texte adopté en commission, utilisé pour les amendements de séance.
+# Le CSV OpenData expose ces amendements (Instance = "Séance publique") mais
+# leur URL XML utilise ce texte 2765 et non plus 2632. Si ce numéro change
+# (nouveau dépôt après seconde délibération), il est aussi extrait dynamiquement
+# depuis le champ « URL Amendement » du CSV en cas de besoin.
+TEXT_NUMBER_SEANCE = "2765"
 
 # CSV OpenData officiel listant TOUS les amendements du dossier législatif.
 # Beaucoup plus fiable que de découvrir les amendements via le flux RSS,
@@ -70,11 +76,15 @@ GROUP_REF_MAP = {
     "PO872880": "UDR",
 }
 
-# Préfixes des organes de commission (le 2e bloc dans l'URI XML OpenData)
+# Préfixes des organes (le 2e bloc dans l'URI XML OpenData)
 ORGANE_PREFIXES = {
     "CD": "PO419865",  # CION-DVP : Développement durable
     "CE": "PO419610",  # CION-ECO : Affaires économiques
     "AS": "PO420120",  # CION-SOC : Affaires sociales
+    "AN": "PO838901",  # Assemblée nationale en séance publique (hémicycle).
+                       # Les amendements de séance portent un préfixe "AN" et
+                       # ciblent le numéro de texte adopté en commission
+                       # (TEXT_NUMBER_SEANCE), pas le texte initial.
 }
 
 XML_NS = "{http://schemas.assemblee-nationale.fr/referentiel}"
@@ -98,7 +108,14 @@ def http_get(url: str) -> str | None:
 
 
 def amendment_xml_url(num: str) -> str | None:
-    """Construit l'URL du XML OpenData pour un numéro CD/CE/AS."""
+    """Construit l'URL du XML OpenData pour un numéro d'amendement.
+
+    Selon le préfixe :
+      - CD, CE, AS : texte initial (TEXT_NUMBER, ex: 2632) en commission
+      - AN         : texte adopté en commission (TEXT_NUMBER_SEANCE, ex: 2765)
+                     pour les amendements de séance, et le marqueur "TC" au
+                     lieu de rien (texte commission) dans l'identifiant.
+    """
     m = re.match(r"^([A-Z]+)(\d+)$", num)
     if not m:
         return None
@@ -106,6 +123,10 @@ def amendment_xml_url(num: str) -> str | None:
     org = ORGANE_PREFIXES.get(letters)
     if not org:
         return None
+    if letters == "AN":
+        # Amendement de séance : URL au format AMANR5L17 + org + BTC + numéro texte + P0D1N + digits
+        return f"https://www.assemblee-nationale.fr/dyn/opendata/AMANR5L17{org}BTC{TEXT_NUMBER_SEANCE}P0D1N{digits}.xml"
+    # Amendements de commission : URL au format AMANR5L17 + org + B + numéro texte + P0D1N + digits
     return f"https://www.assemblee-nationale.fr/dyn/opendata/AMANR5L17{org}B{TEXT_NUMBER}P0D1N{digits}.xml"
 
 
@@ -356,12 +377,23 @@ def synchronize() -> dict:
         summary["csv_total"] = len(csv_rows)
         print(f"CSV OpenData : {len(csv_rows)} amendements officiels")
 
-    # Indexer le CSV par numéro
+    # Indexer le CSV par numéro.
+    # Cas particulier : pour les amendements de séance, le CSV expose un
+    # numéro nu ("1", "10", "100"...) sans préfixe, contrairement aux
+    # amendements de commission qui ont déjà leur préfixe ("CD1", "CE1").
+    # On harmonise en ajoutant le préfixe "AN" pour la séance, afin que
+    # toute la chaîne (XML fetch, URL, filtrage, affichage) puisse les
+    # distinguer du reste.
     csv_by_num = {}
     for row in csv_rows:
         num = (row.get("Numéro de l'amendement") or "").strip()
-        if num:
-            csv_by_num[num] = row
+        if not num:
+            continue
+        instance = (row.get("Instance") or "").strip()
+        # Détecter la séance publique (libellé exact du CSV OpenData)
+        if instance == "Séance publique" and num.isdigit():
+            num = f"AN{num}"
+        csv_by_num[num] = row
 
     # 3. Comparer : changements d'état
     for num, csv_row in csv_by_num.items():

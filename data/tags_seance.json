@@ -1,0 +1,3325 @@
+{
+ "_comment": "Tags thématiques manuels des amendements de séance du PJL 2632, extraits du bulletin focus thématiques. 4 focus : coop, ab, animale, végétale. Multi-tags possibles. Écrase les tags Claude.",
+ "_source": "bulletin_focus_PJL_souverainete_agricole.pdf",
+ "_focus_stats": {
+  "coop": 45,
+  "ab": 189,
+  "animale": 399,
+  "végétale": 636,
+  "total_unique": 1021,
+  "multi_tags": 232
+ },
+ "tags": {
+  "AN155": [
+   "coop"
+  ],
+  "AN1590": [
+   "coop",
+   "végétale"
+  ],
+  "AN1515": [
+   "coop",
+   "ab",
+   "végétale"
+  ],
+  "AN616": [
+   "coop",
+   "animale",
+   "végétale"
+  ],
+  "AN1513": [
+   "coop",
+   "végétale"
+  ],
+  "AN2056": [
+   "coop",
+   "végétale"
+  ],
+  "AN2060": [
+   "coop",
+   "animale",
+   "végétale"
+  ],
+  "AN1227": [
+   "coop",
+   "végétale"
+  ],
+  "AN1785": [
+   "coop"
+  ],
+  "AN1798": [
+   "coop",
+   "végétale"
+  ],
+  "AN1935": [
+   "coop",
+   "végétale"
+  ],
+  "AN2111": [
+   "coop",
+   "végétale"
+  ],
+  "AN1751": [
+   "coop"
+  ],
+  "AN1564": [
+   "coop"
+  ],
+  "AN54": [
+   "coop"
+  ],
+  "AN55": [
+   "coop"
+  ],
+  "AN1036": [
+   "coop"
+  ],
+  "AN1115": [
+   "coop"
+  ],
+  "AN1868": [
+   "coop",
+   "végétale"
+  ],
+  "AN1162": [
+   "coop"
+  ],
+  "AN1775": [
+   "coop"
+  ],
+  "AN714": [
+   "coop",
+   "végétale"
+  ],
+  "AN2027": [
+   "coop"
+  ],
+  "AN308": [
+   "coop",
+   "animale"
+  ],
+  "AN1674": [
+   "coop"
+  ],
+  "AN2084": [
+   "coop"
+  ],
+  "AN1911": [
+   "coop",
+   "végétale"
+  ],
+  "AN1922": [
+   "coop",
+   "ab",
+   "végétale"
+  ],
+  "AN65": [
+   "coop"
+  ],
+  "AN1953": [
+   "coop"
+  ],
+  "AN1256": [
+   "coop"
+  ],
+  "AN1553": [
+   "coop"
+  ],
+  "AN1039": [
+   "coop"
+  ],
+  "AN68": [
+   "coop"
+  ],
+  "AN632": [
+   "coop"
+  ],
+  "AN69": [
+   "coop"
+  ],
+  "AN1445": [
+   "coop"
+  ],
+  "AN1013": [
+   "coop"
+  ],
+  "AN1930": [
+   "coop"
+  ],
+  "AN1633": [
+   "coop"
+  ],
+  "AN2244": [
+   "coop"
+  ],
+  "AN672": [
+   "coop",
+   "animale",
+   "végétale"
+  ],
+  "AN426": [
+   "coop",
+   "animale"
+  ],
+  "AN2176": [
+   "coop"
+  ],
+  "AN2161": [
+   "coop"
+  ],
+  "AN820": [
+   "ab",
+   "végétale"
+  ],
+  "AN1164": [
+   "ab",
+   "végétale"
+  ],
+  "AN1579": [
+   "ab"
+  ],
+  "AN1161": [
+   "ab"
+  ],
+  "AN643": [
+   "ab",
+   "animale"
+  ],
+  "AN1204": [
+   "ab",
+   "végétale"
+  ],
+  "AN1550": [
+   "ab"
+  ],
+  "AN779": [
+   "ab",
+   "végétale"
+  ],
+  "AN1507": [
+   "ab"
+  ],
+  "AN1552": [
+   "ab"
+  ],
+  "AN1735": [
+   "ab",
+   "végétale"
+  ],
+  "AN143": [
+   "ab"
+  ],
+  "AN869": [
+   "ab",
+   "végétale"
+  ],
+  "AN913": [
+   "ab",
+   "végétale"
+  ],
+  "AN2028": [
+   "ab",
+   "végétale"
+  ],
+  "AN2031": [
+   "ab",
+   "végétale"
+  ],
+  "AN2034": [
+   "ab"
+  ],
+  "AN2203": [
+   "ab"
+  ],
+  "AN2266": [
+   "ab"
+  ],
+  "AN931": [
+   "ab"
+  ],
+  "AN932": [
+   "ab"
+  ],
+  "AN50": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN281": [
+   "ab",
+   "animale"
+  ],
+  "AN366": [
+   "ab"
+  ],
+  "AN609": [
+   "ab"
+  ],
+  "AN368": [
+   "ab"
+  ],
+  "AN388": [
+   "ab"
+  ],
+  "AN451": [
+   "ab"
+  ],
+  "AN521": [
+   "ab"
+  ],
+  "AN564": [
+   "ab"
+  ],
+  "AN872": [
+   "ab"
+  ],
+  "AN933": [
+   "ab"
+  ],
+  "AN934": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN1428": [
+   "ab"
+  ],
+  "AN1818": [
+   "ab"
+  ],
+  "AN1891": [
+   "ab"
+  ],
+  "AN2003": [
+   "ab"
+  ],
+  "AN2050": [
+   "ab",
+   "végétale"
+  ],
+  "AN2234": [
+   "ab"
+  ],
+  "AN2236": [
+   "ab"
+  ],
+  "AN1975": [
+   "ab"
+  ],
+  "AN51": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN1754": [
+   "ab"
+  ],
+  "AN1752": [
+   "ab"
+  ],
+  "AN1762": [
+   "ab"
+  ],
+  "AN1644": [
+   "ab"
+  ],
+  "AN1111": [
+   "ab"
+  ],
+  "AN2271": [
+   "ab"
+  ],
+  "AN1116": [
+   "ab"
+  ],
+  "AN1141": [
+   "ab"
+  ],
+  "AN1767": [
+   "ab"
+  ],
+  "AN1771": [
+   "ab"
+  ],
+  "AN946": [
+   "ab"
+  ],
+  "AN941": [
+   "ab"
+  ],
+  "AN1505": [
+   "ab"
+  ],
+  "AN229": [
+   "ab"
+  ],
+  "AN1904": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN681": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN1508": [
+   "ab"
+  ],
+  "AN1567": [
+   "ab"
+  ],
+  "AN175": [
+   "ab"
+  ],
+  "AN177": [
+   "ab"
+  ],
+  "AN178": [
+   "ab"
+  ],
+  "AN116": [
+   "ab"
+  ],
+  "AN1719": [
+   "ab"
+  ],
+  "AN2101": [
+   "ab"
+  ],
+  "AN180": [
+   "ab",
+   "végétale"
+  ],
+  "AN1916": [
+   "ab",
+   "végétale"
+  ],
+  "AN1617": [
+   "ab",
+   "végétale"
+  ],
+  "AN307": [
+   "ab"
+  ],
+  "AN419": [
+   "ab"
+  ],
+  "AN1206": [
+   "ab"
+  ],
+  "AN420": [
+   "ab",
+   "végétale"
+  ],
+  "AN1212": [
+   "ab",
+   "végétale"
+  ],
+  "AN1810": [
+   "ab"
+  ],
+  "AN1529": [
+   "ab",
+   "végétale"
+  ],
+  "AN1814": [
+   "ab",
+   "végétale"
+  ],
+  "AN261": [
+   "ab",
+   "végétale"
+  ],
+  "AN267": [
+   "ab",
+   "végétale"
+  ],
+  "AN305": [
+   "ab"
+  ],
+  "AN323": [
+   "ab"
+  ],
+  "AN324": [
+   "ab"
+  ],
+  "AN1160": [
+   "ab",
+   "végétale"
+  ],
+  "AN1424": [
+   "ab",
+   "végétale"
+  ],
+  "AN1512": [
+   "ab"
+  ],
+  "AN1536": [
+   "ab"
+  ],
+  "AN428": [
+   "ab",
+   "animale"
+  ],
+  "AN647": [
+   "ab",
+   "animale"
+  ],
+  "AN176": [
+   "ab"
+  ],
+  "AN1504": [
+   "ab"
+  ],
+  "AN1645": [
+   "ab"
+  ],
+  "AN351": [
+   "ab"
+  ],
+  "AN605": [
+   "ab"
+  ],
+  "AN970": [
+   "ab"
+  ],
+  "AN1343": [
+   "ab"
+  ],
+  "AN919": [
+   "ab",
+   "végétale"
+  ],
+  "AN238": [
+   "ab",
+   "végétale"
+  ],
+  "AN1905": [
+   "ab",
+   "végétale"
+  ],
+  "AN239": [
+   "ab",
+   "végétale"
+  ],
+  "AN243": [
+   "ab"
+  ],
+  "AN1464": [
+   "ab",
+   "végétale"
+  ],
+  "AN273": [
+   "ab"
+  ],
+  "AN816": [
+   "ab"
+  ],
+  "AN991": [
+   "ab",
+   "végétale"
+  ],
+  "AN274": [
+   "ab"
+  ],
+  "AN817": [
+   "ab"
+  ],
+  "AN244": [
+   "ab"
+  ],
+  "AN245": [
+   "ab"
+  ],
+  "AN320": [
+   "ab",
+   "végétale"
+  ],
+  "AN2033": [
+   "ab"
+  ],
+  "AN432": [
+   "ab",
+   "végétale"
+  ],
+  "AN490": [
+   "ab"
+  ],
+  "AN527": [
+   "ab",
+   "végétale"
+  ],
+  "AN574": [
+   "ab",
+   "végétale"
+  ],
+  "AN1101": [
+   "ab",
+   "végétale"
+  ],
+  "AN1955": [
+   "ab",
+   "végétale"
+  ],
+  "AN2118": [
+   "ab",
+   "végétale"
+  ],
+  "AN385": [
+   "ab",
+   "végétale"
+  ],
+  "AN433": [
+   "ab",
+   "végétale"
+  ],
+  "AN529": [
+   "ab",
+   "végétale"
+  ],
+  "AN578": [
+   "ab",
+   "végétale"
+  ],
+  "AN1102": [
+   "ab",
+   "végétale"
+  ],
+  "AN1446": [
+   "ab"
+  ],
+  "AN503": [
+   "ab"
+  ],
+  "AN2149": [
+   "ab",
+   "végétale"
+  ],
+  "AN2119": [
+   "ab",
+   "végétale"
+  ],
+  "AN96": [
+   "ab"
+  ],
+  "AN435": [
+   "ab"
+  ],
+  "AN534": [
+   "ab"
+  ],
+  "AN1037": [
+   "ab"
+  ],
+  "AN1059": [
+   "ab"
+  ],
+  "AN1186": [
+   "ab"
+  ],
+  "AN1363": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN1697": [
+   "ab"
+  ],
+  "AN1711": [
+   "ab"
+  ],
+  "AN1834": [
+   "ab"
+  ],
+  "AN1858": [
+   "ab"
+  ],
+  "AN2220": [
+   "ab"
+  ],
+  "AN248": [
+   "ab"
+  ],
+  "AN494": [
+   "ab"
+  ],
+  "AN250": [
+   "ab"
+  ],
+  "AN120": [
+   "ab"
+  ],
+  "AN1498": [
+   "ab"
+  ],
+  "AN1499": [
+   "ab"
+  ],
+  "AN1614": [
+   "ab"
+  ],
+  "AN1936": [
+   "ab"
+  ],
+  "AN2020": [
+   "ab",
+   "végétale"
+  ],
+  "AN2183": [
+   "ab"
+  ],
+  "AN1497": [
+   "ab"
+  ],
+  "AN797": [
+   "ab"
+  ],
+  "AN1797": [
+   "ab",
+   "végétale"
+  ],
+  "AN1800": [
+   "ab",
+   "végétale"
+  ],
+  "AN1442": [
+   "ab",
+   "végétale"
+  ],
+  "AN1804": [
+   "ab",
+   "végétale"
+  ],
+  "AN1805": [
+   "ab"
+  ],
+  "AN1937": [
+   "ab"
+  ],
+  "AN256": [
+   "ab",
+   "végétale"
+  ],
+  "AN257": [
+   "ab",
+   "végétale"
+  ],
+  "AN258": [
+   "ab",
+   "végétale"
+  ],
+  "AN1016": [
+   "ab"
+  ],
+  "AN1908": [
+   "ab"
+  ],
+  "AN1894": [
+   "ab"
+  ],
+  "AN811": [
+   "ab"
+  ],
+  "AN813": [
+   "ab",
+   "végétale"
+  ],
+  "AN1903": [
+   "ab"
+  ],
+  "AN1900": [
+   "ab"
+  ],
+  "AN1841": [
+   "ab"
+  ],
+  "AN216": [
+   "ab",
+   "végétale"
+  ],
+  "AN1828": [
+   "ab",
+   "végétale"
+  ],
+  "AN374": [
+   "ab"
+  ],
+  "AN1320": [
+   "ab"
+  ],
+  "AN1422": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN1094": [
+   "ab",
+   "végétale"
+  ],
+  "AN246": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN1331": [
+   "ab",
+   "végétale"
+  ],
+  "AN664": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN1575": [
+   "ab",
+   "animale"
+  ],
+  "AN996": [
+   "ab",
+   "animale"
+  ],
+  "AN1551": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN1873": [
+   "ab",
+   "animale",
+   "végétale"
+  ],
+  "AN187": [
+   "ab",
+   "végétale"
+  ],
+  "AN1045": [
+   "ab"
+  ],
+  "AN1046": [
+   "ab"
+  ],
+  "AN586": [
+   "ab"
+  ],
+  "AN590": [
+   "ab"
+  ],
+  "AN682": [
+   "ab",
+   "végétale"
+  ],
+  "AN1005": [
+   "ab"
+  ],
+  "AN1469": [
+   "animale"
+  ],
+  "AN156": [
+   "animale"
+  ],
+  "AN749": [
+   "animale"
+  ],
+  "AN750": [
+   "animale"
+  ],
+  "AN162": [
+   "animale"
+  ],
+  "AN855": [
+   "animale",
+   "végétale"
+  ],
+  "AN1127": [
+   "animale"
+  ],
+  "AN1322": [
+   "animale"
+  ],
+  "AN152": [
+   "animale"
+  ],
+  "AN397": [
+   "animale"
+  ],
+  "AN1128": [
+   "animale",
+   "végétale"
+  ],
+  "AN1208": [
+   "animale"
+  ],
+  "AN644": [
+   "animale",
+   "végétale"
+  ],
+  "AN1987": [
+   "animale"
+  ],
+  "AN159": [
+   "animale"
+  ],
+  "AN2038": [
+   "animale"
+  ],
+  "AN2040": [
+   "animale"
+  ],
+  "AN589": [
+   "animale"
+  ],
+  "AN641": [
+   "animale",
+   "végétale"
+  ],
+  "AN642": [
+   "animale",
+   "végétale"
+  ],
+  "AN680": [
+   "animale",
+   "végétale"
+  ],
+  "AN1004": [
+   "animale",
+   "végétale"
+  ],
+  "AN1698": [
+   "animale"
+  ],
+  "AN457": [
+   "animale",
+   "végétale"
+  ],
+  "AN862": [
+   "animale",
+   "végétale"
+  ],
+  "AN1636": [
+   "animale",
+   "végétale"
+  ],
+  "AN1648": [
+   "animale",
+   "végétale"
+  ],
+  "AN1901": [
+   "animale"
+  ],
+  "AN1075": [
+   "animale"
+  ],
+  "AN645": [
+   "animale",
+   "végétale"
+  ],
+  "AN785": [
+   "animale"
+  ],
+  "AN1717": [
+   "animale"
+  ],
+  "AN795": [
+   "animale"
+  ],
+  "AN1790": [
+   "animale"
+  ],
+  "AN48": [
+   "animale",
+   "végétale"
+  ],
+  "AN949": [
+   "animale"
+  ],
+  "AN1733": [
+   "animale"
+  ],
+  "AN49": [
+   "animale"
+  ],
+  "AN496": [
+   "animale",
+   "végétale"
+  ],
+  "AN166": [
+   "animale"
+  ],
+  "AN170": [
+   "animale",
+   "végétale"
+  ],
+  "AN801": [
+   "animale"
+  ],
+  "AN1829": [
+   "animale"
+  ],
+  "AN63": [
+   "animale"
+  ],
+  "AN1476": [
+   "animale"
+  ],
+  "AN1638": [
+   "animale"
+  ],
+  "AN472": [
+   "animale"
+  ],
+  "AN2253": [
+   "animale"
+  ],
+  "AN1647": [
+   "animale"
+  ],
+  "AN554": [
+   "animale"
+  ],
+  "AN1235": [
+   "animale"
+  ],
+  "AN935": [
+   "animale",
+   "végétale"
+  ],
+  "AN936": [
+   "animale",
+   "végétale"
+  ],
+  "AN284": [
+   "animale",
+   "végétale"
+  ],
+  "AN2135": [
+   "animale"
+  ],
+  "AN940": [
+   "animale"
+  ],
+  "AN2151": [
+   "animale"
+  ],
+  "AN2152": [
+   "animale"
+  ],
+  "AN1897": [
+   "animale"
+  ],
+  "AN1182": [
+   "animale",
+   "végétale"
+  ],
+  "AN1214": [
+   "animale"
+  ],
+  "AN556": [
+   "animale"
+  ],
+  "AN956": [
+   "animale"
+  ],
+  "AN1652": [
+   "animale",
+   "végétale"
+  ],
+  "AN732": [
+   "animale"
+  ],
+  "AN1231": [
+   "animale"
+  ],
+  "AN153": [
+   "animale"
+  ],
+  "AN154": [
+   "animale",
+   "végétale"
+  ],
+  "AN646": [
+   "animale"
+  ],
+  "AN649": [
+   "animale",
+   "végétale"
+  ],
+  "AN650": [
+   "animale",
+   "végétale"
+  ],
+  "AN115": [
+   "animale",
+   "végétale"
+  ],
+  "AN249": [
+   "animale"
+  ],
+  "AN119": [
+   "animale"
+  ],
+  "AN114": [
+   "animale",
+   "végétale"
+  ],
+  "AN1157": [
+   "animale"
+  ],
+  "AN1876": [
+   "animale",
+   "végétale"
+  ],
+  "AN400": [
+   "animale",
+   "végétale"
+  ],
+  "AN401": [
+   "animale",
+   "végétale"
+  ],
+  "AN738": [
+   "animale",
+   "végétale"
+  ],
+  "AN739": [
+   "animale",
+   "végétale"
+  ],
+  "AN1748": [
+   "animale",
+   "végétale"
+  ],
+  "AN1747": [
+   "animale"
+  ],
+  "AN2108": [
+   "animale"
+  ],
+  "AN1538": [
+   "animale"
+  ],
+  "AN1702": [
+   "animale"
+  ],
+  "AN2013": [
+   "animale"
+  ],
+  "AN823": [
+   "animale"
+  ],
+  "AN824": [
+   "animale"
+  ],
+  "AN1145": [
+   "animale"
+  ],
+  "AN825": [
+   "animale"
+  ],
+  "AN1351": [
+   "animale",
+   "végétale"
+  ],
+  "AN1831": [
+   "animale",
+   "végétale"
+  ],
+  "AN1352": [
+   "animale",
+   "végétale"
+  ],
+  "AN1859": [
+   "animale"
+  ],
+  "AN587": [
+   "animale"
+  ],
+  "AN240": [
+   "animale",
+   "végétale"
+  ],
+  "AN1383": [
+   "animale",
+   "végétale"
+  ],
+  "AN831": [
+   "animale",
+   "végétale"
+  ],
+  "AN60": [
+   "animale"
+  ],
+  "AN469": [
+   "animale"
+  ],
+  "AN517": [
+   "animale"
+  ],
+  "AN1287": [
+   "animale",
+   "végétale"
+  ],
+  "AN1991": [
+   "animale"
+  ],
+  "AN1326": [
+   "animale",
+   "végétale"
+  ],
+  "AN2139": [
+   "animale",
+   "végétale"
+  ],
+  "AN1478": [
+   "animale"
+  ],
+  "AN850": [
+   "animale"
+  ],
+  "AN497": [
+   "animale"
+  ],
+  "AN498": [
+   "animale",
+   "végétale"
+  ],
+  "AN953": [
+   "animale",
+   "végétale"
+  ],
+  "AN302": [
+   "animale",
+   "végétale"
+  ],
+  "AN61": [
+   "animale",
+   "végétale"
+  ],
+  "AN1929": [
+   "animale",
+   "végétale"
+  ],
+  "AN1765": [
+   "animale"
+  ],
+  "AN1489": [
+   "animale"
+  ],
+  "AN1596": [
+   "animale"
+  ],
+  "AN1591": [
+   "animale"
+  ],
+  "AN1483": [
+   "animale"
+  ],
+  "AN1598": [
+   "animale"
+  ],
+  "AN424": [
+   "animale",
+   "végétale"
+  ],
+  "AN391": [
+   "animale",
+   "végétale"
+  ],
+  "AN1417": [
+   "animale"
+  ],
+  "AN389": [
+   "animale",
+   "végétale"
+  ],
+  "AN1200": [
+   "animale",
+   "végétale"
+  ],
+  "AN592": [
+   "animale"
+  ],
+  "AN352": [
+   "animale"
+  ],
+  "AN378": [
+   "animale",
+   "végétale"
+  ],
+  "AN2009": [
+   "animale",
+   "végétale"
+  ],
+  "AN75": [
+   "animale"
+  ],
+  "AN262": [
+   "animale",
+   "végétale"
+  ],
+  "AN71": [
+   "animale"
+  ],
+  "AN87": [
+   "animale",
+   "végétale"
+  ],
+  "AN363": [
+   "animale"
+  ],
+  "AN470": [
+   "animale"
+  ],
+  "AN76": [
+   "animale"
+  ],
+  "AN264": [
+   "animale",
+   "végétale"
+  ],
+  "AN1726": [
+   "animale",
+   "végétale"
+  ],
+  "AN1444": [
+   "animale",
+   "végétale"
+  ],
+  "AN80": [
+   "animale"
+  ],
+  "AN78": [
+   "animale",
+   "végétale"
+  ],
+  "AN728": [
+   "animale",
+   "végétale"
+  ],
+  "AN893": [
+   "animale"
+  ],
+  "AN1087": [
+   "animale",
+   "végétale"
+  ],
+  "AN90": [
+   "animale"
+  ],
+  "AN230": [
+   "animale"
+  ],
+  "AN895": [
+   "animale"
+  ],
+  "AN1167": [
+   "animale"
+  ],
+  "AN1315": [
+   "animale",
+   "végétale"
+  ],
+  "AN1743": [
+   "animale",
+   "végétale"
+  ],
+  "AN1824": [
+   "animale"
+  ],
+  "AN79": [
+   "animale"
+  ],
+  "AN371": [
+   "animale"
+  ],
+  "AN897": [
+   "animale"
+  ],
+  "AN898": [
+   "animale"
+  ],
+  "AN266": [
+   "animale",
+   "végétale"
+  ],
+  "AN730": [
+   "animale"
+  ],
+  "AN2006": [
+   "animale"
+  ],
+  "AN263": [
+   "animale"
+  ],
+  "AN265": [
+   "animale"
+  ],
+  "AN372": [
+   "animale"
+  ],
+  "AN696": [
+   "animale"
+  ],
+  "AN789": [
+   "animale",
+   "végétale"
+  ],
+  "AN791": [
+   "animale"
+  ],
+  "AN792": [
+   "animale"
+  ],
+  "AN1103": [
+   "animale"
+  ],
+  "AN1319": [
+   "animale"
+  ],
+  "AN278": [
+   "animale",
+   "végétale"
+  ],
+  "AN392": [
+   "animale"
+  ],
+  "AN394": [
+   "animale"
+  ],
+  "AN624": [
+   "animale"
+  ],
+  "AN1450": [
+   "animale"
+  ],
+  "AN2116": [
+   "animale"
+  ],
+  "AN752": [
+   "animale"
+  ],
+  "AN1826": [
+   "animale"
+  ],
+  "AN2092": [
+   "animale"
+  ],
+  "AN753": [
+   "animale"
+  ],
+  "AN2091": [
+   "animale"
+  ],
+  "AN2130": [
+   "animale"
+  ],
+  "AN1664": [
+   "animale"
+  ],
+  "AN755": [
+   "animale"
+  ],
+  "AN1667": [
+   "animale"
+  ],
+  "AN82": [
+   "animale"
+  ],
+  "AN2142": [
+   "animale"
+  ],
+  "AN1823": [
+   "animale"
+  ],
+  "AN92": [
+   "animale"
+  ],
+  "AN756": [
+   "animale"
+  ],
+  "AN790": [
+   "animale"
+  ],
+  "AN900": [
+   "animale"
+  ],
+  "AN1825": [
+   "animale"
+  ],
+  "AN1252": [
+   "animale"
+  ],
+  "AN84": [
+   "animale"
+  ],
+  "AN135": [
+   "animale"
+  ],
+  "AN393": [
+   "animale"
+  ],
+  "AN1321": [
+   "animale"
+  ],
+  "AN475": [
+   "animale"
+  ],
+  "AN88": [
+   "animale"
+  ],
+  "AN179": [
+   "animale"
+  ],
+  "AN181": [
+   "animale",
+   "végétale"
+  ],
+  "AN415": [
+   "animale"
+  ],
+  "AN759": [
+   "animale"
+  ],
+  "AN760": [
+   "animale",
+   "végétale"
+  ],
+  "AN1690": [
+   "animale"
+  ],
+  "AN2093": [
+   "animale"
+  ],
+  "AN2102": [
+   "animale"
+  ],
+  "AN1578": [
+   "animale"
+  ],
+  "AN926": [
+   "animale"
+  ],
+  "AN1081": [
+   "animale"
+  ],
+  "AN1099": [
+   "animale"
+  ],
+  "AN1316": [
+   "animale"
+  ],
+  "AN1375": [
+   "animale"
+  ],
+  "AN1750": [
+   "animale"
+  ],
+  "AN2023": [
+   "animale"
+  ],
+  "AN2089": [
+   "animale"
+  ],
+  "AN477": [
+   "animale"
+  ],
+  "AN182": [
+   "animale",
+   "végétale"
+  ],
+  "AN763": [
+   "animale",
+   "végétale"
+  ],
+  "AN1679": [
+   "animale"
+  ],
+  "AN2014": [
+   "animale"
+  ],
+  "AN1573": [
+   "animale"
+  ],
+  "AN1107": [
+   "animale",
+   "végétale"
+  ],
+  "AN1118": [
+   "animale",
+   "végétale"
+  ],
+  "AN1376": [
+   "animale",
+   "végétale"
+  ],
+  "AN1770": [
+   "animale",
+   "végétale"
+  ],
+  "AN151": [
+   "animale",
+   "végétale"
+  ],
+  "AN1681": [
+   "animale"
+  ],
+  "AN1759": [
+   "animale"
+  ],
+  "AN99": [
+   "animale",
+   "végétale"
+  ],
+  "AN716": [
+   "animale"
+  ],
+  "AN1541": [
+   "animale"
+  ],
+  "AN1851": [
+   "animale"
+  ],
+  "AN1217": [
+   "animale"
+  ],
+  "AN1076": [
+   "animale"
+  ],
+  "AN364": [
+   "animale"
+  ],
+  "AN1249": [
+   "animale"
+  ],
+  "AN717": [
+   "animale"
+  ],
+  "AN1542": [
+   "animale"
+  ],
+  "AN718": [
+   "animale"
+  ],
+  "AN1481": [
+   "animale"
+  ],
+  "AN1543": [
+   "animale"
+  ],
+  "AN1684": [
+   "animale"
+  ],
+  "AN481": [
+   "animale"
+  ],
+  "AN591": [
+   "animale"
+  ],
+  "AN1238": [
+   "animale"
+  ],
+  "AN1599": [
+   "animale"
+  ],
+  "AN729": [
+   "animale"
+  ],
+  "AN1931": [
+   "animale",
+   "végétale"
+  ],
+  "AN2173": [
+   "animale",
+   "végétale"
+  ],
+  "AN188": [
+   "animale"
+  ],
+  "AN1670": [
+   "animale"
+  ],
+  "AN190": [
+   "animale"
+  ],
+  "AN566": [
+   "animale",
+   "végétale"
+  ],
+  "AN841": [
+   "animale"
+  ],
+  "AN1812": [
+   "animale"
+  ],
+  "AN565": [
+   "animale",
+   "végétale"
+  ],
+  "AN567": [
+   "animale",
+   "végétale"
+  ],
+  "AN1274": [
+   "animale",
+   "végétale"
+  ],
+  "AN990": [
+   "animale"
+  ],
+  "AN193": [
+   "animale"
+  ],
+  "AN194": [
+   "animale"
+  ],
+  "AN651": [
+   "animale"
+  ],
+  "AN840": [
+   "animale"
+  ],
+  "AN568": [
+   "animale",
+   "végétale"
+  ],
+  "AN741": [
+   "animale"
+  ],
+  "AN569": [
+   "animale",
+   "végétale"
+  ],
+  "AN588": [
+   "animale",
+   "végétale"
+  ],
+  "AN1819": [
+   "animale"
+  ],
+  "AN413": [
+   "animale"
+  ],
+  "AN200": [
+   "animale"
+  ],
+  "AN271": [
+   "animale"
+  ],
+  "AN652": [
+   "animale",
+   "végétale"
+  ],
+  "AN1095": [
+   "animale",
+   "végétale"
+  ],
+  "AN1150": [
+   "animale"
+  ],
+  "AN1140": [
+   "animale",
+   "végétale"
+  ],
+  "AN100": [
+   "animale"
+  ],
+  "AN653": [
+   "animale",
+   "végétale"
+  ],
+  "AN1131": [
+   "animale"
+  ],
+  "AN1778": [
+   "animale",
+   "végétale"
+  ],
+  "AN101": [
+   "animale"
+  ],
+  "AN203": [
+   "animale",
+   "végétale"
+  ],
+  "AN1602": [
+   "animale"
+  ],
+  "AN309": [
+   "animale"
+  ],
+  "AN1663": [
+   "animale"
+  ],
+  "AN204": [
+   "animale"
+  ],
+  "AN1604": [
+   "animale",
+   "végétale"
+  ],
+  "AN1772": [
+   "animale",
+   "végétale"
+  ],
+  "AN1608": [
+   "animale",
+   "végétale"
+  ],
+  "AN1276": [
+   "animale",
+   "végétale"
+  ],
+  "AN1954": [
+   "animale"
+  ],
+  "AN205": [
+   "animale"
+  ],
+  "AN206": [
+   "animale"
+  ],
+  "AN1650": [
+   "animale"
+  ],
+  "AN654": [
+   "animale",
+   "végétale"
+  ],
+  "AN655": [
+   "animale",
+   "végétale"
+  ],
+  "AN665": [
+   "animale"
+  ],
+  "AN1769": [
+   "animale",
+   "végétale"
+  ],
+  "AN1957": [
+   "animale",
+   "végétale"
+  ],
+  "AN1959": [
+   "animale"
+  ],
+  "AN1960": [
+   "animale",
+   "végétale"
+  ],
+  "AN2160": [
+   "animale"
+  ],
+  "AN1687": [
+   "animale",
+   "végétale"
+  ],
+  "AN1888": [
+   "animale"
+  ],
+  "AN2007": [
+   "animale"
+  ],
+  "AN993": [
+   "animale"
+  ],
+  "AN1473": [
+   "animale"
+  ],
+  "AN1488": [
+   "animale"
+  ],
+  "AN1893": [
+   "animale",
+   "végétale"
+  ],
+  "AN957": [
+   "animale",
+   "végétale"
+  ],
+  "AN882": [
+   "animale"
+  ],
+  "AN1328": [
+   "animale"
+  ],
+  "AN1487": [
+   "animale",
+   "végétale"
+  ],
+  "AN1961": [
+   "animale",
+   "végétale"
+  ],
+  "AN1963": [
+   "animale",
+   "végétale"
+  ],
+  "AN1965": [
+   "animale",
+   "végétale"
+  ],
+  "AN666": [
+   "animale"
+  ],
+  "AN2083": [
+   "animale"
+  ],
+  "AN2169": [
+   "animale",
+   "végétale"
+  ],
+  "AN630": [
+   "animale"
+  ],
+  "AN1640": [
+   "animale",
+   "végétale"
+  ],
+  "AN2094": [
+   "animale",
+   "végétale"
+  ],
+  "AN102": [
+   "animale"
+  ],
+  "AN479": [
+   "animale"
+  ],
+  "AN880": [
+   "animale",
+   "végétale"
+  ],
+  "AN448": [
+   "animale",
+   "végétale"
+  ],
+  "AN519": [
+   "animale",
+   "végétale"
+  ],
+  "AN550": [
+   "animale",
+   "végétale"
+  ],
+  "AN584": [
+   "animale",
+   "végétale"
+  ],
+  "AN747": [
+   "animale",
+   "végétale"
+  ],
+  "AN1540": [
+   "animale",
+   "végétale"
+  ],
+  "AN1347": [
+   "animale",
+   "végétale"
+  ],
+  "AN1441": [
+   "animale"
+  ],
+  "AN2127": [
+   "animale",
+   "végétale"
+  ],
+  "AN301": [
+   "animale",
+   "végétale"
+  ],
+  "AN533": [
+   "animale",
+   "végétale"
+  ],
+  "AN499": [
+   "animale"
+  ],
+  "AN2232": [
+   "animale",
+   "végétale"
+  ],
+  "AN1783": [
+   "animale",
+   "végétale"
+  ],
+  "AN1623": [
+   "animale",
+   "végétale"
+  ],
+  "AN2165": [
+   "animale",
+   "végétale"
+  ],
+  "AN310": [
+   "animale"
+  ],
+  "AN311": [
+   "animale"
+  ],
+  "AN1739": [
+   "animale",
+   "végétale"
+  ],
+  "AN636": [
+   "animale"
+  ],
+  "AN41": [
+   "animale",
+   "végétale"
+  ],
+  "AN382": [
+   "animale",
+   "végétale"
+  ],
+  "AN548": [
+   "animale"
+  ],
+  "AN450": [
+   "animale",
+   "végétale"
+  ],
+  "AN971": [
+   "animale",
+   "végétale"
+  ],
+  "AN314": [
+   "animale"
+  ],
+  "AN1386": [
+   "animale"
+  ],
+  "AN57": [
+   "animale",
+   "végétale"
+  ],
+  "AN1021": [
+   "animale",
+   "végétale"
+  ],
+  "AN594": [
+   "animale",
+   "végétale"
+  ],
+  "AN1527": [
+   "animale",
+   "végétale"
+  ],
+  "AN2008": [
+   "animale"
+  ],
+  "AN317": [
+   "animale",
+   "végétale"
+  ],
+  "AN1838": [
+   "animale"
+  ],
+  "AN711": [
+   "animale"
+  ],
+  "AN1910": [
+   "animale",
+   "végétale"
+  ],
+  "AN1415": [
+   "animale"
+  ],
+  "AN2041": [
+   "animale"
+  ],
+  "AN1449": [
+   "animale"
+  ],
+  "AN123": [
+   "animale"
+  ],
+  "AN500": [
+   "animale",
+   "végétale"
+  ],
+  "AN1914": [
+   "animale"
+  ],
+  "AN1520": [
+   "animale",
+   "végétale"
+  ],
+  "AN1943": [
+   "animale"
+  ],
+  "AN147": [
+   "animale",
+   "végétale"
+  ],
+  "AN73": [
+   "animale",
+   "végétale"
+  ],
+  "AN1258": [
+   "animale",
+   "végétale"
+  ],
+  "AN583": [
+   "animale"
+  ],
+  "AN471": [
+   "animale"
+  ],
+  "AN280": [
+   "animale",
+   "végétale"
+  ],
+  "AN679": [
+   "animale",
+   "végétale"
+  ],
+  "AN1158": [
+   "animale"
+  ],
+  "AN1848": [
+   "animale"
+  ],
+  "AN1966": [
+   "animale",
+   "végétale"
+  ],
+  "AN2206": [
+   "végétale"
+  ],
+  "AN2131": [
+   "végétale"
+  ],
+  "AN452": [
+   "végétale"
+  ],
+  "AN776": [
+   "végétale"
+  ],
+  "AN819": [
+   "végétale"
+  ],
+  "AN859": [
+   "végétale"
+  ],
+  "AN1394": [
+   "végétale"
+  ],
+  "AN1429": [
+   "végétale"
+  ],
+  "AN1465": [
+   "végétale"
+  ],
+  "AN137": [
+   "végétale"
+  ],
+  "AN822": [
+   "végétale"
+  ],
+  "AN2275": [
+   "végétale"
+  ],
+  "AN396": [
+   "végétale"
+  ],
+  "AN1222": [
+   "végétale"
+  ],
+  "AN1780": [
+   "végétale"
+  ],
+  "AN506": [
+   "végétale"
+  ],
+  "AN456": [
+   "végétale"
+  ],
+  "AN608": [
+   "végétale"
+  ],
+  "AN1634": [
+   "végétale"
+  ],
+  "AN138": [
+   "végétale"
+  ],
+  "AN1666": [
+   "végétale"
+  ],
+  "AN233": [
+   "végétale"
+  ],
+  "AN337": [
+   "végétale"
+  ],
+  "AN773": [
+   "végétale"
+  ],
+  "AN1176": [
+   "végétale"
+  ],
+  "AN1228": [
+   "végétale"
+  ],
+  "AN1332": [
+   "végétale"
+  ],
+  "AN2055": [
+   "végétale"
+  ],
+  "AN275": [
+   "végétale"
+  ],
+  "AN1677": [
+   "végétale"
+  ],
+  "AN161": [
+   "végétale"
+  ],
+  "AN1008": [
+   "végétale"
+  ],
+  "AN1178": [
+   "végétale"
+  ],
+  "AN1234": [
+   "végétale"
+  ],
+  "AN575": [
+   "végétale"
+  ],
+  "AN1262": [
+   "végétale"
+  ],
+  "AN1273": [
+   "végétale"
+  ],
+  "AN1703": [
+   "végétale"
+  ],
+  "AN1713": [
+   "végétale"
+  ],
+  "AN1709": [
+   "végétale"
+  ],
+  "AN1763": [
+   "végétale"
+  ],
+  "AN799": [
+   "végétale"
+  ],
+  "AN1027": [
+   "végétale"
+  ],
+  "AN1555": [
+   "végétale"
+  ],
+  "AN1724": [
+   "végétale"
+  ],
+  "AN864": [
+   "végétale"
+  ],
+  "AN1651": [
+   "végétale"
+  ],
+  "AN1080": [
+   "végétale"
+  ],
+  "AN2146": [
+   "végétale"
+  ],
+  "AN2200": [
+   "végétale"
+  ],
+  "AN999": [
+   "végétale"
+  ],
+  "AN1088": [
+   "végétale"
+  ],
+  "AN1357": [
+   "végétale"
+  ],
+  "AN912": [
+   "végétale"
+  ],
+  "AN2073": [
+   "végétale"
+  ],
+  "AN600": [
+   "végétale"
+  ],
+  "AN427": [
+   "végétale"
+  ],
+  "AN482": [
+   "végétale"
+  ],
+  "AN524": [
+   "végétale"
+  ],
+  "AN552": [
+   "végétale"
+  ],
+  "AN576": [
+   "végétale"
+  ],
+  "AN1704": [
+   "végétale"
+  ],
+  "AN1791": [
+   "végétale"
+  ],
+  "AN350": [
+   "végétale"
+  ],
+  "AN866": [
+   "végétale"
+  ],
+  "AN867": [
+   "végétale"
+  ],
+  "AN868": [
+   "végétale"
+  ],
+  "AN1576": [
+   "végétale"
+  ],
+  "AN1716": [
+   "végétale"
+  ],
+  "AN563": [
+   "végétale"
+  ],
+  "AN142": [
+   "végétale"
+  ],
+  "AN1486": [
+   "végétale"
+  ],
+  "AN1485": [
+   "végétale"
+  ],
+  "AN1501": [
+   "végétale"
+  ],
+  "AN1945": [
+   "végétale"
+  ],
+  "AN2018": [
+   "végétale"
+  ],
+  "AN2025": [
+   "végétale"
+  ],
+  "AN2100": [
+   "végétale"
+  ],
+  "AN2201": [
+   "végétale"
+  ],
+  "AN2202": [
+   "végétale"
+  ],
+  "AN2249": [
+   "végétale"
+  ],
+  "AN163": [
+   "végétale"
+  ],
+  "AN164": [
+   "végétale"
+  ],
+  "AN165": [
+   "végétale"
+  ],
+  "AN167": [
+   "végétale"
+  ],
+  "AN169": [
+   "végétale"
+  ],
+  "AN1755": [
+   "végétale"
+  ],
+  "AN1490": [
+   "végétale"
+  ],
+  "AN1934": [
+   "végétale"
+  ],
+  "AN1967": [
+   "végétale"
+  ],
+  "AN1454": [
+   "végétale"
+  ],
+  "AN1777": [
+   "végétale"
+  ],
+  "AN52": [
+   "végétale"
+  ],
+  "AN285": [
+   "végétale"
+  ],
+  "AN2231": [
+   "végétale"
+  ],
+  "AN172": [
+   "végétale"
+  ],
+  "AN2153": [
+   "végétale"
+  ],
+  "AN1181": [
+   "végétale"
+  ],
+  "AN2097": [
+   "végétale"
+  ],
+  "AN787": [
+   "végétale"
+  ],
+  "AN408": [
+   "végétale"
+  ],
+  "AN2267": [
+   "végétale"
+  ],
+  "AN2136": [
+   "végétale"
+  ],
+  "AN943": [
+   "végétale"
+  ],
+  "AN1224": [
+   "végétale"
+  ],
+  "AN1019": [
+   "végétale"
+  ],
+  "AN2052": [
+   "végétale"
+  ],
+  "AN227": [
+   "végétale"
+  ],
+  "AN687": [
+   "végétale"
+  ],
+  "AN891": [
+   "végétale"
+  ],
+  "AN2104": [
+   "végétale"
+  ],
+  "AN118": [
+   "végétale"
+  ],
+  "AN304": [
+   "végétale"
+  ],
+  "AN306": [
+   "végétale"
+  ],
+  "AN1988": [
+   "végétale"
+  ],
+  "AN593": [
+   "végétale"
+  ],
+  "AN1297": [
+   "végétale"
+  ],
+  "AN1427": [
+   "végétale"
+  ],
+  "AN611": [
+   "végétale"
+  ],
+  "AN367": [
+   "végétale"
+  ],
+  "AN474": [
+   "végétale"
+  ],
+  "AN1821": [
+   "végétale"
+  ],
+  "AN1329": [
+   "végétale"
+  ],
+  "AN1330": [
+   "végétale"
+  ],
+  "AN2044": [
+   "végétale"
+  ],
+  "AN2113": [
+   "végétale"
+  ],
+  "AN547": [
+   "végétale"
+  ],
+  "AN1822": [
+   "végétale"
+  ],
+  "AN237": [
+   "végétale"
+  ],
+  "AN1399": [
+   "végétale"
+  ],
+  "AN2030": [
+   "végétale"
+  ],
+  "AN2046": [
+   "végétale"
+  ],
+  "AN2061": [
+   "végétale"
+  ],
+  "AN2036": [
+   "végétale"
+  ],
+  "AN2039": [
+   "végétale"
+  ],
+  "AN828": [
+   "végétale"
+  ],
+  "AN502": [
+   "végétale"
+  ],
+  "AN1990": [
+   "végétale"
+  ],
+  "AN504": [
+   "végétale"
+  ],
+  "AN1060": [
+   "végétale"
+  ],
+  "AN1061": [
+   "végétale"
+  ],
+  "AN1062": [
+   "végétale"
+  ],
+  "AN39": [
+   "végétale"
+  ],
+  "AN321": [
+   "végétale"
+  ],
+  "AN322": [
+   "végétale"
+  ],
+  "AN1470": [
+   "végétale"
+  ],
+  "AN40": [
+   "végétale"
+  ],
+  "AN1861": [
+   "végétale"
+  ],
+  "AN920": [
+   "végétale"
+  ],
+  "AN130": [
+   "végétale"
+  ],
+  "AN247": [
+   "végétale"
+  ],
+  "AN1837": [
+   "végétale"
+  ],
+  "AN1882": [
+   "végétale"
+  ],
+  "AN2192": [
+   "végétale"
+  ],
+  "AN2193": [
+   "végétale"
+  ],
+  "AN2195": [
+   "végétale"
+  ],
+  "AN2196": [
+   "végétale"
+  ],
+  "AN2223": [
+   "végétale"
+  ],
+  "AN2230": [
+   "végétale"
+  ],
+  "AN1870": [
+   "végétale"
+  ],
+  "AN1993": [
+   "végétale"
+  ],
+  "AN417": [
+   "végétale"
+  ],
+  "AN1063": [
+   "végétale"
+  ],
+  "AN1305": [
+   "végétale"
+  ],
+  "AN1642": [
+   "végétale"
+  ],
+  "AN386": [
+   "végétale"
+  ],
+  "AN434": [
+   "végétale"
+  ],
+  "AN530": [
+   "végétale"
+  ],
+  "AN580": [
+   "végétale"
+  ],
+  "AN1852": [
+   "végétale"
+  ],
+  "AN1996": [
+   "végétale"
+  ],
+  "AN1962": [
+   "végétale"
+  ],
+  "AN1303": [
+   "végétale"
+  ],
+  "AN1018": [
+   "végétale"
+  ],
+  "AN1355": [
+   "végétale"
+  ],
+  "AN1356": [
+   "végétale"
+  ],
+  "AN1354": [
+   "végétale"
+  ],
+  "AN658": [
+   "végétale"
+  ],
+  "AN1300": [
+   "végétale"
+  ],
+  "AN1302": [
+   "végétale"
+  ],
+  "AN1547": [
+   "végétale"
+  ],
+  "AN1548": [
+   "végétale"
+  ],
+  "AN318": [
+   "végétale"
+  ],
+  "AN852": [
+   "végétale"
+  ],
+  "AN853": [
+   "végétale"
+  ],
+  "AN810": [
+   "végétale"
+  ],
+  "AN1165": [
+   "végétale"
+  ],
+  "AN253": [
+   "végétale"
+  ],
+  "AN1079": [
+   "végétale"
+  ],
+  "AN2022": [
+   "végétale"
+  ],
+  "AN1877": [
+   "végétale"
+  ],
+  "AN338": [
+   "végétale"
+  ],
+  "AN918": [
+   "végétale"
+  ],
+  "AN1078": [
+   "végétale"
+  ],
+  "AN1921": [
+   "végétale"
+  ],
+  "AN416": [
+   "végétale"
+  ],
+  "AN1889": [
+   "végétale"
+  ],
+  "AN1887": [
+   "végétale"
+  ],
+  "AN2182": [
+   "végétale"
+  ],
+  "AN2216": [
+   "végétale"
+  ],
+  "AN2273": [
+   "végétale"
+  ],
+  "AN845": [
+   "végétale"
+  ],
+  "AN846": [
+   "végétale"
+  ],
+  "AN1137": [
+   "végétale"
+  ],
+  "AN1942": [
+   "végétale"
+  ],
+  "AN2058": [
+   "végétale"
+  ],
+  "AN2284": [
+   "végétale"
+  ],
+  "AN2286": [
+   "végétale"
+  ],
+  "AN342": [
+   "végétale"
+  ],
+  "AN1585": [
+   "végétale"
+  ],
+  "AN1503": [
+   "végétale"
+  ],
+  "AN1597": [
+   "végétale"
+  ],
+  "AN814": [
+   "végétale"
+  ],
+  "AN727": [
+   "végétale"
+  ],
+  "AN929": [
+   "végétale"
+  ],
+  "AN969": [
+   "végétale"
+  ],
+  "AN1370": [
+   "végétale"
+  ],
+  "AN1665": [
+   "végétale"
+  ],
+  "AN1846": [
+   "végétale"
+  ],
+  "AN1913": [
+   "végétale"
+  ],
+  "AN1956": [
+   "végétale"
+  ],
+  "AN818": [
+   "végétale"
+  ],
+  "AN1605": [
+   "végétale"
+  ],
+  "AN1493": [
+   "végétale"
+  ],
+  "AN1587": [
+   "végétale"
+  ],
+  "AN1312": [
+   "végétale"
+  ],
+  "AN618": [
+   "végétale"
+  ],
+  "AN619": [
+   "végétale"
+  ],
+  "AN1148": [
+   "végétale"
+  ],
+  "AN997": [
+   "végétale"
+  ],
+  "AN1023": [
+   "végétale"
+  ],
+  "AN1420": [
+   "végétale"
+  ],
+  "AN1421": [
+   "végétale"
+  ],
+  "AN2213": [
+   "végétale"
+  ],
+  "AN1196": [
+   "végétale"
+  ],
+  "AN298": [
+   "végétale"
+  ],
+  "AN782": [
+   "végétale"
+  ],
+  "AN1251": [
+   "végétale"
+  ],
+  "AN562": [
+   "végétale"
+  ],
+  "AN1855": [
+   "végétale"
+  ],
+  "AN443": [
+   "végétale"
+  ],
+  "AN581": [
+   "végétale"
+  ],
+  "AN543": [
+   "végétale"
+  ],
+  "AN2235": [
+   "végétale"
+  ],
+  "AN1561": [
+   "végétale"
+  ],
+  "AN232": [
+   "végétale"
+  ],
+  "AN231": [
+   "végétale"
+  ],
+  "AN1056": [
+   "végétale"
+  ],
+  "AN2124": [
+   "végétale"
+  ],
+  "AN980": [
+   "végétale"
+  ],
+  "AN1398": [
+   "végétale"
+  ],
+  "AN1480": [
+   "végétale"
+  ],
+  "AN111": [
+   "végétale"
+  ],
+  "AN113": [
+   "végétale"
+  ],
+  "AN444": [
+   "végétale"
+  ],
+  "AN544": [
+   "végétale"
+  ],
+  "AN1120": [
+   "végétale"
+  ],
+  "AN1173": [
+   "végétale"
+  ],
+  "AN1242": [
+   "végétale"
+  ],
+  "AN1923": [
+   "végétale"
+  ],
+  "AN1941": [
+   "végétale"
+  ],
+  "AN2209": [
+   "végétale"
+  ],
+  "AN2212": [
+   "végétale"
+  ],
+  "AN214": [
+   "végétale"
+  ],
+  "AN209": [
+   "végétale"
+  ],
+  "AN1205": [
+   "végétale"
+  ],
+  "AN330": [
+   "végétale"
+  ],
+  "AN1295": [
+   "végétale"
+  ],
+  "AN1757": [
+   "végétale"
+  ],
+  "AN377": [
+   "végétale"
+  ],
+  "AN2250": [
+   "végétale"
+  ],
+  "AN2047": [
+   "végétale"
+  ],
+  "AN1981": [
+   "végétale"
+  ],
+  "AN1283": [
+   "végétale"
+  ],
+  "AN985": [
+   "végétale"
+  ],
+  "AN1280": [
+   "végétale"
+  ],
+  "AN2096": [
+   "végétale"
+  ],
+  "AN1978": [
+   "végétale"
+  ],
+  "AN740": [
+   "végétale"
+  ],
+  "AN1211": [
+   "végétale"
+  ],
+  "AN1216": [
+   "végétale"
+  ],
+  "AN1233": [
+   "végétale"
+  ],
+  "AN1213": [
+   "végétale"
+  ],
+  "AN1230": [
+   "végétale"
+  ],
+  "AN325": [
+   "végétale"
+  ],
+  "AN332": [
+   "végétale"
+  ],
+  "AN328": [
+   "végétale"
+  ],
+  "AN327": [
+   "végétale"
+  ],
+  "AN326": [
+   "végétale"
+  ],
+  "AN1057": [
+   "végétale"
+  ],
+  "AN1129": [
+   "végétale"
+  ],
+  "AN1171": [
+   "végétale"
+  ],
+  "AN381": [
+   "végétale"
+  ],
+  "AN331": [
+   "végétale"
+  ],
+  "AN380": [
+   "végétale"
+  ],
+  "AN453": [
+   "végétale"
+  ],
+  "AN1349": [
+   "végétale"
+  ],
+  "AN1926": [
+   "végétale"
+  ],
+  "AN2045": [
+   "végétale"
+  ],
+  "AN2157": [
+   "végétale"
+  ],
+  "AN2174": [
+   "végétale"
+  ],
+  "AN2175": [
+   "végétale"
+  ],
+  "AN2257": [
+   "végétale"
+  ],
+  "AN370": [
+   "végétale"
+  ],
+  "AN579": [
+   "végétale"
+  ],
+  "AN2087": [
+   "végétale"
+  ],
+  "AN762": [
+   "végétale"
+  ],
+  "AN1678": [
+   "végétale"
+  ],
+  "AN1906": [
+   "végétale"
+  ],
+  "AN1958": [
+   "végétale"
+  ],
+  "AN2255": [
+   "végétale"
+  ],
+  "AN30": [
+   "végétale"
+  ],
+  "AN219": [
+   "végétale"
+  ],
+  "AN1686": [
+   "végétale"
+  ],
+  "AN2278": [
+   "végétale"
+  ],
+  "AN1010": [
+   "végétale"
+  ],
+  "AN1656": [
+   "végétale"
+  ],
+  "AN570": [
+   "végétale"
+  ],
+  "AN878": [
+   "végétale"
+  ],
+  "AN1011": [
+   "végétale"
+  ],
+  "AN1278": [
+   "végétale"
+  ],
+  "AN2035": [
+   "végétale"
+  ],
+  "AN2245": [
+   "végétale"
+  ],
+  "AN1336": [
+   "végétale"
+  ],
+  "AN1337": [
+   "végétale"
+  ],
+  "AN195": [
+   "végétale"
+  ],
+  "AN1458": [
+   "végétale"
+  ],
+  "AN994": [
+   "végétale"
+  ],
+  "AN1528": [
+   "végétale"
+  ],
+  "AN460": [
+   "végétale"
+  ],
+  "AN144": [
+   "végétale"
+  ],
+  "AN1025": [
+   "végétale"
+  ],
+  "AN1588": [
+   "végétale"
+  ],
+  "AN629": [
+   "végétale"
+  ],
+  "AN1028": [
+   "végétale"
+  ],
+  "AN1197": [
+   "végétale"
+  ],
+  "AN1340": [
+   "végétale"
+  ],
+  "AN1641": [
+   "végétale"
+  ],
+  "AN614": [
+   "végétale"
+  ],
+  "AN1170": [
+   "végétale"
+  ],
+  "AN13": [
+   "végétale"
+  ],
+  "AN467": [
+   "végétale"
+  ],
+  "AN976": [
+   "végétale"
+  ],
+  "AN390": [
+   "végétale"
+  ],
+  "AN2167": [
+   "végétale"
+  ],
+  "AN2177": [
+   "végétale"
+  ],
+  "AN613": [
+   "végétale"
+  ],
+  "AN1457": [
+   "végétale"
+  ],
+  "AN2237": [
+   "végétale"
+  ],
+  "AN1589": [
+   "végétale"
+  ],
+  "AN1944": [
+   "végétale"
+  ],
+  "AN2010": [
+   "végétale"
+  ],
+  "AN122": [
+   "végétale"
+  ],
+  "AN1245": [
+   "végétale"
+  ],
+  "AN1881": [
+   "végétale"
+  ],
+  "AN1626": [
+   "végétale"
+  ],
+  "AN1385": [
+   "végétale"
+  ],
+  "AN1250": [
+   "végétale"
+  ],
+  "AN1384": [
+   "végétale"
+  ],
+  "AN1123": [
+   "végétale"
+  ],
+  "AN1221": [
+   "végétale"
+  ],
+  "AN2164": [
+   "végétale"
+  ],
+  "AN1119": [
+   "végétale"
+  ],
+  "AN1324": [
+   "végétale"
+  ],
+  "AN2261": [
+   "végétale"
+  ],
+  "AN713": [
+   "végétale"
+  ],
+  "AN2075": [
+   "végétale"
+  ],
+  "AN2269": [
+   "végétale"
+  ],
+  "AN697": [
+   "végétale"
+  ],
+  "AN1067": [
+   "végétale"
+  ],
+  "AN1237": [
+   "végétale"
+  ],
+  "AN1565": [
+   "végétale"
+  ],
+  "AN1040": [
+   "végétale"
+  ],
+  "AN745": [
+   "végétale"
+  ],
+  "AN64": [
+   "végétale"
+  ],
+  "AN1035": [
+   "végétale"
+  ],
+  "AN1253": [
+   "végétale"
+  ],
+  "AN1925": [
+   "végétale"
+  ],
+  "AN1255": [
+   "végétale"
+  ],
+  "AN2233": [
+   "végétale"
+  ],
+  "AN892": [
+   "végétale"
+  ],
+  "AN466": [
+   "végétale"
+  ],
+  "AN978": [
+   "végétale"
+  ],
+  "AN1014": [
+   "végétale"
+  ],
+  "AN958": [
+   "végétale"
+  ],
+  "AN1293": [
+   "végétale"
+  ],
+  "AN995": [
+   "végétale"
+  ],
+  "AN129": [
+   "végétale"
+  ],
+  "AN133": [
+   "végétale"
+  ],
+  "AN225": [
+   "végétale"
+  ],
+  "AN634": [
+   "végétale"
+  ],
+  "AN1455": [
+   "végétale"
+  ],
+  "AN146": [
+   "végétale"
+  ],
+  "AN228": [
+   "végétale"
+  ],
+  "AN12": [
+   "végétale"
+  ],
+  "AN32": [
+   "végétale"
+  ],
+  "AN1125": [
+   "végétale"
+  ],
+  "AN1381": [
+   "végétale"
+  ],
+  "AN2265": [
+   "végétale"
+  ],
+  "AN1768": [
+   "végétale"
+  ],
+  "AN671": [
+   "végétale"
+  ],
+  "AN670": [
+   "végétale"
+  ],
+  "AN669": [
+   "végétale"
+  ],
+  "AN62": [
+   "végétale"
+  ],
+  "AN621": [
+   "végétale"
+  ],
+  "AN627": [
+   "végétale"
+  ],
+  "AN793": [
+   "végétale"
+  ],
+  "AN1084": [
+   "végétale"
+  ],
+  "AN1583": [
+   "végétale"
+  ],
+  "AN1672": [
+   "végétale"
+  ],
+  "AN2048": [
+   "végétale"
+  ],
+  "AN2150": [
+   "végétale"
+  ]
+ }
+}

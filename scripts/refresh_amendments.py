@@ -598,6 +598,19 @@ def synchronize() -> dict:
         print(f"⚠ Application jumeaux échouée : {e}", file=sys.stderr)
         summary.setdefault("errors", []).append(f"Jumeaux CD↔CE : {e}")
 
+    # 8 quinquies. Application des résumés et tags éditorialisés des amendements
+    #    de séance, depuis data/resumes_seance.json (bulletin de veille manuel,
+    #    exposés des motifs) et data/tags_seance.json (bulletin focus thématiques :
+    #    coop, ab, animale, végétale). Source prioritaire : écrase Claude.
+    try:
+        from apply_seance_manual import apply_seance_manual
+        seance_stats = apply_seance_manual(data["amendments"])
+        summary["seance_resumes_applied"] = seance_stats.get("resumes_applied", 0)
+        summary["seance_tags_applied"] = seance_stats.get("tags_applied", 0)
+    except Exception as e:
+        print(f"⚠ Application résumés/tags séance échouée : {e}", file=sys.stderr)
+        summary.setdefault("errors", []).append(f"Séance manuel : {e}")
+
     # 9. Mettre à jour la métadonnée
     data["meta"]["last_sync"] = datetime.now(timezone.utc).isoformat()
     data["meta"]["total"] = len(data["amendments"])

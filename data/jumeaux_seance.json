@@ -1,0 +1,2039 @@
+{
+ "_comment": "Jumeaux identifiés sur dispositif + exposé des motifs identiques. Permet, pour les amendements de séance, d'afficher le sort déjà connu de leurs jumeaux en commission (CD/CE) — donc d'anticiper leur sort probable.",
+ "_source": "amendements_identiques.xlsx",
+ "_stats": {
+  "groupes_total": 162,
+  "groupes_mixtes_avec_commission": 142,
+  "groupes_100pc_seance": 20,
+  "amendements_AN_avec_jumeau": 151
+ },
+ "jumeaux": {
+  "AN471": {
+   "groupe": "G001",
+   "jumeaux": [
+    {
+     "num": "AN481",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Bonnivard Émilie",
+     "article": "Après l'article 14",
+     "instance": "Séance publique"
+    },
+    {
+     "num": "AN1848",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Battistel Marie-Noëlle",
+     "article": "Après l'article 27",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN481": {
+   "groupe": "G001",
+   "jumeaux": [
+    {
+     "num": "AN471",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Descoeur Vincent",
+     "article": "Après l'article 27",
+     "instance": "Séance publique"
+    },
+    {
+     "num": "AN1848",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Battistel Marie-Noëlle",
+     "article": "Après l'article 27",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1848": {
+   "groupe": "G001",
+   "jumeaux": [
+    {
+     "num": "AN471",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Descoeur Vincent",
+     "article": "Après l'article 27",
+     "instance": "Séance publique"
+    },
+    {
+     "num": "AN481",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Bonnivard Émilie",
+     "article": "Après l'article 14",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN806": {
+   "groupe": "G002",
+   "jumeaux": [
+    {
+     "num": "AN951",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Le Fur Corentin",
+     "article": "Article 8 BIS",
+     "instance": "Séance publique"
+    },
+    {
+     "num": "AN1369",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "de Courson Charles",
+     "article": "Article 8 BIS",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN951": {
+   "groupe": "G002",
+   "jumeaux": [
+    {
+     "num": "AN806",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Pradié Aurélien",
+     "article": "Article 8",
+     "instance": "Séance publique"
+    },
+    {
+     "num": "AN1369",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "de Courson Charles",
+     "article": "Article 8 BIS",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1369": {
+   "groupe": "G002",
+   "jumeaux": [
+    {
+     "num": "AN806",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Pradié Aurélien",
+     "article": "Article 8",
+     "instance": "Séance publique"
+    },
+    {
+     "num": "AN951",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Le Fur Corentin",
+     "article": "Article 8 BIS",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN823": {
+   "groupe": "G003",
+   "jumeaux": [
+    {
+     "num": "AN825",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Jourdan Chantal",
+     "article": "Article 5",
+     "instance": "Séance publique"
+    },
+    {
+     "num": "CD37",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Jourdan Chantal",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN825": {
+   "groupe": "G003",
+   "jumeaux": [
+    {
+     "num": "AN823",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Jourdan Chantal",
+     "article": "Article 5",
+     "instance": "Séance publique"
+    },
+    {
+     "num": "CD37",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Jourdan Chantal",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN19": {
+   "groupe": "G008",
+   "jumeaux": [
+    {
+     "num": "CE27",
+     "kind": "CE",
+     "sort": "Retiré",
+     "auteur": "Blin Anne-Laure",
+     "article": "Article 2",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN21": {
+   "groupe": "G009",
+   "jumeaux": [
+    {
+     "num": "CE30",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Blin Anne-Laure",
+     "article": "Article 4",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN22": {
+   "groupe": "G010",
+   "jumeaux": [
+    {
+     "num": "CE31",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Blin Anne-Laure",
+     "article": "Article 4",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN32": {
+   "groupe": "G011",
+   "jumeaux": [
+    {
+     "num": "CE41",
+     "kind": "CE",
+     "sort": "Retiré",
+     "auteur": "Blin Anne-Laure",
+     "article": "Après l'article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN49": {
+   "groupe": "G012",
+   "jumeaux": [
+    {
+     "num": "CE518",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Pochon Marie",
+     "article": "Article 3",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN51": {
+   "groupe": "G013",
+   "jumeaux": [
+    {
+     "num": "CE522",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Pochon Marie",
+     "article": "Article 4",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN62": {
+   "groupe": "G014",
+   "jumeaux": [
+    {
+     "num": "CE124",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Bonnivard Émilie",
+     "article": "Après l'article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN67": {
+   "groupe": "G015",
+   "jumeaux": [
+    {
+     "num": "CE785",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Après l'article 21",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN68": {
+   "groupe": "G016",
+   "jumeaux": [
+    {
+     "num": "CE849",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Après l'article 21",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN72": {
+   "groupe": "G017",
+   "jumeaux": [
+    {
+     "num": "CE552",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Pochon Marie",
+     "article": "Après l'article 21",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN75": {
+   "groupe": "G018",
+   "jumeaux": [
+    {
+     "num": "CD255",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Pochon Marie",
+     "article": "Article 14",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN125": {
+   "groupe": "G019",
+   "jumeaux": [
+    {
+     "num": "CE744",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN129": {
+   "groupe": "G020",
+   "jumeaux": [
+    {
+     "num": "CE750",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN132": {
+   "groupe": "G021",
+   "jumeaux": [
+    {
+     "num": "CE763",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN133": {
+   "groupe": "G022",
+   "jumeaux": [
+    {
+     "num": "CE764",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN135": {
+   "groupe": "G023",
+   "jumeaux": [
+    {
+     "num": "AN1321",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Corneloup Josiane",
+     "article": "Article 14",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1321": {
+   "groupe": "G023",
+   "jumeaux": [
+    {
+     "num": "AN135",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Descoeur Vincent",
+     "article": "Article 14",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN161": {
+   "groupe": "G024",
+   "jumeaux": [
+    {
+     "num": "CE323",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 2",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN163": {
+   "groupe": "G025",
+   "jumeaux": [
+    {
+     "num": "CE326",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 3",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN164": {
+   "groupe": "G026",
+   "jumeaux": [
+    {
+     "num": "CE332",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 3",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN165": {
+   "groupe": "G027",
+   "jumeaux": [
+    {
+     "num": "CE333",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 3",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN167": {
+   "groupe": "G028",
+   "jumeaux": [
+    {
+     "num": "CE334",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 3",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN168": {
+   "groupe": "G029",
+   "jumeaux": [
+    {
+     "num": "CE343",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 3",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN169": {
+   "groupe": "G030",
+   "jumeaux": [
+    {
+     "num": "CE338",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 3",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN182": {
+   "groupe": "G031",
+   "jumeaux": [
+    {
+     "num": "AN763",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Roseren Xavier",
+     "article": "Article 14",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN763": {
+   "groupe": "G031",
+   "jumeaux": [
+    {
+     "num": "AN182",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Warsmann Jean-Luc",
+     "article": "Article 14",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN183": {
+   "groupe": "G032",
+   "jumeaux": [
+    {
+     "num": "CE431",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Après l'article 12",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN184": {
+   "groupe": "G033",
+   "jumeaux": [
+    {
+     "num": "CE436",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Article 13",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN185": {
+   "groupe": "G034",
+   "jumeaux": [
+    {
+     "num": "CE434",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Article 13",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN188": {
+   "groupe": "G035",
+   "jumeaux": [
+    {
+     "num": "CE450",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 15",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN189": {
+   "groupe": "G036",
+   "jumeaux": [
+    {
+     "num": "CE516",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 15",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN195": {
+   "groupe": "G037",
+   "jumeaux": [
+    {
+     "num": "CE857",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 16",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN196": {
+   "groupe": "G038",
+   "jumeaux": [
+    {
+     "num": "CE873",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 16",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN197": {
+   "groupe": "G039",
+   "jumeaux": [
+    {
+     "num": "CE882",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 16",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN199": {
+   "groupe": "G040",
+   "jumeaux": [
+    {
+     "num": "CE880",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 16",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN200": {
+   "groupe": "G041",
+   "jumeaux": [
+    {
+     "num": "CE575",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Article 17",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN203": {
+   "groupe": "G042",
+   "jumeaux": [
+    {
+     "num": "CE589",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 17",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN204": {
+   "groupe": "G043",
+   "jumeaux": [
+    {
+     "num": "CE592",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 17",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN205": {
+   "groupe": "G044",
+   "jumeaux": [
+    {
+     "num": "CE619",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 17",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN206": {
+   "groupe": "G045",
+   "jumeaux": [
+    {
+     "num": "CE681",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 17",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN208": {
+   "groupe": "G046",
+   "jumeaux": [
+    {
+     "num": "CE830",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 18",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN210": {
+   "groupe": "G047",
+   "jumeaux": [
+    {
+     "num": "CE437",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Après l'article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN211": {
+   "groupe": "G048",
+   "jumeaux": [
+    {
+     "num": "CE747",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN213": {
+   "groupe": "G049",
+   "jumeaux": [
+    {
+     "num": "CE769",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN216": {
+   "groupe": "G050",
+   "jumeaux": [
+    {
+     "num": "CE743",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Falcon Frédéric",
+     "article": "Article 13",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN223": {
+   "groupe": "G051",
+   "jumeaux": [
+    {
+     "num": "CE825",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Falcon Frédéric",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN237": {
+   "groupe": "G052",
+   "jumeaux": [
+    {
+     "num": "CD395",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN243": {
+   "groupe": "G053",
+   "jumeaux": [
+    {
+     "num": "CD409",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN247": {
+   "groupe": "G054",
+   "jumeaux": [
+    {
+     "num": "CD448",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN248": {
+   "groupe": "G055",
+   "jumeaux": [
+    {
+     "num": "CD450",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Article 6",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN250": {
+   "groupe": "G056",
+   "jumeaux": [
+    {
+     "num": "CD455",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 6",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN255": {
+   "groupe": "G057",
+   "jumeaux": [
+    {
+     "num": "CD495",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 9",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN256": {
+   "groupe": "G058",
+   "jumeaux": [
+    {
+     "num": "CD496",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 9",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN257": {
+   "groupe": "G059",
+   "jumeaux": [
+    {
+     "num": "CD497",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 9",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN258": {
+   "groupe": "G060",
+   "jumeaux": [
+    {
+     "num": "CD498",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Meunier Manon",
+     "article": "Article 10",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN268": {
+   "groupe": "G061",
+   "jumeaux": [
+    {
+     "num": "CD314",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Voynet Dominique",
+     "article": "Avant l'article 10",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN269": {
+   "groupe": "G062",
+   "jumeaux": [
+    {
+     "num": "CE628",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Voynet Dominique",
+     "article": "Article 15",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN270": {
+   "groupe": "G063",
+   "jumeaux": [
+    {
+     "num": "CE700",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Voynet Dominique",
+     "article": "Article 15",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN271": {
+   "groupe": "G064",
+   "jumeaux": [
+    {
+     "num": "CE954",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Belluco Lisa",
+     "article": "Article 17",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN276": {
+   "groupe": "G065",
+   "jumeaux": [
+    {
+     "num": "CE318",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 2",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN318": {
+   "groupe": "G066",
+   "jumeaux": [
+    {
+     "num": "CD22",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Belluco Lisa",
+     "article": "Article 6",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN320": {
+   "groupe": "G067",
+   "jumeaux": [
+    {
+     "num": "CD404",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Belluco Lisa",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN321": {
+   "groupe": "G068",
+   "jumeaux": [
+    {
+     "num": "CD405",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Belluco Lisa",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN322": {
+   "groupe": "G069",
+   "jumeaux": [
+    {
+     "num": "CD411",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Belluco Lisa",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN358": {
+   "groupe": "G070",
+   "jumeaux": [
+    {
+     "num": "CD158",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Brun Fabrice",
+     "article": "Avant l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN386": {
+   "groupe": "G071",
+   "jumeaux": [
+    {
+     "num": "AN530",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Martineau Éric",
+     "article": "Après l'article 5 TER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN530": {
+   "groupe": "G071",
+   "jumeaux": [
+    {
+     "num": "AN386",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Martineau Éric",
+     "article": "Après l'article 5 TER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN426": {
+   "groupe": "G072",
+   "jumeaux": [
+    {
+     "num": "CE844",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Bonnet Nicolas",
+     "article": "Après l'article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN445": {
+   "groupe": "G073",
+   "jumeaux": [
+    {
+     "num": "AN545",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Martineau Éric",
+     "article": "Article 12 BIS",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN545": {
+   "groupe": "G073",
+   "jumeaux": [
+    {
+     "num": "AN445",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Bouyx Bertrand",
+     "article": "Article 12 BIS",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN465": {
+   "groupe": "G074",
+   "jumeaux": [
+    {
+     "num": "CD521",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Riotton Véronique",
+     "article": "Article 9",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN608": {
+   "groupe": "G075",
+   "jumeaux": [
+    {
+     "num": "AN1634",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Lingemann Delphine",
+     "article": "Après l'article PREMIER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1634": {
+   "groupe": "G075",
+   "jumeaux": [
+    {
+     "num": "AN608",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Liégeon Eric",
+     "article": "Après l'article PREMIER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN627": {
+   "groupe": "G076",
+   "jumeaux": [
+    {
+     "num": "CE253",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Martin Patrice",
+     "article": "Après l'article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN631": {
+   "groupe": "G077",
+   "jumeaux": [
+    {
+     "num": "CE257",
+     "kind": "CE",
+     "sort": "Tombé",
+     "auteur": "Martin Patrice",
+     "article": "Article 21",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN633": {
+   "groupe": "G078",
+   "jumeaux": [
+    {
+     "num": "CE259",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Martin Patrice",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN634": {
+   "groupe": "G079",
+   "jumeaux": [
+    {
+     "num": "CE260",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Martin Patrice",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN641": {
+   "groupe": "G080",
+   "jumeaux": [
+    {
+     "num": "AN680",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Caron Aymeric",
+     "article": "Article PREMIER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN680": {
+   "groupe": "G080",
+   "jumeaux": [
+    {
+     "num": "AN641",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Caron Aymeric",
+     "article": "Article PREMIER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN727": {
+   "groupe": "G081",
+   "jumeaux": [
+    {
+     "num": "AN1370",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "de Courson Charles",
+     "article": "Article 8 TER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1370": {
+   "groupe": "G081",
+   "jumeaux": [
+    {
+     "num": "AN727",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Kervran Loïc",
+     "article": "Article 8 TER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN767": {
+   "groupe": "G082",
+   "jumeaux": [
+    {
+     "num": "CE229",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Thomin Mélanie",
+     "article": "Article 3",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN802": {
+   "groupe": "G083",
+   "jumeaux": [
+    {
+     "num": "AN1359",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "de Courson Charles",
+     "article": "Article 5",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1359": {
+   "groupe": "G083",
+   "jumeaux": [
+    {
+     "num": "AN802",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Pradié Aurélien",
+     "article": "Article 5",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN808": {
+   "groupe": "G084",
+   "jumeaux": [
+    {
+     "num": "AN955",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Le Fur Corentin",
+     "article": "Article 18 BIS",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN955": {
+   "groupe": "G084",
+   "jumeaux": [
+    {
+     "num": "AN808",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Pradié Aurélien",
+     "article": "Article 18 BIS",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN812": {
+   "groupe": "G085",
+   "jumeaux": [
+    {
+     "num": "CD449",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Après l'article 8",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN817": {
+   "groupe": "G086",
+   "jumeaux": [
+    {
+     "num": "CD433",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Hignet Mathilde",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN826": {
+   "groupe": "G087",
+   "jumeaux": [
+    {
+     "num": "CD40",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN827": {
+   "groupe": "G088",
+   "jumeaux": [
+    {
+     "num": "CD41",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN829": {
+   "groupe": "G089",
+   "jumeaux": [
+    {
+     "num": "CD44",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN834": {
+   "groupe": "G090",
+   "jumeaux": [
+    {
+     "num": "CD460",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN835": {
+   "groupe": "G091",
+   "jumeaux": [
+    {
+     "num": "CD33",
+     "kind": "CD",
+     "sort": "Retiré",
+     "auteur": "Jourdan Chantal",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN843": {
+   "groupe": "G092",
+   "jumeaux": [
+    {
+     "num": "CD88",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Après l'article 8",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN844": {
+   "groupe": "G093",
+   "jumeaux": [
+    {
+     "num": "CD89",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Après l'article 8",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN847": {
+   "groupe": "G094",
+   "jumeaux": [
+    {
+     "num": "CD200",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Avant l'article 8",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN853": {
+   "groupe": "G095",
+   "jumeaux": [
+    {
+     "num": "CD59",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Barusseau Fabrice",
+     "article": "Article 6",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN857": {
+   "groupe": "G096",
+   "jumeaux": [
+    {
+     "num": "AN1306",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Pantel Sophie",
+     "article": "Après l'article 14",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1306": {
+   "groupe": "G096",
+   "jumeaux": [
+    {
+     "num": "AN857",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Gouvernement",
+     "article": "Après l'article 14",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN881": {
+   "groupe": "G097",
+   "jumeaux": [
+    {
+     "num": "CE499",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Laporte Hélène",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN897": {
+   "groupe": "G098",
+   "jumeaux": [
+    {
+     "num": "CD196",
+     "kind": "CD",
+     "sort": "Retiré",
+     "auteur": "Pantel Sophie",
+     "article": "Article 14",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN898": {
+   "groupe": "G099",
+   "jumeaux": [
+    {
+     "num": "CD194",
+     "kind": "CD",
+     "sort": "Retiré",
+     "auteur": "Pantel Sophie",
+     "article": "Article 14",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN899": {
+   "groupe": "G100",
+   "jumeaux": [
+    {
+     "num": "CD191",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Allemand Marie-José",
+     "article": "Article 14",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN903": {
+   "groupe": "G101",
+   "jumeaux": [
+    {
+     "num": "CD187",
+     "kind": "CD",
+     "sort": "Tombé",
+     "auteur": "Rossi Valérie",
+     "article": "Article 14",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN948": {
+   "groupe": "G102",
+   "jumeaux": [
+    {
+     "num": "AN1365",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "de Courson Charles",
+     "article": "Article 6",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1365": {
+   "groupe": "G102",
+   "jumeaux": [
+    {
+     "num": "AN948",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Le Fur Corentin",
+     "article": "Article 6",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN961": {
+   "groupe": "G103",
+   "jumeaux": [
+    {
+     "num": "CD103",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Bouquin Manon",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN962": {
+   "groupe": "G104",
+   "jumeaux": [
+    {
+     "num": "CD105",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Bouquin Manon",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN963": {
+   "groupe": "G105",
+   "jumeaux": [
+    {
+     "num": "CD437",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Bouquin Manon",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN986": {
+   "groupe": "G106",
+   "jumeaux": [
+    {
+     "num": "AN1279",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Ronceret Anne-Sophie",
+     "article": "Article 13",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1279": {
+   "groupe": "G106",
+   "jumeaux": [
+    {
+     "num": "AN986",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Lecamp Pascal",
+     "article": "Article 13",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1048": {
+   "groupe": "G107",
+   "jumeaux": [
+    {
+     "num": "CE242",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Le Bourgeois Robert",
+     "article": "Article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN1095": {
+   "groupe": "G108",
+   "jumeaux": [
+    {
+     "num": "CE218",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Thomin Mélanie",
+     "article": "Article 17",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN1248": {
+   "groupe": "G109",
+   "jumeaux": [
+    {
+     "num": "CD418",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Belluco Lisa",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1271": {
+   "groupe": "G110",
+   "jumeaux": [
+    {
+     "num": "CD93",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Biteau Benoît",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1284": {
+   "groupe": "G111",
+   "jumeaux": [
+    {
+     "num": "CD94",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Biteau Benoît",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1296": {
+   "groupe": "G112",
+   "jumeaux": [
+    {
+     "num": "CE896",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Article 13",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN1346": {
+   "groupe": "G113",
+   "jumeaux": [
+    {
+     "num": "AN1616",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Gouvernement",
+     "article": "Article 5 TER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1616": {
+   "groupe": "G113",
+   "jumeaux": [
+    {
+     "num": "AN1346",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Coggia Nathalie",
+     "article": "Article 5 TER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1390": {
+   "groupe": "G114",
+   "jumeaux": [
+    {
+     "num": "CE658",
+     "kind": "CE",
+     "sort": "Rejeté",
+     "auteur": "Potier Dominique",
+     "article": "Après l'article 23",
+     "instance": "Affaires économiques"
+    }
+   ]
+  },
+  "AN1401": {
+   "groupe": "G115",
+   "jumeaux": [
+    {
+     "num": "CD329",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Magnier David",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1470": {
+   "groupe": "G116",
+   "jumeaux": [
+    {
+     "num": "CD406",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Belluco Lisa",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1471": {
+   "groupe": "G117",
+   "jumeaux": [
+    {
+     "num": "CD106",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Biteau Benoît",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1519": {
+   "groupe": "G118",
+   "jumeaux": [
+    {
+     "num": "CD464",
+     "kind": "CD",
+     "sort": "Non soutenu",
+     "auteur": "Taupiac David",
+     "article": "Article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1621": {
+   "groupe": "G119",
+   "jumeaux": [
+    {
+     "num": "AN2258",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Gouvernement",
+     "article": "Article 24",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN2258": {
+   "groupe": "G119",
+   "jumeaux": [
+    {
+     "num": "AN1621",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Gouvernement",
+     "article": "Article 24",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1668": {
+   "groupe": "G120",
+   "jumeaux": [
+    {
+     "num": "CD148",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Biteau Benoît",
+     "article": "Article 6",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1711": {
+   "groupe": "G121",
+   "jumeaux": [
+    {
+     "num": "AN1858",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Ronceret Anne-Sophie",
+     "article": "Article 5 QUATER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1858": {
+   "groupe": "G121",
+   "jumeaux": [
+    {
+     "num": "AN1711",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Ronceret Anne-Sophie",
+     "article": "Article 5 QUATER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1776": {
+   "groupe": "G122",
+   "jumeaux": [
+    {
+     "num": "CD151",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Biteau Benoît",
+     "article": "Article 9",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1808": {
+   "groupe": "G123",
+   "jumeaux": [
+    {
+     "num": "CD153",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Biteau Benoît",
+     "article": "Article 9",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1820": {
+   "groupe": "G124",
+   "jumeaux": [
+    {
+     "num": "CD155",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Biteau Benoît",
+     "article": "Article 10",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1852": {
+   "groupe": "G125",
+   "jumeaux": [
+    {
+     "num": "AN2150",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Gernigon François",
+     "article": "Après l'article 27",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN2150": {
+   "groupe": "G125",
+   "jumeaux": [
+    {
+     "num": "AN1852",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Battistel Marie-Noëlle",
+     "article": "Après l'article 5 TER",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1872": {
+   "groupe": "G126",
+   "jumeaux": [
+    {
+     "num": "AN1879",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 10",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1879": {
+   "groupe": "G126",
+   "jumeaux": [
+    {
+     "num": "AN1872",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Trouvé Aurélie",
+     "article": "Article 10",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN1878": {
+   "groupe": "G127",
+   "jumeaux": [
+    {
+     "num": "CD235",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Descoeur Vincent",
+     "article": "Article 6",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1880": {
+   "groupe": "G128",
+   "jumeaux": [
+    {
+     "num": "CD234",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Descoeur Vincent",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1882": {
+   "groupe": "G129",
+   "jumeaux": [
+    {
+     "num": "CD233",
+     "kind": "CD",
+     "sort": "Rejeté",
+     "auteur": "Descoeur Vincent",
+     "article": "Après l'article 5",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN1998": {
+   "groupe": "G130",
+   "jumeaux": [
+    {
+     "num": "CD516",
+     "kind": "CD",
+     "sort": "Non soutenu",
+     "auteur": "Cazeneuve Jean-René",
+     "article": "Après l'article 7",
+     "instance": "Développement durable"
+    }
+   ]
+  },
+  "AN2090": {
+   "groupe": "G131",
+   "jumeaux": [
+    {
+     "num": "AN2114",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Benoit Thierry",
+     "article": "Article 4",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN2114": {
+   "groupe": "G131",
+   "jumeaux": [
+    {
+     "num": "AN2090",
+     "kind": "AN",
+     "sort": "Non renseigné",
+     "auteur": "Dive Julien",
+     "article": "Article 4",
+     "instance": "Séance publique"
+    }
+   ]
+  },
+  "AN2094": {
+   "groupe": "G132",
+   "jumeaux": [
+    {
+     "num": "CE962",
+     "kind": "CE",
+     "sort": "Tombé",
+     "auteur": "Biteau Benoît",
+     "article": "Article 18",
+     "instance": "Affaires économiques"
+    }
+   ]
+  }
+ }
+}

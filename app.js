@@ -625,34 +625,67 @@ function tagLabel(t) {
 }
 
 function renderJumeaux(a) {
-  // Affiche les amendements jumeaux côté commission Développement durable.
-  // Permet d'anticiper le sort probable d'un CE à partir du sort déjà connu côté CD.
-  if (!a.jumeaux_cd || a.jumeaux_cd.length === 0) return "";
-  const jumeaux = a.jumeaux_cd;
-  const type = a.jumeau_type || "substantiel";
+  // Affichage unifié des jumeaux :
+  //  - Pour les CE (commission Affaires éco) : champ jumeaux_cd, source =
+  //    analyse comparative dispositif des amendements CD vs CE.
+  //  - Pour les AN (séance publique) : champ jumeaux, source = analyse
+  //    d'amendements identiques (dispositif + exposé strictement identiques)
+  //    pour le texte n° 2765. Comprend des jumeaux de séance (AN) et de
+  //    commission (CD, CE), avec leur sort.
+  //
+  // Utilité : prévoir le sort probable de l'amendement courant à partir
+  // du sort déjà connu de ses jumeaux (notamment côté commission).
+  let jumeaux, mode;
+  if (Array.isArray(a.jumeaux_cd) && a.jumeaux_cd.length > 0) {
+    jumeaux = a.jumeaux_cd;
+    mode = "ce_vs_cd";          // CE qui regarde ses jumeaux CD
+  } else if (Array.isArray(a.jumeaux) && a.jumeaux.length > 0) {
+    jumeaux = a.jumeaux;
+    mode = "seance";            // AN qui regarde ses jumeaux (AN + CD + CE)
+  } else {
+    return "";
+  }
 
-  // Compteur par sort (pour résumer si beaucoup de jumeaux)
+  // Normalisation du sort vide → "Non renseigné" pour l'affichage
+  const cleanSort = s => (s && s.trim() !== "" ? s : "Non renseigné");
+
+  // Compteur par sort
   const sortCounts = {};
-  jumeaux.forEach(j => { sortCounts[j.sort] = (sortCounts[j.sort] || 0) + 1; });
+  jumeaux.forEach(j => {
+    const s = cleanSort(j.sort);
+    sortCounts[s] = (sortCounts[s] || 0) + 1;
+  });
 
   const sortClass = sort => "sort-" + sort.toLowerCase().replace(/[^a-zà-ÿ]/gi, "");
 
-  const label = type === "suppression"
-    ? `🔗 Amendement de suppression — ${jumeaux.length} jumeau${jumeaux.length > 1 ? "x" : ""} CD :`
-    : `🔗 Jumeau${jumeaux.length > 1 ? "x" : ""} CD :`;
+  // Libellé adapté
+  let label;
+  if (mode === "ce_vs_cd") {
+    const type = a.jumeau_type || "substantiel";
+    label = type === "suppression"
+      ? `🔗 Amendement de suppression — ${jumeaux.length} jumeau${jumeaux.length > 1 ? "x" : ""} CD :`
+      : `🔗 Jumeau${jumeaux.length > 1 ? "x" : ""} CD :`;
+  } else {
+    // mode "seance"
+    const hasCommission = jumeaux.some(j => j.kind === "CD" || j.kind === "CE");
+    label = hasCommission
+      ? `🔗 Jumeau${jumeaux.length > 1 ? "x" : ""} (sort partiellement tranché en commission) :`
+      : `🔗 ${jumeaux.length} amendement${jumeaux.length > 1 ? "s" : ""} identique${jumeaux.length > 1 ? "s" : ""} en séance :`;
+  }
 
-  // Si peu de jumeaux (≤ 4), liste détaillée. Sinon, résumé par sort.
+  // Si peu de jumeaux (≤ 5), liste détaillée. Sinon, résumé par sort.
   let body;
-  if (jumeaux.length <= 4) {
+  if (jumeaux.length <= 5) {
     body = jumeaux.map(j => {
-      const cd = state.byNum.get(j.num);
-      const url = cd ? cd.url : null;
-      const inner = `${escapeHtml(j.num)} <span class="sort">${escapeHtml(j.sort)}</span>`;
+      const sort = cleanSort(j.sort);
+      const ref = state.byNum.get(j.num);
+      const url = ref ? ref.url : null;
+      const inner = `${escapeHtml(j.num)} <span class="sort">${escapeHtml(sort)}</span>`;
       const title = j.auteur ? `Auteur : ${escapeAttr(j.auteur)}` : escapeAttr(j.num);
       if (url) {
-        return `<a class="jumeau-link ${sortClass(j.sort)}" href="${escapeAttr(url)}" target="_blank" rel="noopener" title="${title}">${inner}</a>`;
+        return `<a class="jumeau-link ${sortClass(sort)}" href="${escapeAttr(url)}" target="_blank" rel="noopener" title="${title}">${inner}</a>`;
       }
-      return `<span class="jumeau-link ${sortClass(j.sort)}" title="${title}">${inner}</span>`;
+      return `<span class="jumeau-link ${sortClass(sort)}" title="${title}">${inner}</span>`;
     }).join("");
   } else {
     body = Object.entries(sortCounts).map(([sort, count]) =>

@@ -611,6 +611,18 @@ def synchronize() -> dict:
         print(f"⚠ Application résumés/tags séance échouée : {e}", file=sys.stderr)
         summary.setdefault("errors", []).append(f"Séance manuel : {e}")
 
+    # 8 sexies. Jumeaux d'amendements de séance — affiche pour chaque AN ses
+    #    amendements identiques (dispositif + exposé), notamment ceux qui ont
+    #    déjà un sort tranché en commission (CD/CE), ce qui donne un signal
+    #    prédictif fort sur le sort probable de l'AN.
+    try:
+        from apply_jumeaux_seance import apply_jumeaux_seance
+        js_stats = apply_jumeaux_seance(data["amendments"])
+        summary["jumeaux_seance_applied"] = js_stats.get("applied", 0)
+    except Exception as e:
+        print(f"⚠ Application jumeaux séance échouée : {e}", file=sys.stderr)
+        summary.setdefault("errors", []).append(f"Jumeaux séance : {e}")
+
     # 9. Mettre à jour la métadonnée
     data["meta"]["last_sync"] = datetime.now(timezone.utc).isoformat()
     data["meta"]["total"] = len(data["amendments"])

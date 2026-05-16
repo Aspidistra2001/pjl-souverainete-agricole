@@ -1,12 +1,12 @@
 {
-  "last_sync_utc": "2026-05-16T04:50:40.745442+00:00",
-  "last_sync_human": "2026-05-16 04:50:40 UTC",
+  "last_sync_utc": "2026-05-16T05:01:14.000463+00:00",
+  "last_sync_human": "2026-05-16 05:01:14 UTC",
   "feed_items": 0,
   "fetched": 0,
   "added": 0,
   "state_changes": 0,
-  "summaries_generated": 50,
-  "summaries_cost_usd": 0.1606,
+  "summaries_generated": 3,
+  "summaries_cost_usd": 0.0096,
   "errors": [
     "Tagging Claude : No module named 'tag_amendments'"
   ]

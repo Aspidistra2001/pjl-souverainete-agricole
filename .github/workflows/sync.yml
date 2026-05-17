@@ -20,6 +20,11 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    # Garde-fou : si la sync prend plus de 15 min, on l'arrête. Évite les runs
+    # fantômes qui bloqueraient la file via concurrency. Une sync normale prend
+    # 2-3 minutes ; au-delà de 15 c'est forcément un blocage (timeout réseau
+    # sur un fetch XML, conflit git push qui boucle, etc.).
+    timeout-minutes: 15
     # Variable de sortie : indique si un commit a été fait (donc si on doit redéployer)
     outputs:
       committed: ${{ steps.push.outputs.committed }}
@@ -114,6 +119,7 @@ jobs:
   # automatiquement le workflow deploy.yml (protection anti-boucle de GitHub).
   deploy:
     needs: sync
+    timeout-minutes: 5
     if: needs.sync.outputs.committed == 'true'
     runs-on: ubuntu-latest
     environment:

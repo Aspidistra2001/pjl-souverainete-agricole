@@ -241,8 +241,23 @@ function rebuildFilters() {
   buildFilterRows(dom.groupFilters, groupOrder, groupCounts, "group", true);
 
   const articleCounts = countBy(scope, a => a.article);
-  const articleOrder = state.meta.article_order.filter(x => articleCounts.has(x))
-    .concat(Array.from(articleCounts.keys()).filter(x => !state.meta.article_order.includes(x)));
+  // Concaténation : d'abord les articles présents dans l'ordre du serveur,
+  // puis les articles présents mais inconnus du serveur — triés localement
+  // pour ne pas tomber au hasard en queue (cas des bis/ter/après ajoutés
+  // en séance après que article_order ait été figé).
+  const knownInOrder = state.meta.article_order.filter(x => articleCounts.has(x));
+  const unknown = Array.from(articleCounts.keys())
+    .filter(x => !state.meta.article_order.includes(x))
+    .sort((a, b) => {
+      const ka = articleSortKey(a);
+      const kb = articleSortKey(b);
+      for (let i = 0; i < 4; i++) {
+        if (ka[i] < kb[i]) return -1;
+        if (ka[i] > kb[i]) return 1;
+      }
+      return 0;
+    });
+  const articleOrder = knownInOrder.concat(unknown);
   buildFilterRows(dom.articleFilters, articleOrder, articleCounts, "article");
 
   // Filtre thématique : un amendement compte une fois par tag distinct qu'il porte
@@ -342,6 +357,52 @@ function countBy(arr, fn) {
     m.set(k, (m.get(k) || 0) + 1);
   });
   return m;
+}
+
+// Clé de tri parlementaire pour la désignation d'un article.
+// Réimplémente _article_sort_key (refresh_amendments.py) côté front,
+// pour rester robuste si articleOrder serveur est obsolète ou incomplet.
+// Renvoie un tuple [num, bisOrdinal, sub, raw] :
+//   - num         : numéro de l'article (TITRE = -1, PREMIER/1er = 1, inconnu = 9999)
+//   - bisOrdinal  : 0 = pas de bis/ter, 1 = BIS, 2 = TER, 3 = QUATER, 4 = QUINQUIES,
+//                   5 = SEXIES, 6 = SEPTIES, 7 = OCTIES, etc.
+//   - sub         : -1 = Avant, 0 = Sur, 1 = Après
+//   - raw         : chaîne originale (tie-breaker stable)
+function articleSortKey(article) {
+  if (!article) return [10000, 0, 0, ""];
+  const norm = article.trim().toLowerCase().replace(/\xa0/g, " ");
+
+  // TITRE / intitulé : avant tout
+  if (norm.includes("titre") || norm.includes("intitulé") || norm.includes("intitule")) {
+    return [-1, 0, 0, article];
+  }
+
+  // Détecter "Avant" / "Après" en début (sous-ordre).
+  // Accepte aussi "aprs" (forme tronquée vue dans certains exports CSV).
+  let sub = 0;
+  if (norm.startsWith("avant ")) sub = -1;
+  else if (norm.startsWith("après ") || norm.startsWith("apres ") || norm.startsWith("aprs ")) sub = 1;
+
+  // Numéro de l'article
+  let num;
+  if (/\bpremier\b/.test(norm) || /\b1er\b/.test(norm)) {
+    num = 1;
+  } else {
+    const m = norm.match(/\b(\d{1,3})\b/);
+    num = m ? parseInt(m[1], 10) : 9000;
+  }
+
+  // Bis/ter/quater/... pour le sous-numéro
+  let bisOrdinal = 0;
+  if (/\bbis\b/.test(norm)) bisOrdinal = 1;
+  else if (/\bter\b/.test(norm)) bisOrdinal = 2;
+  else if (/\bquater\b/.test(norm)) bisOrdinal = 3;
+  else if (/\bquinquies\b/.test(norm)) bisOrdinal = 4;
+  else if (/\bsexies\b/.test(norm)) bisOrdinal = 5;
+  else if (/\bsepties\b/.test(norm)) bisOrdinal = 6;
+  else if (/\boctie\b/.test(norm)) bisOrdinal = 7;
+
+  return [num, bisOrdinal, sub, article];
 }
 
 function prettyArticle(name) {
@@ -538,10 +599,26 @@ function renderAmendments() {
     byArticle.get(a.article).push(a);
   });
 
+  // Tri principal des articles. Si l'article est dans articleOrder (calculé
+  // côté serveur), on utilise sa position. Sinon (article récent absent
+  // d'articleOrder, fréquent quand l'examen passe en séance et que de
+  // nouveaux articles bis/ter apparaissent), on calcule une clé de tri
+  // localement avec la même logique que _article_sort_key côté Python.
+  // Cela évite que tous les articles « inconnus » ne se retrouvent à la fin.
   const sortedArticles = Array.from(byArticle.keys()).sort((a, b) => {
     const ai = articleOrder.indexOf(a);
     const bi = articleOrder.indexOf(b);
-    return (ai < 0 ? 9999 : ai) - (bi < 0 ? 9999 : bi);
+    // Cas 1 : les deux sont dans articleOrder → ordre du serveur
+    if (ai >= 0 && bi >= 0) return ai - bi;
+    // Cas 2 : un seul des deux est dedans → calcul local pour comparer
+    const ka = articleSortKey(a);
+    const kb = articleSortKey(b);
+    // Comparaison tuple-wise sur (num, bisOrdinal, sub, raw)
+    for (let i = 0; i < 4; i++) {
+      if (ka[i] < kb[i]) return -1;
+      if (ka[i] > kb[i]) return 1;
+    }
+    return 0;
   });
 
   const html = sortedArticles.map(article => {

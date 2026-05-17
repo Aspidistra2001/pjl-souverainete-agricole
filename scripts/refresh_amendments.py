@@ -153,6 +153,91 @@ def truncate(s: str, n: int = 500) -> str:
     return s[:n].rsplit(" ", 1)[0] + "…"
 
 
+# ----- Ordre parlementaire des articles -----
+
+def _article_sort_key(article: str) -> tuple:
+    """Clé de tri parlementaire pour la désignation d'un article.
+
+    Renvoie un tuple (num, bis_ordinal, sub, raw) où :
+      - num         : position de l'article (TITRE = -1, art. 1 = 1,
+                      art. 2 = 2, etc., articles inconnus = 9999)
+      - bis_ordinal : 0 = sans suffixe, 1 = BIS, 2 = TER, 3 = QUATER,
+                      4 = QUINQUIES, 5 = SEXIES, 6 = SEPTIES, 7 = OCTIES
+      - sub         : sous-ordre dans l'article (Avant = -1, sur = 0, Après = 1)
+      - raw         : la chaîne originale, comme tie-breaker stable
+
+    Le tri ordonne d'abord par num, puis bis_ordinal, puis sub, ce qui donne
+    l'ordre parlementaire :
+        TITRE
+        Avant l'article PREMIER
+        Article PREMIER
+        Après l'article PREMIER
+        Article 2
+        Après l'article 2
+        Article 4
+        Article 4 BIS
+        Article 4 TER
+        Article 4 QUATER
+        ...
+    """
+    if not article:
+        return (10000, 0, 0, "")
+    norm = article.strip().lower().replace("\xa0", " ")
+
+    # TITRE / intitulé : avant tout
+    if "titre" in norm or "intitulé" in norm:
+        return (-1, 0, 0, article)
+
+    # Détecter "Avant" / "Après" en début (sous-ordre).
+    # On accepte aussi la forme tronquée "aprs " (rencontrée si le CSV est
+    # mal décodé), même si normalement le décodage cp1252 le préserve bien.
+    sub = 0
+    if norm.startswith("avant "):
+        sub = -1
+    elif (norm.startswith("après ")
+          or norm.startswith("apres ")
+          or norm.startswith("aprs ")):
+        sub = 1
+
+    # Extraire le numéro d'article
+    if re.search(r"\bpremier\b", norm) or re.search(r"\b1er\b", norm):
+        num = 1
+    else:
+        m = re.search(r"\b(\d{1,3})\b", norm)
+        if m:
+            num = int(m.group(1))
+        else:
+            return (9000, 0, sub, article)
+
+    # Bis / Ter / Quater / Quinquies / Sexies / Septies / Octies
+    bis_ordinal = 0
+    if re.search(r"\bbis\b", norm):
+        bis_ordinal = 1
+    elif re.search(r"\bter\b", norm):
+        bis_ordinal = 2
+    elif re.search(r"\bquater\b", norm):
+        bis_ordinal = 3
+    elif re.search(r"\bquinquies\b", norm):
+        bis_ordinal = 4
+    elif re.search(r"\bsexies\b", norm):
+        bis_ordinal = 5
+    elif re.search(r"\bsepties\b", norm):
+        bis_ordinal = 6
+    elif re.search(r"\boctie\b", norm):
+        bis_ordinal = 7
+
+    return (num, bis_ordinal, sub, article)
+
+
+def _compute_article_order(amendments: list[dict]) -> list[str]:
+    """Calcule l'ordre des articles à partir des amendements existants.
+
+    Renvoie la liste des articles distincts triés selon l'ordre parlementaire.
+    """
+    articles = {a.get("article", "") for a in amendments if a.get("article")}
+    return sorted(articles, key=_article_sort_key)
+
+
 # ----- Parsing du flux RSS -----
 
 def parse_feed(feed_xml: str) -> list[dict]:
@@ -626,6 +711,20 @@ def synchronize() -> dict:
     # 9. Mettre à jour la métadonnée
     data["meta"]["last_sync"] = datetime.now(timezone.utc).isoformat()
     data["meta"]["total"] = len(data["amendments"])
+
+    # 9 bis. Recalculer l'ordre parlementaire des articles, à partir des
+    #        articles réellement présents dans les amendements. L'AN classe
+    #        traditionnellement dans cet ordre :
+    #            1. TITRE
+    #            2. Avant l'article PREMIER
+    #            3. Article PREMIER (= article 1)
+    #            4. Après l'article PREMIER
+    #            5. Article 2
+    #            6. Après l'article 2
+    #            ...
+    #            N. Articles additionnels après l'article N
+    #            Z. Annexes / divers
+    data["meta"]["article_order"] = _compute_article_order(data["amendments"])
 
     # 10. Écrire le fichier
     with DATA_FILE.open("w", encoding="utf-8") as f:

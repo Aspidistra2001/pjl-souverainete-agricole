@@ -587,12 +587,102 @@ def synchronize() -> dict:
         print(f"⚠ {len(local_only)} amendements locaux non présents dans le CSV : {local_only[:5]}…", file=sys.stderr)
         summary["errors"].append(f"{len(local_only)} amendements locaux manquants au CSV")
 
-    # 7. Flux RSS — reste utilisé comme signal complémentaire
+    # 7. Flux RSS — détection des amendements republiés depuis la dernière sync
+    #    et re-fetch de leur XML pour capter les changements de sort en avance
+    #    sur la mise à jour du CSV OpenData (qui peut tarder plusieurs heures).
+    #
+    #    Logique :
+    #    1) Récupérer les items du flux RSS Aspidistra
+    #    2) Garder uniquement ceux dont le guid concerne notre texte
+    #       (filtre par fragment d'URI : "PO838901BTC2765" et "BTC2765" pour
+    #       les amendements de séance et "PO419865B2632" / "PO419610B2632"
+    #       pour les amendements de commission CD/CE)
+    #    3) Pour chaque amendement républié dans le RSS, re-fetcher son XML
+    #       et comparer le sort à celui qu'on a en base
+    #    4) Si différent → mise à jour
     feed_xml = http_get(FEED_URL)
     if feed_xml:
         feed_items = parse_feed(feed_xml)
         summary["feed_items"] = len(feed_items)
-        print(f"Flux RSS (info) : {len(feed_items)} items")
+        print(f"Flux RSS : {len(feed_items)} items")
+
+        # Filtres d'URI à matcher pour repérer nos amendements
+        # CD = PO419865 sur texte 2632 ; CE = PO419610 sur texte 2632
+        # AN (séance) = PO838901 sur texte BTC2765
+        TEXT_URI_FRAGMENTS = (
+            f"PO419865B{TEXT_NUMBER}",        # CD commission Dvp durable
+            f"PO419610B{TEXT_NUMBER}",        # CE commission Aff. éco
+            f"PO838901BTC{TEXT_NUMBER_SEANCE}",  # AN séance publique
+        )
+
+        # Extraire les numéros candidats depuis le flux
+        candidates = set()
+        for item in feed_items:
+            guid = item.get("guid", "") or item.get("link", "")
+            if not any(frag in guid for frag in TEXT_URI_FRAGMENTS):
+                continue
+            # Extraire le numéro depuis le guid (format ...P0D1N000123)
+            m = re.search(r"P0D1N(\d+)(?:\.|$)", guid)
+            if not m:
+                continue
+            digits = int(m.group(1))
+            # Identifier le préfixe selon le fragment matché
+            if f"PO419865B{TEXT_NUMBER}" in guid:
+                num = f"CD{digits}"
+            elif f"PO419610B{TEXT_NUMBER}" in guid:
+                num = f"CE{digits}"
+            elif f"PO838901BTC{TEXT_NUMBER_SEANCE}" in guid:
+                num = f"AN{digits}"
+            else:
+                continue
+            if num in by_num:
+                candidates.add(num)
+
+        print(f"  → {len(candidates)} amendements republiés dans le RSS et présents en base")
+
+        if candidates:
+            # Re-fetcher les XML en parallèle, capés à 100 pour ne pas exploser
+            # le runner si jamais le RSS publie une grosse vague.
+            to_refresh = list(candidates)[:100]
+            print(f"  → Re-fetch de {len(to_refresh)} XML pour vérifier le sort...")
+            refreshed_count = 0
+            state_changes_rss = []
+            with ThreadPoolExecutor(max_workers=5) as ex:
+                futures = {ex.submit(fetch_and_parse_xml, n, None): n for n in to_refresh}
+                for fut in as_completed(futures):
+                    num = futures[fut]
+                    try:
+                        _, parsed = fut.result()
+                    except Exception:
+                        continue
+                    if not parsed:
+                        continue
+                    new_state = parsed.get("state") or "En traitement"
+                    existing = by_num.get(num)
+                    if not existing:
+                        continue
+                    if new_state != existing.get("state"):
+                        state_changes_rss.append({
+                            "num": num,
+                            "old": existing.get("state"),
+                            "new": new_state,
+                            "source": "rss",
+                        })
+                        existing["state"] = new_state
+                        # Marquer la source pour traçabilité
+                        existing["state_source"] = "rss"
+                    refreshed_count += 1
+
+            summary["rss_refreshed"] = refreshed_count
+            summary["rss_state_changes"] = len(state_changes_rss)
+            if state_changes_rss:
+                print(f"  ✓ {len(state_changes_rss)} sorts mis à jour via RSS :")
+                for chg in state_changes_rss[:10]:
+                    print(f"      {chg['num']}: {chg['old']!r} → {chg['new']!r}")
+                if len(state_changes_rss) > 10:
+                    print(f"      … et {len(state_changes_rss) - 10} autres")
+            else:
+                print(f"  → Aucun changement de sort détecté via RSS")
 
     # 8. Génération des résumés via l'API Claude (Haiku 4.5).
     #    On ne traite que les amendements avec summary_pending=True

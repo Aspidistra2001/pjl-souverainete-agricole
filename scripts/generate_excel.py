@@ -103,7 +103,7 @@ def write_sheet(ws, amendments: list, title: str):
     ws.row_dimensions[2].height = 18
 
     # En-têtes (ligne 4)
-    headers = ["N°", "Article", "Auteur", "Groupe", "État", "Thématiques", "Résumé", "Lien officiel"]
+    headers = ["N°", "Article", "Auteur", "Groupe", "État", "Découvert le", "Thématiques", "Résumé", "Lien officiel"]
     for col_idx, h in enumerate(headers, start=1):
         cell = ws.cell(row=4, column=col_idx, value=h)
         cell.font = Font(name="Calibri", size=11, bold=True, color=HEADER_FG)
@@ -178,6 +178,22 @@ def write_sheet(ws, amendments: list, title: str):
         cell.alignment = Alignment(horizontal="center", vertical="center")
         cell.border = border
 
+        # Découvert le (date de première détection par le pipeline)
+        ts = a.get("discovered_at") or a.get("added_via_csv_at") or ""
+        ts_display = ""
+        if ts:
+            try:
+                from datetime import datetime as _dt
+                # Parser ISO 8601 et formater jj/mm/aaaa hh:mm
+                d = _dt.fromisoformat(ts.replace("Z", "+00:00"))
+                ts_display = d.strftime("%d/%m/%Y %H:%M")
+            except Exception:
+                ts_display = str(ts)[:16]
+        cell = ws.cell(row=row_idx, column=6, value=ts_display)
+        cell.font = Font(name="Calibri", size=9, color="6e6859")
+        cell.alignment = Alignment(horizontal="left", vertical="top")
+        cell.border = border
+
         # Thématiques (tags Claude)
         TAG_LABELS_LOCAL = {
             "coop": "Coopératives", "ab": "AB",
@@ -185,20 +201,20 @@ def write_sheet(ws, amendments: list, title: str):
         }
         tags = a.get("tags", []) or []
         tag_text = ", ".join(TAG_LABELS_LOCAL.get(t, t) for t in tags)
-        cell = ws.cell(row=row_idx, column=6, value=safe_text(tag_text))
+        cell = ws.cell(row=row_idx, column=7, value=safe_text(tag_text))
         cell.font = Font(name="Calibri", size=9, italic=True, color="4a443a")
         cell.alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
         cell.border = border
 
         # Résumé
         summary = a.get("summary", "")
-        cell = ws.cell(row=row_idx, column=7, value=safe_text(summary))
+        cell = ws.cell(row=row_idx, column=8, value=safe_text(summary))
         cell.font = Font(name="Calibri", size=10)
         cell.alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
         cell.border = border
 
         # Lien officiel
-        cell = ws.cell(row=row_idx, column=8, value="Voir sur l'AN" if url else "")
+        cell = ws.cell(row=row_idx, column=9, value="Voir sur l'AN" if url else "")
         if url:
             cell.font = Font(name="Calibri", size=10, color="1565C0", underline="single")
             cell.hyperlink = url
@@ -207,8 +223,8 @@ def write_sheet(ws, amendments: list, title: str):
         cell.alignment = Alignment(horizontal="left", vertical="top")
         cell.border = border
 
-    # Largeurs de colonnes (en caractères) — pour 8 colonnes maintenant
-    widths = [10, 24, 28, 8, 18, 22, 75, 18]
+    # Largeurs de colonnes (en caractères) — pour 9 colonnes maintenant
+    widths = [10, 24, 28, 8, 18, 16, 22, 75, 18]
     for col_idx, w in enumerate(widths, start=1):
         ws.column_dimensions[get_column_letter(col_idx)].width = w
 

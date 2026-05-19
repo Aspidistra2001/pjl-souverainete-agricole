@@ -732,6 +732,16 @@ a:hover { color: var(--hemicycle-deep); }
 
 .amendment-body { display: flex; flex-direction: column; gap: 0.45rem; }
 
+.amendment-discovered {
+  /* Petite ligne discrète sous la barre de méta : indique quand l'amendement
+     a été détecté par notre pipeline de veille. Utile pour suivre la
+     chronologie des dépôts, ne doit pas voler la vedette au contenu. */
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.02em;
+}
+
 .amendment-meta {
   display: flex;
   flex-wrap: wrap;

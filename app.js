@@ -684,12 +684,31 @@ function renderAmendment(a) {
           ${a.is_rss_new ? `<span class="badge badge-rss">FLUX</span>` : ""}
           ${a._stateChangedSinceOpen ? `<span class="badge badge-changed" title="Avant : ${escapeAttr(a._previousState || "?")}">MODIFIÉ</span>` : ""}
         </div>
+        ${renderDiscoveredAt(a)}
         ${summaryHtml}
         ${renderAvis(a)}
         ${renderJumeaux(a)}
       </div>
     </article>
   `;
+}
+
+function renderDiscoveredAt(a) {
+  // Affiche la date de découverte de l'amendement par le pipeline.
+  // Champ principal : discovered_at (depuis le tour mai 2026).
+  // Champ historique compatible : added_via_csv_at (anciennes entrées).
+  const ts = a.discovered_at || a.added_via_csv_at;
+  if (!ts) return "";
+  const d = new Date(ts);
+  if (isNaN(d.getTime())) return "";
+  // Format français court : JJ/MM à HH:MM
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mi = String(d.getMinutes()).padStart(2, "0");
+  // Date complète au survol pour traçabilité fine
+  const fullIso = ts.replace("T", " ").slice(0, 16);
+  return `<div class="amendment-discovered" title="Première détection par la veille — ${escapeAttr(fullIso)}">Découvert le ${dd}/${mm} à ${hh}h${mi}</div>`;
 }
 
 function tagLabel(t) {

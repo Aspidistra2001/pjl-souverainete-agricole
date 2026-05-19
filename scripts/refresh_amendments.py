@@ -472,6 +472,25 @@ def synchronize() -> dict:
         data["amendments"] = cleaned
         print(f"Migration : -{nb_removed_dup} doublons supprimés, {nb_renamed} entrées renommées (X → ANX)")
 
+    # Migration discovered_at : pour les amendements qui n'ont aucun
+    # horodatage de découverte (anciennes versions du pipeline), on attribue
+    # rétroactivement la dernière sync connue (ou la baseline). Tous les
+    # amendements ajoutés ensuite auront leur vraie date de découverte.
+    fallback_ts = (
+        data.get("meta", {}).get("last_sync")
+        or data.get("meta", {}).get("baseline_date")
+        or datetime.now(timezone.utc).isoformat()
+    )
+    nb_backfilled = 0
+    for a in data["amendments"]:
+        if not a.get("discovered_at"):
+            # Anciens champs équivalents potentiels (rétrocompatibilité)
+            legacy = a.get("added_via_csv_at") or a.get("added_at")
+            a["discovered_at"] = legacy or fallback_ts
+            nb_backfilled += 1
+    if nb_backfilled:
+        print(f"Migration : {nb_backfilled} amendements rétro-datés à {fallback_ts[:16]}")
+
     by_num = {a["num"]: a for a in data["amendments"]}
     print(f"Baseline locale : {len(by_num)} amendements")
 
@@ -573,7 +592,10 @@ def synchronize() -> dict:
                 "summary_pending": True,
                 "is_new": True,
                 "is_rss_new": True,
-                "added_via_csv_at": datetime.now(timezone.utc).isoformat(),
+                # Horodatage de première détection par le pipeline.
+                # Affiché sur la fiche (« Découvert le… ») et dans l'export
+                # Excel. Format ISO 8601 UTC.
+                "discovered_at": datetime.now(timezone.utc).isoformat(),
             }
             data["amendments"].append(new_amend)
             by_num[num] = new_amend

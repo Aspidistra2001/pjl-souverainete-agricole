@@ -1,10 +1,10 @@
 {
-  "last_sync_utc": "2026-05-22T10:01:10.485014+00:00",
-  "last_sync_human": "2026-05-22 10:01:10 UTC",
+  "last_sync_utc": "2026-05-22T10:14:03.965733+00:00",
+  "last_sync_human": "2026-05-22 10:14:03 UTC",
   "feed_items": 0,
   "fetched": 0,
   "added": 0,
-  "state_changes": 0,
+  "state_changes": 13,
   "summaries_generated": 0,
   "summaries_cost_usd": 0,
   "errors": [

@@ -1,0 +1,14 @@
+{
+ "_doc": "Registre des textes suivis. Chaque dossier référence son fichier d'annotations (config + référentiels du texte), ses tables influences/filieres (optionnelles), son répertoire de caches (data_dir) et son répertoire de sortie (out_dir, où sont écrits index.html et bulletin-veille.pdf). Mettre actif=false pour suspendre un texte sans le supprimer. Le portail racine (index.html) liste les dossiers actifs.",
+ "dossiers": [
+  {
+   "slug": "senat-689",
+   "actif": true,
+   "annotations": "annotations.json",
+   "influences": "data/influences_an.json",
+   "filieres": "data/filieres.json",
+   "data_dir": "data",
+   "out_dir": "dossiers/senat-689"
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 {
-  "last_sync_utc": "2026-06-28T17:01:47.648069+00:00",
-  "last_sync_human": "2026-06-28 17:01:47 UTC",
+  "last_sync_utc": "2026-06-28T17:25:05.710070+00:00",
+  "last_sync_human": "2026-06-28 17:25:05 UTC",
   "feed_items": 0,
   "fetched": 0,
   "added": 0,
@@ -8,7 +8,8 @@
   "summaries_generated": 0,
   "summaries_cost_usd": 0,
   "errors": [
-    "98 amendements locaux manquants au CSV",
+    "CSV OpenData injoignable",
+    "4103 amendements locaux manquants au CSV",
     "Tagging Claude : No module named 'tag_amendments'"
   ]
 }

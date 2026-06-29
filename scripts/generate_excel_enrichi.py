@@ -23,6 +23,7 @@ import html
 import sys
 import urllib.request
 import urllib.error
+import ssl
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
@@ -119,11 +120,36 @@ def clean_html(raw_html: str) -> str:
     return text
 
 
+def _ssl_context(verified: bool = True):
+    """Contexte SSL : vérifié (certifi si dispo) ou — en repli — non vérifié."""
+    if not verified:
+        return ssl._create_unverified_context()
+    try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        return ssl.create_default_context()
+
+
+def _uopen(req, timeout=TIMEOUT):
+    """urlopen avec repli SSL non vérifié si l'AN sert un certificat non vérifiable
+    (WAF/anti-bot intermittent). Donnée PUBLIQUE en lecture seule.
+    NB : urlopen ENVELOPPE l'erreur SSL dans URLError -> on teste e.reason."""
+    try:
+        return urllib.request.urlopen(req, timeout=timeout, context=_ssl_context(True))
+    except urllib.error.URLError as e:
+        if isinstance(getattr(e, "reason", None), ssl.SSLCertVerificationError):
+            print("  certificat AN non vérifiable — repli SSL non vérifié (donnée publique)",
+                  file=sys.stderr)
+            return urllib.request.urlopen(req, timeout=timeout, context=_ssl_context(False))
+        raise
+
+
 def http_get(url: str, decode: str | None = None) -> bytes | str | None:
     """GET HTTP avec User-Agent et timeout. Retourne None en cas d'échec."""
     try:
         req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+        with _uopen(req, timeout=TIMEOUT) as resp:
             raw = resp.read()
             return raw.decode(decode) if decode else raw
     except Exception as e:
